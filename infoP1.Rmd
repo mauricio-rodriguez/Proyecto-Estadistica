@@ -1,0 +1,40 @@
+---
+title: "Info P1 "
+output: html_notebook
+---
+
+# cargar librerias 
+```{r}
+library(readr)
+library(dplyr)
+```
+
+# asignamos data frames
+```{r}
+DFFallecidos <- read_csv("fallecidos.csv")
+DFVacunados <- read_csv("vacunados.csv")
+```
+# Eliminamos columnas innecesarias en vacunados
+```{r}
+DFVacunados<-subset(DFVacunados,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
+```
+# Eliminamos columnas innecesarias en fallecidos
+```{r}
+DFFallecidos<-subset(DFFallecidos,select = -c(FECHA_CORTE,UUID,FECHA_NAC,UBIGEO,PROVINCIA,DISTRITO))
+```
+# Editamos nombres 
+
+```{r}
+DFFallecidos %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidos
+```
+
+#Editamos DFVacunados 
+
+```{r}
+DFVacunados %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunados
+```
+
+```{r}
+boxplot(DFFallecidos$EDAD,horizontal = 1)
+```
+
