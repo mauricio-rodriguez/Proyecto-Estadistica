@@ -52,6 +52,11 @@ DEPARTAMENTO | C. Nominal | Departamentos del Perú
 Objetivos 
 =========================================================
 Analizar la cantidad de fallecidos en el periodo de la segunda ola.
+<div align="center">
+<img src="histograma.jpg" width=600 height=400>
+</div>
+- EJE X: 
+- EJE Y:
 
 Objetivos 
 =========================================================
