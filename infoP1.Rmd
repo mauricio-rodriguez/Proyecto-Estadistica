@@ -78,6 +78,12 @@ DFFallecidosCopy<-DFFallecidosCopy[,2]
 
 
 ```{r}
+DFFallecidosCopy %>% group_by(DFFallecidosCopy$DATE) %>% tally()
+hist(DFFallecidosCopy$DATE,breaks = 100, )
+```
+
+
+```{r}
 by_month <- function(x,n=1){
   seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n," months"))
 }
