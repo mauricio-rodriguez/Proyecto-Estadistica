@@ -87,3 +87,12 @@ ggplot(DFFallecidosCopy,aes(fecha )) +
                breaks = by_month(DFFallecidosCopy$fecha,2)) + 
   theme(axis.text.x = element_text(angle=90))
 ```
+
+Objetivo 4: 
+Determinar si es que existe relación entre las distintas vacunas con la cantidad de fallecidos en los distintos departamentos
+
+Cantidad de vacunas aplicadas por departamento
+```{r}
+table(subset(DFVacunadosCLEAN, select = c(DEPARTAMENTO, FABRICANTE)))
+```
+
