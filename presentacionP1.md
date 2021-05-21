@@ -53,22 +53,107 @@ Objetivos
 =========================================================
 Analizar la cantidad de fallecidos en el periodo de la segunda ola.
 
+- Variables: 
+  - Table &rarr; 
+  - Table &rarr; 
+- Descriptores númericos: 
+- Descriptores gráficos:
+  - Tipo de grafico
+  - Ejes:
+      - X:
+      - Y:
+  - Unidades:
+      - X:
+      - Y:
+
+
 Objetivos 
 =========================================================
 Hallar la comparación del impacto de la vacunación en los diferentes departamentos del país.
+
+- Variables: 
+  - Table &rarr; 
+  - Table &rarr; 
+- Descriptores númericos: 
+- Descriptores gráficos:
+  - Tipo de grafico
+  - Ejes:
+      - X:
+      - Y:
+  - Unidades:
+      - X:
+      - Y:
+
 
 Objetivos 
 =========================================================
 Hallar la relación entre la curva de fallecidos con los rangos de edades.
 
+- Variables: 
+  - Table &rarr; 
+  - Table &rarr; 
+- Descriptores númericos: 
+- Descriptores gráficos:
+  - Tipo de grafico
+  - Ejes:
+      - X:
+      - Y:
+  - Unidades:
+      - X:
+      - Y:
+
+
 Objetivos 
 =========================================================
 Analizar el impacto generado por la situación de riesgo de la región con respecto al número de hospitalizaciones o decesos, desde el inicio del proceso de vacunación.
+
+- Variables: 
+  - Table &rarr; 
+  - Table &rarr; 
+- Descriptores númericos: 
+- Descriptores gráficos:
+  - Tipo de grafico
+  - Ejes:
+      - X:
+      - Y:
+  - Unidades:
+      - X:
+      - Y:
 
 
 Objetivos 
 =========================================================
 Determinar si es que existe relación entre las distintas vacunas con la cantidad de contagios en los distintos departamentos.
+
+- Variables: 
+  - Table &rarr; 
+  - Table &rarr; 
+- Descriptores númericos: 
+- Descriptores gráficos:
+  - Tipo de grafico
+  - Ejes:
+      - X:
+      - Y:
+  - Unidades:
+      - X:
+      - Y:
+      
+Objetivos 
+=========================================================
+Determinar si es que existe relación entre las distintas vacunas con la cantidad de contagios en los distintos departamentos.
+
+- Variables: 
+  - Table &rarr; 
+  - Table &rarr; 
+- Descriptores númericos: 
+- Descriptores gráficos:
+  - Tipo de grafico
+  - Ejes:
+      - X:
+      - Y:
+  - Unidades:
+      - X:
+      - Y:
 
 Factibilidad
 ========================================================
