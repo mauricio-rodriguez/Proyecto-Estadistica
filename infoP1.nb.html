@@ -219,32 +219,14 @@ pre code {
 <h1>cargar librerias</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5IChnZ3Bsb3QyKVxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeShzY2FsZXMpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5IChnZ3Bsb3QyKVxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeShzY2FsZXMpXG5saWJyYXJ5KGx1YnJpZGF0ZSlcbmBgYCJ9 -->
 <pre class="r"><code>library(readr)
 library(dplyr)
 library (ggplot2)
 library(stringr)
-library(scales)</code></pre>
+library(scales)
+library(lubridate)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYc2NhbGVz4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6cmVhZHLigJk6XG5cbiAgICBjb2xfZmFjdG9yXG4ifQ== -->
-<pre><code>
-Attaching package: ‘scales’
-
-The following object is masked from ‘package:readr’:
-
-    col_factor</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsdWJyaWRhdGUpXG5gYGAifQ== -->
-<pre class="r"><code>library(lubridate)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYbHVicmlkYXRl4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTpiYXNl4oCZOlxuXG4gICAgZGF0ZSwgaW50ZXJzZWN0LCBzZXRkaWZmLCB1bmlvblxuIn0= -->
-<pre><code>
-Attaching package: ‘lubridate’
-
-The following objects are masked from ‘package:base’:
-
-    date, intersect, setdiff, union</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -252,52 +234,10 @@ The following objects are masked from ‘package:base’:
 <h1>Asignamos DF’s con los datos RAW de los archivos</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZGYWxsZWNpZG9zUkFXIDwtIHJlYWRfY3N2KFwiZmFsbGVjaWRvcy5jc3ZcIilcbmBgYCJ9 -->
-<pre class="r"><code>DFFallecidosRAW &lt;- read_csv(&quot;fallecidos.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZGYWxsZWNpZG9zUkFXIDwtIHJlYWRfY3N2KFwiZmFsbGVjaWRvcy5jc3ZcIilcbkRGVmFjdW5hZG9zUkFXIDwtIHJlYWRfY3N2KFwidmFjdW5hZG9zLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>DFFallecidosRAW &lt;- read_csv(&quot;fallecidos.csv&quot;)
+DFVacunadosRAW &lt;- read_csv(&quot;vacunados.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG7ilIDilIAgQ29sdW1uIHNwZWNpZmljYXRpb24g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAXG5jb2xzKFxuICBGRUNIQV9DT1JURSA9IGNvbF9kb3VibGUoKSxcbiAgVVVJRCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRkVDSEFfRkFMTEVDSU1JRU5UTyA9IGNvbF9kb3VibGUoKSxcbiAgRURBRF9ERUNMQVJBREEgPSBjb2xfZG91YmxlKCksXG4gIFNFWE8gPSBjb2xfY2hhcmFjdGVyKCksXG4gIEZFQ0hBX05BQyA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgVUJJR0VPID0gY29sX2NoYXJhY3RlcigpLFxuICBERVBBUlRBTUVOVE8gPSBjb2xfY2hhcmFjdGVyKCksXG4gIFBST1ZJTkNJQSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRElTVFJJVE8gPSBjb2xfY2hhcmFjdGVyKClcbilcbiJ9 -->
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────────────
-cols(
-  FECHA_CORTE = col_double(),
-  UUID = col_character(),
-  FECHA_FALLECIMIENTO = col_double(),
-  EDAD_DECLARADA = col_double(),
-  SEXO = col_character(),
-  FECHA_NAC = col_character(),
-  UBIGEO = col_character(),
-  DEPARTAMENTO = col_character(),
-  PROVINCIA = col_character(),
-  DISTRITO = col_character()
-)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZWYWN1bmFkb3NSQVcgPC0gcmVhZF9jc3YoXCJ2YWN1bmFkb3MuY3N2XCIpXG5gYGAifQ== -->
-<pre class="r"><code>DFVacunadosRAW &lt;- read_csv(&quot;vacunados.csv&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG7ilIDilIAgQ29sdW1uIHNwZWNpZmljYXRpb24g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAXG5jb2xzKFxuICBGRUNIQV9DT1JURSA9IGNvbF9kb3VibGUoKSxcbiAgVVVJRCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgR1JVUE9fUklFU0dPID0gY29sX2NoYXJhY3RlcigpLFxuICBFREFEID0gY29sX2RvdWJsZSgpLFxuICBTRVhPID0gY29sX2NoYXJhY3RlcigpLFxuICBGRUNIQV9WQUNVTkFDSU9OID0gY29sX2RvdWJsZSgpLFxuICBET1NJUyA9IGNvbF9kb3VibGUoKSxcbiAgRkFCUklDQU5URSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRElSRVNBID0gY29sX2NoYXJhY3RlcigpLFxuICBERVBBUlRBTUVOVE8gPSBjb2xfY2hhcmFjdGVyKCksXG4gIFBST1ZJTkNJQSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRElTVFJJVE8gPSBjb2xfY2hhcmFjdGVyKClcbilcbiJ9 -->
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────────────
-cols(
-  FECHA_CORTE = col_double(),
-  UUID = col_character(),
-  GRUPO_RIESGO = col_character(),
-  EDAD = col_double(),
-  SEXO = col_character(),
-  FECHA_VACUNACION = col_double(),
-  DOSIS = col_double(),
-  FABRICANTE = col_character(),
-  DIRESA = col_character(),
-  DEPARTAMENTO = col_character(),
-  PROVINCIA = col_character(),
-  DISTRITO = col_character()
-)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubHMoKVxuYGBgIn0= -->
-<pre class="r"><code>ls()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiREZGYWxsZWNpZG9zUkFXXCIgXCJERlZhY3VuYWRvc1JBV1wiIFxuIn0= -->
-<pre><code>[1] &quot;DFFallecidosRAW&quot; &quot;DFVacunadosRAW&quot; </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -398,35 +338,6 @@ ggplot(DFFallecidosCopy,aes(fecha )) +
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUoc3Vic2V0KERGVmFjdW5hZG9zQ0xFQU4sIHNlbGVjdCA9IGMoREVQQVJUQU1FTlRPLCBGQUJSSUNBTlRFKSkpXG5gYGAifQ== -->
 <pre class="r"><code>table(subset(DFVacunadosCLEAN, select = c(DEPARTAMENTO, FABRICANTE)))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgRkFCUklDQU5URVxuREVQQVJUQU1FTlRPICAgIEFTVFJBWkVORUNBIFBGSVpFUiBTSU5PUEhBUk1cbiAgQU1BWk9OQVMgICAgICAgICAgICAxNzkyMSAgIDI2MzIgICAgIDExMDQ5XG4gIEFOQ0FTSCAgICAgICAgICAgICAgICAgIDAgIDQ2MzY3ICAgICAzMDI4OFxuICBBUFVSSU1BQyAgICAgICAgICAgIDI4MTk3ICAgMTYzOCAgICAgMTU0OTBcbiAgQVJFUVVJUEEgICAgICAgICAgICAgICAgMCAgNjg2OTggICAgIDM4MzQyXG4gIEFZQUNVQ0hPICAgICAgICAgICAgMzE4MDAgICAxMzcxICAgICAxOTA0M1xuICBDQUpBTUFSQ0EgICAgICAgICAgICAgICAwICAzNjA2OSAgICAgMjgxMDFcbiAgQ0FMTEFPICAgICAgICAgICAgICAgICAgMCAxNTMxMTkgICAgIDQyNjYzXG4gIENVU0NPICAgICAgICAgICAgICAgICAgIDAgIDQ1ODg0ICAgICAyNjIyOFxuICBIVUFOQ0FWRUxJQ0EgICAgICAgIDI1NDI3ICAgMjY5MiAgICAgMTIzOThcbiAgSFVBTlVDTyAgICAgICAgICAgICAzMDU0MCAgIDE1NTMgICAgIDE5MDIyXG4gIElDQSAgICAgICAgICAgICAgICAgICAgIDAgIDQ1MjQ5ICAgICAzMDg3NlxuICBKVU5JTiAgICAgICAgICAgICAgICAgICAwICAzODUwMiAgICAgMzE2NjdcbiAgTEEgTElCRVJUQUQgICAgICAgICAgICAgMCAxMDIxMzcgICAgIDM2MDI1XG4gIExBTUJBWUVRVUUgICAgICAgICAgICAgIDAgIDU2Mzk4ICAgICAyNjk3MFxuICBMSU1BICAgICAgICAgICAgICAgICAgICAwIDkwNjY2OSAgICA0MDI1OTdcbiAgTE9SRVRPICAgICAgICAgICAgICAgICAgMCAgMzAzMzYgICAgIDE4MzAxXG4gIE1BRFJFIERFIERJT1MgICAgICAgIDIzOTIgICAgNzAyICAgICAgNTAxMFxuICBNT1FVRUdVQSAgICAgICAgICAgICAgICAwICAgNjM3NCAgICAgIDg1MTlcbiAgUEFTQ08gICAgICAgICAgICAgICAgODgzMSAgICA4ODMgICAgICA3MjY3XG4gIFBJVVJBICAgICAgICAgICAgICAgICAgIDAgIDYwNTk3ICAgICA0MDU1OFxuICBQVU5PICAgICAgICAgICAgICAgIDMyMzc3ICAgNTAxMCAgICAgMjI3MzRcbiAgU0FOIE1BUlRJTiAgICAgICAgICAgICAgMCAgMjk2NDEgICAgIDE4MzA1XG4gIFRBQ05BICAgICAgICAgICAgICAgICAgIDAgIDIyMjY1ICAgICAxMTAyN1xuICBUVU1CRVMgICAgICAgICAgICAgICA4OTc1ICAgNTg0MyAgICAgIDY0MDlcbiAgVUNBWUFMSSAgICAgICAgICAgICAxOTc3NSAgIDE1OTkgICAgIDEyMzY1XG4ifQ== -->
-<pre><code>               FABRICANTE
-DEPARTAMENTO    ASTRAZENECA PFIZER SINOPHARM
-  AMAZONAS            17921   2632     11049
-  ANCASH                  0  46367     30288
-  APURIMAC            28197   1638     15490
-  AREQUIPA                0  68698     38342
-  AYACUCHO            31800   1371     19043
-  CAJAMARCA               0  36069     28101
-  CALLAO                  0 153119     42663
-  CUSCO                   0  45884     26228
-  HUANCAVELICA        25427   2692     12398
-  HUANUCO             30540   1553     19022
-  ICA                     0  45249     30876
-  JUNIN                   0  38502     31667
-  LA LIBERTAD             0 102137     36025
-  LAMBAYEQUE              0  56398     26970
-  LIMA                    0 906669    402597
-  LORETO                  0  30336     18301
-  MADRE DE DIOS        2392    702      5010
-  MOQUEGUA                0   6374      8519
-  PASCO                8831    883      7267
-  PIURA                   0  60597     40558
-  PUNO                32377   5010     22734
-  SAN MARTIN              0  29641     18305
-  TACNA                   0  22265     11027
-  TUMBES               8975   5843      6409
-  UCAYALI             19775   1599     12365</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
