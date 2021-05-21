@@ -64,7 +64,7 @@ Objetivos
 Analizar la cantidad de fallecidos en el periodo de la segunda ola.
 
 <div align="center">
-<img src="presentacionP1-figure/histograma.jpg" width=1267 height=742>
+<img src="presentacionP1-figure/histograma.jpg" width=1267 height=auto>
 <figcaption> Grafico de referencia </figcaption>
 </div>
 
@@ -96,7 +96,7 @@ Objetivos
 Visualizar la curva de fallecidos desde el inicio de la vacunación según la etapa de vida
 
 <div align="center">
-<img src="presentacionP1-figure/frecuencia.jpg" width=1140 height=685>
+<img src="presentacionP1-figure/frecuencia.jpg" width=1140 height=520>
 <figcaption> Grafico de referencia </figcaption>
 </div>
 
