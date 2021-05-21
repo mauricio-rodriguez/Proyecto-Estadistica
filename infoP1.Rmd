@@ -30,11 +30,7 @@ DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
 # Revisamos el numero de observaciones incompletas
 ```{r}
 #DFVacunadosRAW[which(!complete.cases(DFVacunadosRAW)),]
-```
-
-# Identificamos la fuente de todos los NA's
-```{r}
-
+round(sum(!complete.cases(DFVacunadosRAW))/nrow(DFVacunadosRAW)*100,2)
 ```
 
 
