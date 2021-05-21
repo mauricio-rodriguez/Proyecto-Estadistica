@@ -59,6 +59,14 @@ Analizar la cantidad de fallecidos en el periodo de la segunda ola.
   - Histograma
   - Seleccion de escala: Número mínimo de fallecidos por grupo poblacional hasta número máximo de fallecidos por grupo.
 
+Objetivos 
+=========================================================
+Analizar la cantidad de fallecidos en el periodo de la segunda ola.
+
+<div align="center">
+<img src="presentacionP1-figure/histograma.jpg" width=1267 height=742>
+<figcaption> Grafico de referencia </figcaption>
+</div>
 
 Objetivos 
 =========================================================
@@ -82,11 +90,15 @@ Visualizar la curva de fallecidos desde el inicio de la vacunación según la et
 - Descriptores gráficos:
   - Polígono de frecuencias, para cada etapa de vida
 
+
+Objetivos 
+=========================================================
+Visualizar la curva de fallecidos desde el inicio de la vacunación según la etapa de vida
+
 <div align="center">
-<img src="presentacionP1-figure/frecuencia.jpg" width=600 height=400>
+<img src="presentacionP1-figure/frecuencia.jpg" width=1140 height=685>
 <figcaption> Grafico de referencia </figcaption>
 </div>
-
 
 Objetivos 
 =========================================================
