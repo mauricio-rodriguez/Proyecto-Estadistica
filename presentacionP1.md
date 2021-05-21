@@ -115,7 +115,10 @@ Determinar si es que existe relación entre las distintas vacunas con la cantida
 Factibilidad
 ========================================================
 
- 
+ <div align="center">
+<img src="presentacionP1-figure/gantt.png" width=1140 height=auto>
+<figcaption> Diagrama de Gantt </figcaption>
+</div>
 !Gracias!
 =======================================================
 ¿Preguntas?
