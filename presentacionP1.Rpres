@@ -8,7 +8,7 @@ Importancia
 =========================================================
 El estudio busca sensibilizar e informar a la población sobre los efectos generados por el proceso de vacunación contra la Covid-19 en las regiones del Perú, por lo que se considera un tema de interés público debido al contexto actual.
 <div align="center">
-<img src="imagenVacunas.jpg" width=600 height=400>
+<img src="presentacionP1-figure/imagenVacunas.jpg" width=600 height=400>
 </div>
 
 
@@ -54,17 +54,10 @@ Objetivos
 Analizar la cantidad de fallecidos en el periodo de la segunda ola.
 
 - Variables: 
-  - Table &rarr; 
-  - Table &rarr; 
-- Descriptores númericos: 
+  - Fallecidos &rarr; **FECHA_FALLECIMIENTO**
 - Descriptores gráficos:
-  - Tipo de grafico
-  - Ejes:
-      - X:
-      - Y:
-  - Unidades:
-      - X:
-      - Y:
+  - Histograma
+  - Seleccion de escala: Número mínimo de fallecidos por grupo poblacional hasta número máximo de fallecidos por grupo.
 
 
 Objetivos 
@@ -72,88 +65,40 @@ Objetivos
 Hallar la comparación del impacto de la vacunación en los diferentes departamentos del país.
 
 - Variables: 
-  - Table &rarr; 
-  - Table &rarr; 
-- Descriptores númericos: 
+  - Fallecidos &rarr; Departamento , **FECHA_FALLECIMIENTO**
+  - Table &rarr; Departamento, **FECHA_VACUNACION**
 - Descriptores gráficos:
-  - Tipo de grafico
-  - Ejes:
-      - X:
-      - Y:
-  - Unidades:
-      - X:
-      - Y:
+  - Polígono de frecuencias
+  - Selección de escala
 
 
 Objetivos 
 =========================================================
-Hallar la relación entre la curva de fallecidos con los rangos de edades.
+Visualizar la curva de fallecidos desde el inicio de la vacunación según la etapa de vida
 
 - Variables: 
-  - Table &rarr; 
-  - Table &rarr; 
-- Descriptores númericos: 
+  - Fallecidos &rarr; **EDAD**
+  - Table &rarr; **FECHA_VACUNACION**
 - Descriptores gráficos:
-  - Tipo de grafico
-  - Ejes:
-      - X:
-      - Y:
-  - Unidades:
-      - X:
-      - Y:
+  - Polígono de frecuencias, para cada etapa de vida
+
+<div align="center">
+<img src="presentacionP1-figure/frecuencia.jpg" width=600 height=400>
+<figcaption> Grafico de referencia </figcaption>
+</div>
 
 
 Objetivos 
 =========================================================
-Analizar el impacto generado por la situación de riesgo de la región con respecto al número de hospitalizaciones o decesos, desde el inicio del proceso de vacunación.
+Determinar si es que existe relación entre las distintas vacunas con la cantidad de fallecidos en los distintos departamentos
 
 - Variables: 
-  - Table &rarr; 
-  - Table &rarr; 
-- Descriptores númericos: 
+  - Vacunación &rarr; **FECHA_VACUNACION**, **FABRICANTE**, **DEPARTAMENTO**
+  - Fallecidos &rarr; **FECHA_FALLECIMIENTO**, **DEPARTAMENTO** 
+- Descriptores númericos: Correlación
 - Descriptores gráficos:
-  - Tipo de grafico
-  - Ejes:
-      - X:
-      - Y:
-  - Unidades:
-      - X:
-      - Y:
-
-
-Objetivos 
-=========================================================
-Determinar si es que existe relación entre las distintas vacunas con la cantidad de contagios en los distintos departamentos.
-
-- Variables: 
-  - Table &rarr; 
-  - Table &rarr; 
-- Descriptores númericos: 
-- Descriptores gráficos:
-  - Tipo de grafico
-  - Ejes:
-      - X:
-      - Y:
-  - Unidades:
-      - X:
-      - Y:
-      
-Objetivos 
-=========================================================
-Determinar si es que existe relación entre las distintas vacunas con la cantidad de contagios en los distintos departamentos.
-
-- Variables: 
-  - Table &rarr; 
-  - Table &rarr; 
-- Descriptores númericos: 
-- Descriptores gráficos:
-  - Tipo de grafico
-  - Ejes:
-      - X:
-      - Y:
-  - Unidades:
-      - X:
-      - Y:
+  - Polígono de frecuencias de cantidad de fallecidos por región desde el inicio del proceso de vacunación.
+  - Tabla de frecuencias de las vacunas más aplicadas por departamento en proporción con la cantidad de vacunados.
 
 Factibilidad
 ========================================================

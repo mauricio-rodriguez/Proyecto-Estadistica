@@ -75,7 +75,7 @@ DFFallecidosCopy<-DFFallecidosCopy[,2]
 
 ```{r}
 DFFallecidosCopy %>% group_by(DFFallecidosCopy$DATE) %>% tally()
-hist(DFFallecidosCopy$DATE,breaks = 100, )
+#hist(DFFallecidosCopy$DATE,breaks = 100, )
 ```
 
 
