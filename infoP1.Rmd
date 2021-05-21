@@ -7,34 +7,83 @@ output: html_notebook
 ```{r}
 library(readr)
 library(dplyr)
+library (ggplot2)
+library(stringr)
+library(scales)
+library(lubridate)
 ```
 
-# asignamos data frames
+# Asignamos DF's con los datos RAW de los archivos
 ```{r}
-DFFallecidos <- read_csv("fallecidos.csv")
-DFVacunados <- read_csv("vacunados.csv")
-```
-# Eliminamos columnas innecesarias en vacunados
-```{r}
-DFVacunados<-subset(DFVacunados,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
-```
-# Eliminamos columnas innecesarias en fallecidos
-```{r}
-DFFallecidos<-subset(DFFallecidos,select = -c(FECHA_CORTE,UUID,FECHA_NAC,UBIGEO,PROVINCIA,DISTRITO))
-```
-# Editamos nombres 
-
-```{r}
-DFFallecidos %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidos
+DFFallecidosRAW <- read_csv("fallecidos.csv")
+DFVacunadosRAW <- read_csv("vacunados.csv")
 ```
 
-#Editamos DFVacunados 
+# Asignamos DF's limpias de N/A's y con variables renombradas
+```{r}
+DFVacunadosCLEAN<-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
+DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,FECHA_NAC,UBIGEO,PROVINCIA,DISTRITO))
+DFFallecidosCLEAN %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidosCLEAN
+DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
+```
+
+# Revisamos el numero de observaciones incompletas
+```{r}
+#DFVacunadosRAW[which(!complete.cases(DFVacunadosRAW)),]
+```
+
+# Identificamos la fuente de todos los NA's
+```{r}
+
+```
+
+
+# Copia para la grafica del objetivo 1 
 
 ```{r}
-DFVacunados %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunados
+#DFFallecidosCopy<- DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+#DFDia <- toString(str_sub(DFFallecidosCopy,-2,-1)) #dia
+#(DFFallecidosCopy,-4,-3) #mes
+#str_sub(DFFallecidosCopy, end = 4) #anho
+#hist(DFFallecidosCopy$FECHA_FALLECIMIENTO,breaks=100)
+```
+
+
+```{r}
+#vector<-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+#DFFallecidosCopy<-DFFallecidosCLEAN[,1]
+#dia<-str_sub(vector,-2,-1) #dia
+#mes<-str_sub(vector,-4,-3) #mes
+#anio<-str_sub(vector, end = 4) #ano
+#date = paste(anio,"-",mes,"-",dia, sep = "")
+#DFFallecidosCopy$DATE <- as.Date(date)
+#DFFallecidosCopy<-DFFallecidosCopy[,2]
+#DFFallecidosCopy
+#hist(DFFallecidosCopy$DATE,breaks=24)
 ```
 
 ```{r}
-boxplot(DFFallecidos$EDAD,horizontal = 1)
+vector<-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+DFFallecidosCopy<-DFFallecidosCLEAN[,1]
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #ano
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFFallecidosCopy$fecha <- lubridate::ymd(date)
+DFFallecidosCopy<-DFFallecidosCopy[,2]
+#DFFallecidosCopy
+#DFFallecidosCopy %>% group_by(DFFallecidosCopy$fecha) %>% tally -> DFFallecidosCopy
+#DFFallecidosCopy
 ```
 
+
+```{r}
+by_month <- function(x,n=1){
+  seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n," months"))
+}
+ggplot(DFFallecidosCopy,aes(fecha )) +
+  geom_histogram(breaks = by_month(DFFallecidosCopy$fecha)) +
+  scale_x_date(labels = scales::date_format("%Y-%b"),
+               breaks = by_month(DFFallecidosCopy$fecha,2)) + 
+  theme(axis.text.x = element_text(angle=90))
+```
