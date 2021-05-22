@@ -42,3 +42,6 @@ vignettes/*.pdf
 *.csv
 
 *.Rproj 
+
+S3_Fuente/
+S3_Fuente.zip

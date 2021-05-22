@@ -1,8 +1,20 @@
 ---
+author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salazar, Frings Barrueta" 
 title: "Impacto del proceso de vacunación contra la Covid-19"
-output: html_notebook
+date: "May 22th 2021"
+output:
+  html_notebook:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: yes
+    theme: journal
+  html_document:
+    toc: yes
+    df_print: paged
 ---
-## Cargar librerias 
+# Cargar librerias 
 ```{r}
 library(readr)
 library(dplyr)
@@ -10,72 +22,90 @@ library (ggplot2)
 library(stringr)
 library(scales)
 library(lubridate)
+library(modeest)
 ``` 
 
-## Asignar DF's con los datos RAW de los archivos
+# Asignar DF's con los datos RAW de los archivos
 ```{r}
 DFFallecidosRAW <- read_csv("fallecidos.csv")
 DFVacunadosRAW <- read_csv("vacunados.csv")
 ```
  
-## Importancia 
+# Importancia del tema
 El estudio busca sensibilizar e informar a la población sobre los efectos generados por el proceso de vacunación contra la Covid-19 en las regiones del Perú, por lo que se considera un tema de interés público debido al contexto actual.
 
-## Obtención de los datos
+# Obtención de los datos
 Para el estudio se decidió utilizar la Plataforma de Datos Abiertos oficial de el MINSA, en esta encontramos los datos oficiales sobre el [proceso actual de vacunación](https://www.datosabiertos.gob.pe/dataset/vacunaci%C3%B3n-contra-covid-19-ministerio-de-salud-minsa-0) y los [fallecidos por Covid-19](https://www.datosabiertos.gob.pe/dataset/fallecidos-por-covid-19-ministerio-de-salud-minsa/resource/4b7636f3-5f0c-4404-8526) 
 
-### Detalle de la data respecto los fallecidos:
-- Nombre original del archivo: fallecidos_covid
-- Numero de observaciones: 
+## Detalle de la data respecto los fallecidos:
+Nombre original del archivo: fallecidos_covid
+Numero de observaciones 
 ```{r echo=FALSE}
 nrow(DFFallecidosRAW)
 ```
-- Datos faltantes: 
+Datos faltantes 
 ```{r echo = FALSE}
 sum(is.na(DFFallecidosRAW))
 ```
-- Numero de variables
+Numero de variables
 ```{r echo = FALSE}
 ncol(DFFallecidosRAW)
 ```
-### Detalle de la data respecto al proceso de vacunación:
-- Nombre original del archivo: vacunas_covid
-- Numero de observaciones: 
+## Detalle de la data respecto al proceso de vacunación:
+Nombre original del archivo: vacunas_covid
+
+Numero de observaciones
 ```{r echo=FALSE}
 nrow(DFVacunadosRAW)
 ```
-- Datos faltantes: 
+Datos faltantes
 ```{r echo = FALSE}
 sum(is.na(DFVacunadosRAW))
 ```
-- Numero de variables
+Numero de variables
 ```{r echo = FALSE}
 ncol(DFVacunadosRAW)
 ```
-- Porcentaje de observaciones incompletas
+Porcentaje de observaciones incompletas
 ```{r echo = FALSE}
 sum(!complete.cases(DFVacunadosRAW))/nrow(DFVacunadosRAW)*100
 ```
-## Limpieza de general de DATA FRAMES
-### Data frame fallecidos
-Generamos un nuevo data frame donde "eliminamos" las variables que indicaban UUID,Provincia,distrito y ubicación geográfica. Asimismo, renombramos la variable "EDAD_DECLARADA" a "EDAD" para simplificar.
+# Limpieza general de DATA FRAMES
+## Data frame fallecidos
+Generamos un nuevo data frame donde "eliminamos" las variables que indicaban UUID,Provincia,distrito y ubicación geográfica. También, renombramos la variable "EDAD_DECLARADA" a "EDAD" para simplificar y cambiamos el formato de la variable FECHA_FALLECIMIENTO a fin de que calze con el estándar de R.
 ```{r}
 DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,FECHA_NAC,UBIGEO,PROVINCIA,DISTRITO))
+
 DFFallecidosCLEAN %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidosCLEAN
+
+vector<-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
 ```
 
-### Data frame vacunados
+
+## Data frame vacunados
 Generamos un nuevo data frame donde "eliminamos" las variables que indicaban fecha de corte, UUID, diresa, provincia y distrito
-Asimismo, renombramos la variable "GRUPO_Riesgo a "GRUPO" para simplificar.
+Asimismo, renombramos la variable "GRUPO_Riesgo a "GRUPO" para simplificar. No se eliminaron las observaciones incompletas puesto que se utilizaran para todos los análisis que no requieran el uso de su variable EDAD.
 ```{r}
 DFVacunadosCLEAN<-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
 DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
+
+vector<-DFVacunadosCLEAN$FECHA_VACUNACION
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
 ```
 
 En ambos data frames las variables fueron descartadas en base a que no eran requeridas para nuestro análisis por no tener información relevante.
 
-## Clasificación de las variables del estudio
-### Datos sobre proceso de vacunación de covid-19
+# Clasificación de las variables del estudio
+## Datos sobre proceso de vacunación de covid-19
 
 Variable | Tipo de variable | Restricciones
 ------------- | ------------- | -------------
@@ -87,7 +117,7 @@ DOSIS | Categórica Nominal | 1,2
 Fabricante | Categórica Nominal | SINOPHARM, PFIZER, ASTRAZENECA
 DEPARTAMENTO | Categórica Nominal | Departamentos del Perú
 
-### Datos sobre fallecidos por Covid-19
+## Datos sobre fallecidos por Covid-19
 
 Variable | Tipo de variable | Restricciones
 ------------- | ------------- | -------------
@@ -95,4 +125,174 @@ EDAD | Numérica Discreta | Entero Positivo
 SEXO | Categórica Nominal | Masculino, Femenino
 DEPARTAMENTO | Categórica Nominal | Departamentos del Perú
 FECHA_FALLECIDO | | 
+
+# Descriptores gráficos utilizados
+## Histograma fallecidos
+Podemos observar cómo al inicio de la pandemia la cantidad de fallecidos era mínima y tuvo un crecimiento abrupto y aparentemente repentino, que luego de llegar a un máximo local entre mayo y junio fue disminuyendo hasta llegar a un mínimo entre noviembre y diciembre del 2020. Posterior a esto, existe la impresión de que pasado el mes de enero también existió una crecida en el número de fallecidos que decreció levemente en el mes de febrero. Sin embargo, luego de este pequeño decrecimiento hubo un aumento en el número de fallecidos significativo y constante. Este crecimiento ha incluso logrado que se supere el máximo anterior.
+```{r echo = FALSE}
+by_month <- function(x,n=1){
+  seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n," months"))
+}
+ggplot(DFFallecidosCLEAN,aes(FECHA_FALLECIMIENTO)) +
+  geom_histogram(breaks = by_month(DFFallecidosCLEAN$FECHA_FALLECIMIENTO)) +
+  scale_x_date(labels = scales::date_format("%Y-%b"),
+               breaks = by_month(DFFallecidosCLEAN$FECHA_FALLECIMIENTO,2)) + 
+  theme(axis.text.x = element_text(angle=90)) + ggtitle("Cantidad de fallecidos desde el inicio de la pandemia")
+```
+
+## Boxplot Edad Fallecidos
+Esta gráfica indica que existe un sesgo hacia la izquierda de los datos. La gráfica nos indicaría también que el sector de edad más vulnerable a la pandemia es precisamente el que se encuentra entre los 60-80 años, siendo que también existen muchos casos de personas entre 0-30 años que han fallecido. Cabe destacar que la falta de datos atípicos en el lado derecho de la gráfica puede no deberse a una baja mortalidad en ese sector de la población(mayores a 110 años), sino más bien a una baja cantidad de población total.
+```{r echo = FALSE}
+boxplot(DFFallecidosCLEAN$EDAD,horizontal = TRUE, main = "Gráfica de edad de fallecidos", col = "yellow")
+abline(v=mean(DFFallecidosCLEAN$EDAD),col="red")
+```
+
+
+## Boxplot Edad Vacunados
+Al igual que en el caso anterior, el promedio de la edad de los vacunados es menor a la mediana por lo que existe un sesgo a la izquierda. La edad de los vacunados ronda normalmente entre los 40 a los 80 años sin embargo al tener un rango tan amplio no existen datos atípicos. Este hecho nos indica que, si bien la campaña de vacunación está teniendo enfasis en los adultos mayores según los medios de comunicación, el hecho de que el MINSA también haya priorizado el proceso por grupos de riesgo (PNP, estudiantes de ciencias de la salud, etc) puede haber incrementado la variedad de edades encontradas en este proceso.
+```{r echo = FALSE}
+boxplot(DFVacunadosCLEAN$EDAD,horizontal = TRUE, main = "Gráfica de edad de vacunados", col = "yellow")
+abline(v=mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE),col="red")
+```
+
+## Boxplot Fecha Vacunados
+La gráfica muestra que durante los últimos meses la cantidad de vacunaciones ha tenido un rango de entre
+0 a 4000 vacunaciones con pocas fechas en las que se superó este número. Si bien el número se mantuvo en este rango, da la impresión
+de que ha sido un proceso irregular dada la variedad de las locaciones de los puntos, es decir, no parecería que haya habido un número 
+estable de vacunaciones por fecha. Asimismo, la gráfica aparenta tender al crecimiento, lo que podría indicarnos que el proceso de vacunación está acelerando y una mayor cantidad
+de personas está recibiendo la vacuna por fecha. 
+```{r echo=FALSE}
+options(scipen=999)
+DFVacunadosCLEAN %>%  group_by(FECHA_VACUNACION) %>% summarize(n= n())-> DFDATE
+plot(DFDATE$FECHA_VACUNACION,DFDATE$n, xlab = "Meses", ylab = "Cantidad Vacunados", )
+```
+
+## Gráfico de barras DOSIS VACUNADOS
+El gráfico es simple y nos da al mismo tiempo información concisa. Alrededor de 2,000,000 personas han recibido la primera dosis, siendo un poco menos de un millón la cantidad de personas que han recibido ambas dosis. A nivel de proporciones, la cantidad de personas que ha recibido ambas dosis es casi la mitad de la que ha recibido solo una.
+```{r echo = FALSE}
+barplot(table(DFVacunadosCLEAN$DOSIS), main = "Gráfico de barras cantidad de dosis aplicadas", col = "skyblue")
+```
+
+# Descriptores numéricos utilizados
+## Edad promedio de fallecidos por Covid-19
+```{r, echo=FALSE}
+round(mean(DFFallecidosCLEAN$EDAD), digits = 0)
+```
+
+## Rango de edad de personas fallecidas contra el Covid-19
+```{r, echo=FALSE}
+sprintf("Edad máxima: %s", max(DFFallecidosCLEAN$EDAD))
+sprintf("Edad mínima: %s", min(DFFallecidosCLEAN$EDAD))
+sprintf("Rango: %s", max(DFFallecidosCLEAN$EDAD) - min(DFFallecidosCLEAN$EDAD))
+```
+## Edad promedio de vacunados contra el Covid-19
+```{r, echo=FALSE}
+round(mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE), digits = 0)
+```
+
+## Rango de edad de personas vacunadas contra el Covid-19
+```{r, echo=FALSE}
+sprintf("Edad máxima: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+sprintf("Edad mínima: %s", min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+sprintf("Rango: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE) - min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+```
+
+# Objetivos del proyecto
+
+## Analizar la cantidad de fallecidos en el periodo desde inicios de la segunda ola hasta la fecha actual
+  - Variable: 
+    - Fallecidos → FECHA_FALLECIMIENTO
+  - Descriptores gráficos: 
+      - Histograma
+      - Selección de escala: Número mínimo de fallecidos por grupo poblacional hasta número máximo de fallecidos por grupo poblacional.
+    - Ejes: 
+      - X: Fecha de inicio de la segunda ola hasta la fecha actual
+      - Y: Cantidad de fallecidos
+    - Unidades: 
+      - X: Días
+      - Y: Fallecidos por día
+    - Título descriptivo: Número de fallecidos durante la segunda ola (pre y post primera llegada de las vacunas)
+    - Color: Azul
+	
+	Esta gráfica nos permitirá observar la variación de la cantidad de fallecidos durante todo el periodo del inicio de la segunda ola hasta la fecha actual divididos en sectores pre-vacuna y post-vacuna.
+
+## Hallar la comparación del impacto de la vacunación en los diferentes departamentos del país en el periodo de la segunda ola hasta el día de hoy 
+  - Variable: 
+    - fallecidos → departamento, FECHA_FALLECIMIENTO
+    - vacunados  → departamento, FECHA_VACUNACION
+  - Descriptores gráficos: 
+    - Polígono de frecuencias
+    - Ejes: 
+      - X: Fecha desde la primera fecha de vacunación hasta el día actual.
+      - Y: Cantidad de fallecidos
+    - Unidades: 
+      - X: Días
+      - Y: Fallecidos por día
+    - Leyenda:
+      - Nombre del departamento con color correspondiente.
+    - Título descriptivo: Impacto en la cantidad de fallecidos por el proceso de vacunación divididos por departamentos
+    - Color: 
+      - Para departamentos de la costa: Amarillo
+      - Para departamentos de la sierra: Marrón
+      - Para departamentos de la selva: Verde
+      
+	Esta gráfica nos permitirá comparar por departamentos del país cómo ha impactado en la cantidad de fallecidos el proceso de vacunación durante el periodo del inicio de la segunda ola hasta la fecha actual
+
+
+## Visualizar la curva de fallecidos desde el inicio de la vacunación según la etapa de vida
+  - Variable: 
+    - Fallecidos →EDAD
+    - Vacunación →FECHA_VACUNACION
+  - Descriptores gráficos:
+    - Polígono de frecuencias, para cada etapa de vida
+    - Selección de escala: Número mínimo de fallecidos por grupo poblacional hasta número máximo de fallecidos por grupo poblacional.
+    - Ejes: 
+      - X: Fecha desde la primera fecha de vacunación hasta el día actual.
+      - Y: Cantidad de fallecidos
+    - Unidades: 
+      - X: Día
+      - Y: Fallecidos por día
+    - Leyenda: Niños(0-11 años)
+	    - Adolescentes (12 - 17 años) 
+	    - Jóvenes(18 - 29 años)
+	    - Adultos (30 -59 años)
+	    - Adulto Mayor(60 a más)
+    - Título descriptivo: Curva de fallecidos desde el inicio de la vacunación según la etapa de vida.
+    - Color: 
+      - Para niños: Amarillo
+      - Para adolescentes: Celeste
+      - Para jóvenes: Naranja
+      - Para adultos: Verde
+      - Para adultos mayores: Rojo
+
+	Esta gráfica nos permitirá ver por cada etapa de vida(niño, adolescente, joven, adulto, adulto mayor) cómo la cantidad de fallecidos ha cambiado desde el inicio del proceso de vacunación. Con esta gráfica podremos determinar si es que la vacuna ha tenido afectado positivo o negativo en las poblaciones vacunadas.
+	
+## Determinar si es que existe relación entre las distintas vacunas con la cantidad de fallecidos en los distintos departamentos.
+  - Variable: 
+    - Vacunación → FECHA_VACUNACION, FABRICANTE, DEPARTAMENTO
+    - Fallecidos →FECHA_FALLECIMIENTO, DEPARTAMENTO
+  - Descriptores numéricos: Correlación
+  - Descriptores gráficos: 
+    - Polígono de frecuencias de cantidad de fallecidos por región desde el inicio del proceso de vacunación. 
+    - Ejes: 
+      - X: Fecha desde la primera fecha de vacunación hasta el día actual.
+      - Y: Cantidad de fallecidos
+    - Unidades: 
+      - X: Día
+      - Y: Fallecidos por día
+    - Leyenda: Nombre del departamento con color correspondiente.
+    - Título descriptivo: Cantidad de fallecidos por región desde el inicio del proceso de vacunación.
+    - Color: 
+      - Para departamentos de la costa: Amarillo
+      - Para departamentos de la sierra: Marrón
+      - Para departamentos de la selva: Verde
+      
+  - Tabla de frecuencias de las vacunas más aplicadas por departamento en proporción con la cantidad de vacunados. 
+    - Unidades: Vacunados por población
+    - Título descriptivo: Vacunas más aplicadas por región en proporción con la cantidad de vacunados. 
+    - Color: Azul
+
+# Factibilidad
+Se asegura la factibilidad del desarrollo del proyecto partiendo en trabajo en lapsos de tiempo en un Diagrama de Gantt. 
+![](info-imgs/diagrama-gantt.png)
 

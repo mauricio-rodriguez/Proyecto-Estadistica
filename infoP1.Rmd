@@ -11,6 +11,7 @@ library (ggplot2)
 library(stringr)
 library(scales)
 library(lubridate)
+library(modeest)
 ```
 
 # Asignamos DF's con los datos RAW de los archivos
@@ -72,13 +73,25 @@ DFFallecidosCopy<-DFFallecidosCopy[,2]
 #DFFallecidosCopy
 ```
 
+```{r}
+vector<-DFVacunadosCLEAN$FECHA_VACUNACION
+DFVacunadosCopy<-DFVacunadosCLEAN[,1]
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #ano
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFVacunadosCopy$fecha <- lubridate::ymd(date)
+DFVacunadosCopy<-DFVacunadosCopy[,2]
+```
+
+
 
 ```{r}
 DFFallecidosCopy %>% group_by(DFFallecidosCopy$DATE) %>% tally()
 #hist(DFFallecidosCopy$DATE,breaks = 100, )
 ```
 
-
+#
 ```{r}
 by_month <- function(x,n=1){
   seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n," months"))
@@ -90,9 +103,25 @@ ggplot(DFFallecidosCopy,aes(fecha )) +
   theme(axis.text.x = element_text(angle=90))
 ```
 
-
-#Boxplot Edad de Fallecidos
+#Boxplot Edad Fallecidos
 ```{r}
 boxplot(DFFallecidosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
 abline(v=mean(DFFallecidosCLEAN$EDAD),col="red")
+```
+#Boxplot Edad Vacunados
+```{r}
+boxplot(DFVacunadosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
+abline(v=mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE),col="red")
+
+```
+
+#Boxplot Fecha Vacunados
+```{r}
+boxplot(DFVacunadosCopy$FE,horizontal = TRUE,col = "green")
+abline(v=mean(DFVacunadosCopy$fecha),col="blue")
+```
+
+#Gráfico de barras DOSIS VACUNADOS
+```{r}
+barplot(table(DFVacunadosCLEAN$DOSIS), col = "skyblue")
 ```
