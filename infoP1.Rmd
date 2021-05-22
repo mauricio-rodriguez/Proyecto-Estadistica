@@ -89,3 +89,10 @@ ggplot(DFFallecidosCopy,aes(fecha )) +
                breaks = by_month(DFFallecidosCopy$fecha,2)) + 
   theme(axis.text.x = element_text(angle=90))
 ```
+
+
+#Boxplot Edad de Fallecidos
+```{r}
+boxplot(DFFallecidosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
+abline(v=mean(DFFallecidosCLEAN$EDAD),col="red")
+```
