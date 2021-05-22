@@ -126,7 +126,8 @@ DEPARTAMENTO | Categórica Nominal | Departamentos del Perú
 FECHA_FALLECIDO | | 
 
 # Descriptores gráficos utilizados
-
+## Histograma fallecidos
+Podemos observar cómo al inicio de la pandemia la cantidad de fallecidos era mínima y tuvo un crecimiento abrupto y aparentemente repentino, que luego de llegar a un máximo local entre mayo y junio fue disminuyendo hasta llegar a un mínimo entre noviembre y diciembre del 2020. Posterior a esto, existe la impresión de que pasado el mes de enero también existió una crecida en el número de fallecidos que decreció levemente en el mes de febrero. Sin embargo, luego de este pequeño decrecimiento hubo un aumento en el número de fallecidos significativo y constante. Este crecimiento ha incluso logrado que se supere el máximo anterior.
 ```{r echo = FALSE}
 by_month <- function(x,n=1){
   seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n," months"))
@@ -135,40 +136,38 @@ ggplot(DFFallecidosCLEAN,aes(FECHA_FALLECIMIENTO)) +
   geom_histogram(breaks = by_month(DFFallecidosCLEAN$FECHA_FALLECIMIENTO)) +
   scale_x_date(labels = scales::date_format("%Y-%b"),
                breaks = by_month(DFFallecidosCLEAN$FECHA_FALLECIMIENTO,2)) + 
-  theme(axis.text.x = element_text(angle=90))
+  theme(axis.text.x = element_text(angle=90)) + ggtitle("Cantidad de fallecidos desde el inicio de la pandemia")
 ```
 
 ## Boxplot Edad Fallecidos
 Esta gráfica indica que existe un sesgo hacia la izquierda de los datos. La gráfica nos indicaría también que el sector de edad más vulnerable a la pandemia es precisamente el que se encuentra entre los 60-80 años, siendo que también existen muchos casos de personas entre 0-30 años que han fallecido. Cabe destacar que la falta de datos atípicos en el lado derecho de la gráfica puede no deberse a una baja mortalidad en ese sector de la población(mayores a 110 años), sino más bien a una baja cantidad de población total.
 ```{r echo = FALSE}
-boxplot(DFFallecidosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
+boxplot(DFFallecidosCLEAN$EDAD,horizontal = TRUE, main = "Gráfica de edad de fallecidos", col = "yellow")
 abline(v=mean(DFFallecidosCLEAN$EDAD),col="red")
 ```
 ## Boxplot Edad Vacunados
 Al igual que en el caso anterior, el promedio de la edad de los vacunados es menor a la mediana por lo que existe un sesgo a la izquierda. La edad de los vacunados ronda normalmente entre los 40 a los 80 años sin embargo al tener un rango tan amplio no existen datos atípicos. Este hecho nos indica que, si bien la campaña de vacunación está teniendo enfasis en los adultos mayores según los medios de comunicación, el hecho de que el MINSA también haya priorizado el proceso por grupos de riesgo (PNP, estudiantes de ciencias de la salud, etc) puede haber incrementado la variedad de edades encontradas en este proceso.
 ```{r echo = FALSE}
-boxplot(DFVacunadosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
+boxplot(DFVacunadosCLEAN$EDAD,horizontal = TRUE, main = "Gráfica de edad de vacunados", col = "yellow")
 abline(v=mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE),col="red")
 
 ```
 
 ## Boxplot Fecha Vacunados
-La gráfica nos indica que si bien, en promedio las personas se han vacunado a mediados de abril, es de hecho a finales de este mismo mes que 
-
+La gráfica muestra que durante los últimos meses la cantidad de vacunaciones ha tenido un rango de entre
+0 a 4000 vacunaciones con pocas fechas en las que se superó este número. Si bien el número se mantuvo en este rango, da la impresión
+de que ha sido un proceso irregular dada la variedad de las locaciones de los puntos, es decir, no parecería que haya habido un número 
+estable de vacunaciones por fecha. Asimismo, la gráfica aparenta tender al crecimiento, lo que podría indicarnos que el proceso de vacunación está acelerando y una mayor cantidad
+de personas está recibiendo la vacuna por fecha. 
 ```{r echo=FALSE}
 options(scipen=999)
 DFVacunadosCLEAN %>%  group_by(FECHA_VACUNACION) %>% summarize(n= n())-> DFDATE
 plot(DFDATE$FECHA_VACUNACION,DFDATE$n, xlab = "Meses", ylab = "Cantidad Vacunados", )
 ```
 
-```{r echo = FALSE}
-boxplot(DFVacunadosCLEAN$FECHA_VACUNACION,horizontal = TRUE,col = "green")
-abline(v=mean(DFVacunadosCLEAN$FECHA_VACUNACION),col="blue")
-```
-
 ## Gráfico de barras DOSIS VACUNADOS
 El gráfico es simple y nos da al mismo tiempo información concisa. Alrededor de 2,000,000 personas han recibido la primera dosis, siendo un poco menos de un millón la cantidad de personas que han recibido ambas dosis. A nivel de proporciones, la cantidad de personas que ha recibido ambas dosis es casi la mitad de la que ha recibido solo una.
 ```{r echo = FALSE}
-barplot(table(DFVacunadosCLEAN$DOSIS), col = "skyblue")
+barplot(table(DFVacunadosCLEAN$DOSIS), main = "Gráfico de barras de cantidad de dosis aplicadas",  col = "skyblue")
 ```
 
