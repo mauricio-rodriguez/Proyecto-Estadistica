@@ -219,61 +219,37 @@ pre code {
 <h1>cargar librerias</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5IChnZ3Bsb3QyKVxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeShzY2FsZXMpXG5saWJyYXJ5KGx1YnJpZGF0ZSlcbmBgYCJ9 -->
-<pre class="r"><code>library(readr)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5IChnZ3Bsb3QyKVxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeShzY2FsZXMpXG5saWJyYXJ5KGx1YnJpZGF0ZSlcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+library(readr)
 library(dplyr)
 library (ggplot2)
 library(stringr)
 library(scales)
 library(lubridate)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="asignamos-dfs-con-los-datos-raw-de-los-archivos" class="section level1">
-<h1>Asignamos DF’s con los datos RAW de los archivos</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZGYWxsZWNpZG9zUkFXIDwtIHJlYWRfY3N2KFwiZmFsbGVjaWRvcy5jc3ZcIilcbmBgYCJ9 -->
-<pre class="r"><code>DFFallecidosRAW &lt;- read_csv(&quot;fallecidos.csv&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4tLSBDb2x1bW4gc3BlY2lmaWNhdGlvbiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXG5jb2xzKFxuICBGRUNIQV9DT1JURSA9IGNvbF9kb3VibGUoKSxcbiAgVVVJRCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRkVDSEFfRkFMTEVDSU1JRU5UTyA9IGNvbF9kb3VibGUoKSxcbiAgRURBRF9ERUNMQVJBREEgPSBjb2xfZG91YmxlKCksXG4gIFNFWE8gPSBjb2xfY2hhcmFjdGVyKCksXG4gIEZFQ0hBX05BQyA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgVUJJR0VPID0gY29sX2NoYXJhY3RlcigpLFxuICBERVBBUlRBTUVOVE8gPSBjb2xfY2hhcmFjdGVyKCksXG4gIFBST1ZJTkNJQSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRElTVFJJVE8gPSBjb2xfY2hhcmFjdGVyKClcbilcbiJ9 -->
 <pre><code>
--- Column specification ----------------------------------------------------------------------
-cols(
-  FECHA_CORTE = col_double(),
-  UUID = col_character(),
-  FECHA_FALLECIMIENTO = col_double(),
-  EDAD_DECLARADA = col_double(),
-  SEXO = col_character(),
-  FECHA_NAC = col_character(),
-  UBIGEO = col_character(),
-  DEPARTAMENTO = col_character(),
-  PROVINCIA = col_character(),
-  DISTRITO = col_character()
-)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZWYWN1bmFkb3NSQVcgPC0gcmVhZF9jc3YoXCJ2YWN1bmFkb3MuY3N2XCIpXG5gYGAifQ== -->
-<pre class="r"><code>DFVacunadosRAW &lt;- read_csv(&quot;vacunados.csv&quot;)</code></pre>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+# Asignamos DF&#39;s con los datos RAW de los archivos
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZGYWxsZWNpZG9zUkFXIDwtIHJlYWRfY3N2KFwiZmFsbGVjaWRvcy5jc3ZcIilcbkRGVmFjdW5hZG9zUkFXIDwtIHJlYWRfY3N2KFwidmFjdW5hZG9zLmNzdlwiKVxuYGBgIn0= --&gt;
+
+```r
+DFFallecidosRAW &lt;- read_csv(&quot;fallecidos.csv&quot;)
+DFVacunadosRAW &lt;- read_csv(&quot;vacunados.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4tLSBDb2x1bW4gc3BlY2lmaWNhdGlvbiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXG5jb2xzKFxuICBGRUNIQV9DT1JURSA9IGNvbF9kb3VibGUoKSxcbiAgVVVJRCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgR1JVUE9fUklFU0dPID0gY29sX2NoYXJhY3RlcigpLFxuICBFREFEID0gY29sX2RvdWJsZSgpLFxuICBTRVhPID0gY29sX2NoYXJhY3RlcigpLFxuICBGRUNIQV9WQUNVTkFDSU9OID0gY29sX2RvdWJsZSgpLFxuICBET1NJUyA9IGNvbF9kb3VibGUoKSxcbiAgRkFCUklDQU5URSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRElSRVNBID0gY29sX2NoYXJhY3RlcigpLFxuICBERVBBUlRBTUVOVE8gPSBjb2xfY2hhcmFjdGVyKCksXG4gIFBST1ZJTkNJQSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgRElTVFJJVE8gPSBjb2xfY2hhcmFjdGVyKClcbilcbiJ9 -->
-<pre><code>
--- Column specification ----------------------------------------------------------------------
-cols(
-  FECHA_CORTE = col_double(),
-  UUID = col_character(),
-  GRUPO_RIESGO = col_character(),
-  EDAD = col_double(),
-  SEXO = col_character(),
-  FECHA_VACUNACION = col_double(),
-  DOSIS = col_double(),
-  FABRICANTE = col_character(),
-  DIRESA = col_character(),
-  DEPARTAMENTO = col_character(),
-  PROVINCIA = col_character(),
-  DISTRITO = col_character()
-)</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -281,110 +257,171 @@ cols(
 <h1>Asignamos DF’s limpias de N/A’s y con variables renombradas</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZWYWN1bmFkb3NDTEVBTjwtc3Vic2V0KERGVmFjdW5hZG9zUkFXLHNlbGVjdCA9IC1jKEZFQ0hBX0NPUlRFLFVVSUQsRElSRVNBLFBST1ZJTkNJQSxESVNUUklUTykpXG5ERkZhbGxlY2lkb3NDTEVBTjwtc3Vic2V0KERGRmFsbGVjaWRvc1JBVyxzZWxlY3QgPSAtYyhGRUNIQV9DT1JURSxVVUlELEZFQ0hBX05BQyxVQklHRU8sUFJPVklOQ0lBLERJU1RSSVRPKSlcbkRGRmFsbGVjaWRvc0NMRUFOICU+JSByZW5hbWUoXCJFREFEXCI9IFwiRURBRF9ERUNMQVJBREFcIiktPiBERkZhbGxlY2lkb3NDTEVBTlxuREZWYWN1bmFkb3NDTEVBTiAlPiUgcmVuYW1lKFwiR1JVUE9cIj1cIkdSVVBPX1JJRVNHT1wiKS0+IERGVmFjdW5hZG9zQ0xFQU5cbmBgYCJ9 -->
-<pre class="r"><code>DFVacunadosCLEAN&lt;-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuREZWYWN1bmFkb3NDTEVBTjwtc3Vic2V0KERGVmFjdW5hZG9zUkFXLHNlbGVjdCA9IC1jKEZFQ0hBX0NPUlRFLFVVSUQsRElSRVNBLFBST1ZJTkNJQSxESVNUUklUTykpXG5ERkZhbGxlY2lkb3NDTEVBTjwtc3Vic2V0KERGRmFsbGVjaWRvc1JBVyxzZWxlY3QgPSAtYyhGRUNIQV9DT1JURSxVVUlELEZFQ0hBX05BQyxVQklHRU8sUFJPVklOQ0lBLERJU1RSSVRPKSlcbkRGRmFsbGVjaWRvc0NMRUFOICU+JSByZW5hbWUoXFxFREFEXFw9IFxcRURBRF9ERUNMQVJBREFcXCktPiBERkZhbGxlY2lkb3NDTEVBTlxuREZWYWN1bmFkb3NDTEVBTiAlPiUgcmVuYW1lKFxcR1JVUE9cXD1cXEdSVVBPX1JJRVNHT1xcKS0+IERGVmFjdW5hZG9zQ0xFQU5cbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+DFVacunadosCLEAN&lt;-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
 DFFallecidosCLEAN&lt;-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,FECHA_NAC,UBIGEO,PROVINCIA,DISTRITO))
-DFFallecidosCLEAN %&gt;% rename(&quot;EDAD&quot;= &quot;EDAD_DECLARADA&quot;)-&gt; DFFallecidosCLEAN
-DFVacunadosCLEAN %&gt;% rename(&quot;GRUPO&quot;=&quot;GRUPO_RIESGO&quot;)-&gt; DFVacunadosCLEAN</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="revisamos-el-numero-de-observaciones-incompletas" class="section level1">
-<h1>Revisamos el numero de observaciones incompletas</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0RGVmFjdW5hZG9zUkFXW3doaWNoKCFjb21wbGV0ZS5jYXNlcyhERlZhY3VuYWRvc1JBVykpLF1cbnJvdW5kKHN1bSghY29tcGxldGUuY2FzZXMoREZWYWN1bmFkb3NSQVcpKS9ucm93KERGVmFjdW5hZG9zUkFXKSoxMDAsMilcbmBgYCJ9 -->
-<pre class="r"><code>#DFVacunadosRAW[which(!complete.cases(DFVacunadosRAW)),]
+DFFallecidosCLEAN %&gt;% rename(\EDAD\= \EDAD_DECLARADA\)-&gt; DFFallecidosCLEAN
+DFVacunadosCLEAN %&gt;% rename(\GRUPO\=\GRUPO_RIESGO\)-&gt; DFVacunadosCLEAN</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+# Revisamos el numero de observaciones incompletas
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI0RGVmFjdW5hZG9zUkFXW3doaWNoKCFjb21wbGV0ZS5jYXNlcyhERlZhY3VuYWRvc1JBVykpLF1cbnJvdW5kKHN1bSghY29tcGxldGUuY2FzZXMoREZWYWN1bmFkb3NSQVcpKS9ucm93KERGVmFjdW5hZG9zUkFXKSoxMDAsMilcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+#DFVacunadosRAW[which(!complete.cases(DFVacunadosRAW)),]
 round(sum(!complete.cases(DFVacunadosRAW))/nrow(DFVacunadosRAW)*100,2)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQuNTdcbiJ9 -->
-<pre><code>[1] 4.57</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="copia-para-la-grafica-del-objetivo-1" class="section level1">
-<h1>Copia para la grafica del objetivo 1</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0RGRmFsbGVjaWRvc0NvcHk8LSBERkZhbGxlY2lkb3NDTEVBTiRGRUNIQV9GQUxMRUNJTUlFTlRPXG4jREZEaWEgPC0gdG9TdHJpbmcoc3RyX3N1YihERkZhbGxlY2lkb3NDb3B5LC0yLC0xKSkgI2RpYVxuIyhERkZhbGxlY2lkb3NDb3B5LC00LC0zKSAjbWVzXG4jc3RyX3N1YihERkZhbGxlY2lkb3NDb3B5LCBlbmQgPSA0KSAjYW5ob1xuI2hpc3QoREZGYWxsZWNpZG9zQ29weSRGRUNIQV9GQUxMRUNJTUlFTlRPLGJyZWFrcz0xMDApXG5gYGAifQ== -->
-<pre class="r"><code>#DFFallecidosCopy&lt;- DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQuNTdcbiJ9 --&gt;
+</code></pre>
+<p>[1] 4.57</p>
+<pre><code>
+
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+# Copia para la grafica del objetivo 1 
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI0RGRmFsbGVjaWRvc0NvcHk8LSBERkZhbGxlY2lkb3NDTEVBTiRGRUNIQV9GQUxMRUNJTUlFTlRPXG4jREZEaWEgPC0gdG9TdHJpbmcoc3RyX3N1YihERkZhbGxlY2lkb3NDb3B5LC0yLC0xKSkgI2RpYVxuIyhERkZhbGxlY2lkb3NDb3B5LC00LC0zKSAjbWVzXG4jc3RyX3N1YihERkZhbGxlY2lkb3NDb3B5LCBlbmQgPSA0KSAjYW5ob1xuI2hpc3QoREZGYWxsZWNpZG9zQ29weSRGRUNIQV9GQUxMRUNJTUlFTlRPLGJyZWFrcz0xMDApXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+#DFFallecidosCopy&lt;- DFFallecidosCLEAN$FECHA_FALLECIMIENTO
 #DFDia &lt;- toString(str_sub(DFFallecidosCopy,-2,-1)) #dia
 #(DFFallecidosCopy,-4,-3) #mes
 #str_sub(DFFallecidosCopy, end = 4) #anho
 #hist(DFFallecidosCopy$FECHA_FALLECIMIENTO,breaks=100)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3ZlY3RvcjwtREZGYWxsZWNpZG9zQ0xFQU4kRkVDSEFfRkFMTEVDSU1JRU5UT1xuI0RGRmFsbGVjaWRvc0NvcHk8LURGRmFsbGVjaWRvc0NMRUFOWywxXVxuI2RpYTwtc3RyX3N1Yih2ZWN0b3IsLTIsLTEpICNkaWFcbiNtZXM8LXN0cl9zdWIodmVjdG9yLC00LC0zKSAjbWVzXG4jYW5pbzwtc3RyX3N1Yih2ZWN0b3IsIGVuZCA9IDQpICNhbm9cbiNkYXRlID0gcGFzdGUoYW5pbyxcIi1cIixtZXMsXCItXCIsZGlhLCBzZXAgPSBcIlwiKVxuI0RGRmFsbGVjaWRvc0NvcHkkREFURSA8LSBhcy5EYXRlKGRhdGUpXG4jREZGYWxsZWNpZG9zQ29weTwtREZGYWxsZWNpZG9zQ29weVssMl1cbiNERkZhbGxlY2lkb3NDb3B5XG4jaGlzdChERkZhbGxlY2lkb3NDb3B5JERBVEUsYnJlYWtzPTI0KVxuYGBgIn0= -->
-<pre class="r"><code>#vector&lt;-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI3ZlY3RvcjwtREZGYWxsZWNpZG9zQ0xFQU4kRkVDSEFfRkFMTEVDSU1JRU5UT1xuI0RGRmFsbGVjaWRvc0NvcHk8LURGRmFsbGVjaWRvc0NMRUFOWywxXVxuI2RpYTwtc3RyX3N1Yih2ZWN0b3IsLTIsLTEpICNkaWFcbiNtZXM8LXN0cl9zdWIodmVjdG9yLC00LC0zKSAjbWVzXG4jYW5pbzwtc3RyX3N1Yih2ZWN0b3IsIGVuZCA9IDQpICNhbm9cbiNkYXRlID0gcGFzdGUoYW5pbyxcXC1cXCxtZXMsXFwtXFwsZGlhLCBzZXAgPSBcXFxcKVxuI0RGRmFsbGVjaWRvc0NvcHkkREFURSA8LSBhcy5EYXRlKGRhdGUpXG4jREZGYWxsZWNpZG9zQ29weTwtREZGYWxsZWNpZG9zQ29weVssMl1cbiNERkZhbGxlY2lkb3NDb3B5XG4jaGlzdChERkZhbGxlY2lkb3NDb3B5JERBVEUsYnJlYWtzPTI0KVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+#vector&lt;-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
 #DFFallecidosCopy&lt;-DFFallecidosCLEAN[,1]
 #dia&lt;-str_sub(vector,-2,-1) #dia
 #mes&lt;-str_sub(vector,-4,-3) #mes
 #anio&lt;-str_sub(vector, end = 4) #ano
-#date = paste(anio,&quot;-&quot;,mes,&quot;-&quot;,dia, sep = &quot;&quot;)
+#date = paste(anio,\-\,mes,\-\,dia, sep = \\)
 #DFFallecidosCopy$DATE &lt;- as.Date(date)
 #DFFallecidosCopy&lt;-DFFallecidosCopy[,2]
 #DFFallecidosCopy
 #hist(DFFallecidosCopy$DATE,breaks=24)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmVjdG9yPC1ERkZhbGxlY2lkb3NDTEVBTiRGRUNIQV9GQUxMRUNJTUlFTlRPXG5ERkZhbGxlY2lkb3NDb3B5PC1ERkZhbGxlY2lkb3NDTEVBTlssMV1cbmRpYTwtc3RyX3N1Yih2ZWN0b3IsLTIsLTEpICNkaWFcbm1lczwtc3RyX3N1Yih2ZWN0b3IsLTQsLTMpICNtZXNcbmFuaW88LXN0cl9zdWIodmVjdG9yLCBlbmQgPSA0KSAjYW5vXG5kYXRlID0gcGFzdGUoYW5pbyxcIi1cIixtZXMsXCItXCIsZGlhLCBzZXAgPSBcIlwiKVxuREZGYWxsZWNpZG9zQ29weSRmZWNoYSA8LSBsdWJyaWRhdGU6OnltZChkYXRlKVxuREZGYWxsZWNpZG9zQ29weTwtREZGYWxsZWNpZG9zQ29weVssMl1cbiNERkZhbGxlY2lkb3NDb3B5XG4jREZGYWxsZWNpZG9zQ29weSAlPiUgZ3JvdXBfYnkoREZGYWxsZWNpZG9zQ29weSRmZWNoYSkgJT4lIHRhbGx5IC0+IERGRmFsbGVjaWRvc0NvcHlcbiNERkZhbGxlY2lkb3NDb3B5XG5gYGAifQ== -->
-<pre class="r"><code>vector&lt;-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudmVjdG9yPC1ERkZhbGxlY2lkb3NDTEVBTiRGRUNIQV9GQUxMRUNJTUlFTlRPXG5ERkZhbGxlY2lkb3NDb3B5PC1ERkZhbGxlY2lkb3NDTEVBTlssMV1cbmRpYTwtc3RyX3N1Yih2ZWN0b3IsLTIsLTEpICNkaWFcbm1lczwtc3RyX3N1Yih2ZWN0b3IsLTQsLTMpICNtZXNcbmFuaW88LXN0cl9zdWIodmVjdG9yLCBlbmQgPSA0KSAjYW5vXG5kYXRlID0gcGFzdGUoYW5pbyxcXC1cXCxtZXMsXFwtXFwsZGlhLCBzZXAgPSBcXFxcKVxuREZGYWxsZWNpZG9zQ29weSRmZWNoYSA8LSBsdWJyaWRhdGU6OnltZChkYXRlKVxuREZGYWxsZWNpZG9zQ29weTwtREZGYWxsZWNpZG9zQ29weVssMl1cbiNERkZhbGxlY2lkb3NDb3B5XG4jREZGYWxsZWNpZG9zQ29weSAlPiUgZ3JvdXBfYnkoREZGYWxsZWNpZG9zQ29weSRmZWNoYSkgJT4lIHRhbGx5IC0+IERGRmFsbGVjaWRvc0NvcHlcbiNERkZhbGxlY2lkb3NDb3B5XG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+vector&lt;-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
 DFFallecidosCopy&lt;-DFFallecidosCLEAN[,1]
 dia&lt;-str_sub(vector,-2,-1) #dia
 mes&lt;-str_sub(vector,-4,-3) #mes
 anio&lt;-str_sub(vector, end = 4) #ano
-date = paste(anio,&quot;-&quot;,mes,&quot;-&quot;,dia, sep = &quot;&quot;)
+date = paste(anio,\-\,mes,\-\,dia, sep = \\)
 DFFallecidosCopy$fecha &lt;- lubridate::ymd(date)
 DFFallecidosCopy&lt;-DFFallecidosCopy[,2]
 #DFFallecidosCopy
 #DFFallecidosCopy %&gt;% group_by(DFFallecidosCopy$fecha) %&gt;% tally -&gt; DFFallecidosCopy
 #DFFallecidosCopy</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZGYWxsZWNpZG9zQ29weSAlPiUgZ3JvdXBfYnkoREZGYWxsZWNpZG9zQ29weSREQVRFKSAlPiUgdGFsbHkoKVxuI2hpc3QoREZGYWxsZWNpZG9zQ29weSREQVRFLGJyZWFrcyA9IDEwMCwgKVxuYGBgIn0= --&gt;
+
+```r
+DFFallecidosCopy %&gt;% group_by(DFFallecidosCopy$DATE) %&gt;% tally()
+#hist(DFFallecidosCopy$DATE,breaks = 100, )</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREZGYWxsZWNpZG9zQ29weSAlPiUgZ3JvdXBfYnkoREZGYWxsZWNpZG9zQ29weSREQVRFKSAlPiUgdGFsbHkoKVxuYGBgIn0= -->
-<pre class="r"><code>DFFallecidosCopy %&gt;% group_by(DFFallecidosCopy$DATE) %&gt;% tally()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiVW5rbm93biBvciB1bmluaXRpYWxpc2VkIGNvbHVtbjogYERBVEVgLlxuIn0= -->
-<pre><code>Unknown or uninitialised column: `DATE`.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6MSwic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyIxIHggMSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJsMVBXdzZDTUJCY0hzVkFvaUh4SERZUjVRUjZBT01YdnhWUWlkZ1NLTkZQeitpQndHMUREV21UZGgrZG1kMDVIN05kbEVVQTRJRVBCRHlDS1FTSDB6WkpFd0RmeGNyQm4xREZONkxXdWdHdzFOSHh2eGFJY1BZc08wemlPWk5icUxBVkwycVFTc3I5NERQaXNlWHltblcyWEZRd3llaTFSVDVXZzBWWmlFWldnaVBKVmNzU2U1Zldhc1E5VjVzVW0vemU4OGRtbjZvSmswdjRPNTI3MWxmTmRNZEppMHhhUWNsdkZTL044alc3bFBWVXJOQ3lka3lidHVMU1dNRnVSNldRek9DaVhOU21vODNCOEFQWHNPc0pwUUVBQUE9PSJ9 -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"66770"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChERkZhbGxlY2lkb3NDb3B5JERBVEUsYnJlYWtzID0gMTAwLCApXG5gYGAifQ== -->
-<pre class="r"><code>hist(DFFallecidosCopy$DATE,breaks = 100, )</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiVW5rbm93biBvciB1bmluaXRpYWxpc2VkIGNvbHVtbjogYERBVEVgLkVycm9yIGluIGhpc3QuZGVmYXVsdChERkZhbGxlY2lkb3NDb3B5JERBVEUsIGJyZWFrcyA9IDEwMCwgKSA6IFxuICAneCcgbXVzdCBiZSBudW1lcmljXG4ifQ== -->
-<pre><code>Unknown or uninitialised column: `DATE`.Error in hist.default(DFFallecidosCopy$DATE, breaks = 100, ) : 
-  &#39;x&#39; must be numeric</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYnlfbW9udGggPC0gZnVuY3Rpb24oeCxuPTEpe1xuICBzZXEobWluKHgsbmEucm09VCksbWF4KHgsbmEucm09VCksYnk9cGFzdGUwKG4sXCIgbW9udGhzXCIpKVxufVxuZ2dwbG90KERGRmFsbGVjaWRvc0NvcHksYWVzKGZlY2hhICkpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYnJlYWtzID0gYnlfbW9udGgoREZGYWxsZWNpZG9zQ29weSRmZWNoYSkpICtcbiAgc2NhbGVfeF9kYXRlKGxhYmVscyA9IHNjYWxlczo6ZGF0ZV9mb3JtYXQoXCIlWS0lYlwiKSxcbiAgICAgICAgICAgICAgIGJyZWFrcyA9IGJ5X21vbnRoKERGRmFsbGVjaWRvc0NvcHkkZmVjaGEsMikpICsgXG4gIHRoZW1lKGF4aXMudGV4dC54ID0gZWxlbWVudF90ZXh0KGFuZ2xlPTkwKSlcbmBgYCJ9 -->
-<pre class="r"><code>by_month &lt;- function(x,n=1){
-  seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n,&quot; months&quot;))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYnlfbW9udGggPC0gZnVuY3Rpb24oeCxuPTEpe1xuICBzZXEobWluKHgsbmEucm09VCksbWF4KHgsbmEucm09VCksYnk9cGFzdGUwKG4sXFwgbW9udGhzXFwpKVxufVxuZ2dwbG90KERGRmFsbGVjaWRvc0NvcHksYWVzKGZlY2hhICkpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYnJlYWtzID0gYnlfbW9udGgoREZGYWxsZWNpZG9zQ29weSRmZWNoYSkpICtcbiAgc2NhbGVfeF9kYXRlKGxhYmVscyA9IHNjYWxlczo6ZGF0ZV9mb3JtYXQoXFwlWS0lYlxcKSxcbiAgICAgICAgICAgICAgIGJyZWFrcyA9IGJ5X21vbnRoKERGRmFsbGVjaWRvc0NvcHkkZmVjaGEsMikpICsgXG4gIHRoZW1lKGF4aXMudGV4dC54ID0gZWxlbWVudF90ZXh0KGFuZ2xlPTkwKSlcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+by_month &lt;- function(x,n=1){
+  seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n,\ months\))
 }
 ggplot(DFFallecidosCopy,aes(fecha )) +
   geom_histogram(breaks = by_month(DFFallecidosCopy$fecha)) +
-  scale_x_date(labels = scales::date_format(&quot;%Y-%b&quot;),
+  scale_x_date(labels = scales::date_format(\%Y-%b\),
                breaks = by_month(DFFallecidosCopy$fecha,2)) + 
   theme(axis.text.x = element_text(angle=90))</code></pre>
+<p>```</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 </div>
