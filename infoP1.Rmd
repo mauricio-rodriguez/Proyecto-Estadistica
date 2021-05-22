@@ -91,7 +91,7 @@ DFFallecidosCopy %>% group_by(DFFallecidosCopy$DATE) %>% tally()
 #hist(DFFallecidosCopy$DATE,breaks = 100, )
 ```
 
-
+#
 ```{r}
 by_month <- function(x,n=1){
   seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n," months"))
@@ -117,11 +117,11 @@ abline(v=mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE),col="red")
 
 #Boxplot Fecha Vacunados
 ```{r}
-boxplot(DFVacunadosCopy$fecha,horizontal = TRUE,col = "green")
+boxplot(DFVacunadosCopy$FE,horizontal = TRUE,col = "green")
 abline(v=mean(DFVacunadosCopy$fecha),col="blue")
 ```
 
-#Boxplot Moda DOSIS VACUNADOS
+#Gráfico de barras DOSIS VACUNADOS
 ```{r}
 barplot(table(DFVacunadosCLEAN$DOSIS), col = "skyblue")
 ```

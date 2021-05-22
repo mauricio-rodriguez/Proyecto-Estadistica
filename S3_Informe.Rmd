@@ -1,8 +1,19 @@
 ---
 title: "Impacto del proceso de vacunación contra la Covid-19"
-output: html_notebook
+date: "May 22th 2021"
+output:
+  html_notebook:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: yes
+    theme: journal
+  html_document:
+    toc: yes
+    df_print: paged
 ---
-## Cargar librerias 
+# Cargar librerias 
 ```{r}
 library(readr)
 library(dplyr)
@@ -10,72 +21,90 @@ library (ggplot2)
 library(stringr)
 library(scales)
 library(lubridate)
+library(modeest)
 ``` 
 
-## Asignar DF's con los datos RAW de los archivos
+# Asignar DF's con los datos RAW de los archivos
 ```{r}
 DFFallecidosRAW <- read_csv("fallecidos.csv")
 DFVacunadosRAW <- read_csv("vacunados.csv")
 ```
  
-## Importancia 
+# Importancia del tema
 El estudio busca sensibilizar e informar a la población sobre los efectos generados por el proceso de vacunación contra la Covid-19 en las regiones del Perú, por lo que se considera un tema de interés público debido al contexto actual.
 
-## Obtención de los datos
+# Obtención de los datos
 Para el estudio se decidió utilizar la Plataforma de Datos Abiertos oficial de el MINSA, en esta encontramos los datos oficiales sobre el [proceso actual de vacunación](https://www.datosabiertos.gob.pe/dataset/vacunaci%C3%B3n-contra-covid-19-ministerio-de-salud-minsa-0) y los [fallecidos por Covid-19](https://www.datosabiertos.gob.pe/dataset/fallecidos-por-covid-19-ministerio-de-salud-minsa/resource/4b7636f3-5f0c-4404-8526) 
 
-### Detalle de la data respecto los fallecidos:
-- Nombre original del archivo: fallecidos_covid
-- Numero de observaciones: 
+## Detalle de la data respecto los fallecidos:
+Nombre original del archivo: fallecidos_covid
+Numero de observaciones 
 ```{r echo=FALSE}
 nrow(DFFallecidosRAW)
 ```
-- Datos faltantes: 
+Datos faltantes 
 ```{r echo = FALSE}
 sum(is.na(DFFallecidosRAW))
 ```
-- Numero de variables
+Numero de variables
 ```{r echo = FALSE}
 ncol(DFFallecidosRAW)
 ```
-### Detalle de la data respecto al proceso de vacunación:
-- Nombre original del archivo: vacunas_covid
-- Numero de observaciones: 
+## Detalle de la data respecto al proceso de vacunación:
+Nombre original del archivo: vacunas_covid
+
+Numero de observaciones
 ```{r echo=FALSE}
 nrow(DFVacunadosRAW)
 ```
-- Datos faltantes: 
+Datos faltantes
 ```{r echo = FALSE}
 sum(is.na(DFVacunadosRAW))
 ```
-- Numero de variables
+Numero de variables
 ```{r echo = FALSE}
 ncol(DFVacunadosRAW)
 ```
-- Porcentaje de observaciones incompletas
+Porcentaje de observaciones incompletas
 ```{r echo = FALSE}
 sum(!complete.cases(DFVacunadosRAW))/nrow(DFVacunadosRAW)*100
 ```
-## Limpieza de general de DATA FRAMES
-### Data frame fallecidos
-Generamos un nuevo data frame donde "eliminamos" las variables que indicaban UUID,Provincia,distrito y ubicación geográfica. Asimismo, renombramos la variable "EDAD_DECLARADA" a "EDAD" para simplificar.
+# Limpieza general de DATA FRAMES
+## Data frame fallecidos
+Generamos un nuevo data frame donde "eliminamos" las variables que indicaban UUID,Provincia,distrito y ubicación geográfica. También, renombramos la variable "EDAD_DECLARADA" a "EDAD" para simplificar y cambiamos el formato de la variable FECHA_FALLECIMIENTO a fin de que calze con el estándar de R.
 ```{r}
 DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,FECHA_NAC,UBIGEO,PROVINCIA,DISTRITO))
+
 DFFallecidosCLEAN %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidosCLEAN
+
+vector<-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
 ```
 
-### Data frame vacunados
+
+## Data frame vacunados
 Generamos un nuevo data frame donde "eliminamos" las variables que indicaban fecha de corte, UUID, diresa, provincia y distrito
-Asimismo, renombramos la variable "GRUPO_Riesgo a "GRUPO" para simplificar.
+Asimismo, renombramos la variable "GRUPO_Riesgo a "GRUPO" para simplificar. No se eliminaron las observaciones incompletas puesto que se utilizaran para todos los análisis que no requieran el uso de su variable EDAD.
 ```{r}
 DFVacunadosCLEAN<-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
 DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
+
+vector<-DFVacunadosCLEAN$FECHA_VACUNACION
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
 ```
 
 En ambos data frames las variables fueron descartadas en base a que no eran requeridas para nuestro análisis por no tener información relevante.
 
-## Clasificación de las variables del estudio
-### Datos sobre proceso de vacunación de covid-19
+# Clasificación de las variables del estudio
+## Datos sobre proceso de vacunación de covid-19
 
 Variable | Tipo de variable | Restricciones
 ------------- | ------------- | -------------
@@ -87,7 +116,7 @@ DOSIS | Categórica Nominal | 1,2
 Fabricante | Categórica Nominal | SINOPHARM, PFIZER, ASTRAZENECA
 DEPARTAMENTO | Categórica Nominal | Departamentos del Perú
 
-### Datos sobre fallecidos por Covid-19
+## Datos sobre fallecidos por Covid-19
 
 Variable | Tipo de variable | Restricciones
 ------------- | ------------- | -------------
@@ -95,4 +124,40 @@ EDAD | Numérica Discreta | Entero Positivo
 SEXO | Categórica Nominal | Masculino, Femenino
 DEPARTAMENTO | Categórica Nominal | Departamentos del Perú
 FECHA_FALLECIDO | | 
+
+# Descriptores gráficos utilizados
+
+```{r echo = FALSE}
+by_month <- function(x,n=1){
+  seq(min(x,na.rm=T),max(x,na.rm=T),by=paste0(n," months"))
+}
+ggplot(DFFallecidosCLEAN,aes(FECHA_FALLECIMIENTO)) +
+  geom_histogram(breaks = by_month(DFFallecidosCLEAN$FECHA_FALLECIMIENTO)) +
+  scale_x_date(labels = scales::date_format("%Y-%b"),
+               breaks = by_month(DFFallecidosCLEAN$FECHA_FALLECIMIENTO,2)) + 
+  theme(axis.text.x = element_text(angle=90))
+```
+
+## Boxplot Edad Fallecidos
+```{r echo = FALSE}
+boxplot(DFFallecidosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
+abline(v=mean(DFFallecidosCLEAN$EDAD),col="red")
+```
+## Boxplot Edad Vacunados
+```{r echo = FALSE}
+boxplot(DFVacunadosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
+abline(v=mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE),col="red")
+
+```
+
+## Boxplot Fecha Vacunados
+```{r echo = FALSE}
+boxplot(DFVacunadosCLEAN$FECHA_VACUNACION,horizontal = TRUE,col = "green")
+abline(v=mean(DFVacunadosCLEAN$FECHA_VACUNACION),col="blue")
+```
+
+## Gráfico de barras DOSIS VACUNADOS
+```{r echo = FALSE}
+barplot(table(DFVacunadosCLEAN$DOSIS), col = "skyblue")
+```
 
