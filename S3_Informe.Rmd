@@ -143,11 +143,12 @@ ggplot(DFFallecidosCLEAN,aes(FECHA_FALLECIMIENTO)) +
 boxplot(DFFallecidosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
 abline(v=mean(DFFallecidosCLEAN$EDAD),col="red")
 ```
+
+
 ## Boxplot Edad Vacunados
 ```{r echo = FALSE}
 boxplot(DFVacunadosCLEAN$EDAD,horizontal = TRUE,col = "yellow")
 abline(v=mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE),col="red")
-
 ```
 
 ## Boxplot Fecha Vacunados
@@ -161,3 +162,26 @@ abline(v=mean(DFVacunadosCLEAN$FECHA_VACUNACION),col="blue")
 barplot(table(DFVacunadosCLEAN$DOSIS), col = "skyblue")
 ```
 
+# Descriptores numéricos utilizados
+## Edad promedio de fallecidos por Covid-19
+```{r}
+round(mean(DFFallecidosCLEAN$EDAD), digits = 0)
+```
+
+## Rango de edad de personas fallecidas contra el Covid-19
+```{r}
+sprintf("Edad máxima: %s", max(DFFallecidosCLEAN$EDAD))
+sprintf("Edad mínima: %s", min(DFFallecidosCLEAN$EDAD))
+sprintf("Rango: %s", max(DFFallecidosCLEAN$EDAD) - min(DFFallecidosCLEAN$EDAD))
+```
+## Edad promedio de vacunados contra el Covid-19
+```{r}
+round(mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE), digits = 0)
+```
+
+## Rango de edad de personas vacunadas contra el Covid-19
+```{r}
+sprintf("Edad máxima: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+sprintf("Edad mínima: %s", min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+sprintf("Rango: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE) - min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+```
