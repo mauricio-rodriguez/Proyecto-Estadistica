@@ -119,7 +119,7 @@ Factibilidad
 <img src="presentacionP1-figure/gantt.png" width=1140 height=auto>
 <figcaption> Diagrama de Gantt </figcaption>
 </div>
-!Gracias!
+¡Gracias!
 =======================================================
 ¿Preguntas?
 
