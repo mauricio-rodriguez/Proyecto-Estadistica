@@ -1,0 +1,60 @@
+---
+author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salazar, Frings Barrueta" 
+title: "Impacto del proceso de vacunación contra la Covid-19"
+date: "June 9th 2021"
+output:
+  html_notebook:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: yes
+    theme: journal
+  html_document:
+    toc: yes
+    df_print: paged
+---
+# Cargar librerias 
+```{r}
+library(readr)
+library(dplyr)
+library (ggplot2)
+library(stringr)
+library(scales)
+library(lubridate)
+library(modeest)
+``` 
+
+# Asignar DF's con los datos RAW de los archivos
+```{r}
+DFFallecidosRAW <- read_csv("../fallecidos.csv")
+DFVacunadosRAW <- read_csv("../vacunados.csv")
+```
+
+
+```{r echo = FALSE}
+DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,UBIGEO,PROVINCIA,DISTRITO))
+
+DFFallecidosCLEAN %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidosCLEAN
+
+vector<-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
+```
+
+
+```{r echo = FALSE}
+DFVacunadosCLEAN<-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
+DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
+
+vector<-DFVacunadosCLEAN$FECHA_VACUNACION
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
+```
+
