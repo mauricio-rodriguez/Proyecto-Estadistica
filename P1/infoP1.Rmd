@@ -16,8 +16,8 @@ library(modeest)
 
 # Asignamos DF's con los datos RAW de los archivos
 ```{r}
-DFFallecidosRAW <- read_csv("fallecidos.csv")
-DFVacunadosRAW <- read_csv("vacunados.csv")
+DFFallecidosRAW <- read_csv("../fallecidos.csv")
+DFVacunadosRAW <- read_csv("../vacunados.csv")
 ```
 
 # Asignamos DF's limpias de N/A's y con variables renombradas
