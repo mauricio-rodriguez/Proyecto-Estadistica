@@ -14,6 +14,18 @@ output:
     number_sections: yes
     theme: journal
 ---
+#Instalacion de librerias
+```{r}
+install.packages("readr")
+install.packages("dplyr")
+install.packages ("ggplot2")
+install.packages("stringr")
+install.packages("scales")
+install.packages("lubridate")
+install.packages("modeest")
+install.packages("viridis")
+```
+
 # Cargar librerias 
 ```{r}
 library(readr)
@@ -127,7 +139,7 @@ barplot(table(DFVacunadosCLEAN$SEXO),
         main="Sexo de personas vacunadas por COVID-19",
         col=c("orange", "blue"),
         legend.text=c("Mujeres", "Hombres"),
-        ylim = c(0,2000000),
+        ylim = c(0,3000000),
         ylab = "Frecuencia"
 )
 ```
@@ -154,14 +166,13 @@ ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) +
 
 ### DEPARTAMENTO
 ```{r, echo=FALSE}
-ggplot(data = DFVacunadosCLEAN, aes(x=DEPARTAMENTO)) + 
+ggplot(data = DFVacunadosCLEAN, aes(y=DEPARTAMENTO)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
   scale_fill_viridis("Frecuencia", discrete=F) + 
   labs(title="Departamentos de vacunados por COVID-19",
-       x="Departamento",
-       y="Frecuencia")
+       x="Frecuencia",
+       y="Departamento")
 ```
-
 
 # Patrones y descripcion del conjunto de datos
 ```{r}
@@ -170,6 +181,8 @@ ggplot(data = DFVacunadosCLEAN, aes(x=DEPARTAMENTO)) +
 # CODE
 #
 #
+max(DFVacunadosCLEAN$FECHA_VACUNACION)
+
 ```
 
 
