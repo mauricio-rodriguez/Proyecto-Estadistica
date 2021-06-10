@@ -28,8 +28,8 @@ library(viridis)
 
 # Asignar DF's con los datos RAW de los archivos
 ```{r}
-DFFallecidosRAW <- read_csv("../fallecidos.csv")
-DFVacunadosRAW <- read_csv("../vacunados.csv")
+DFFallecidosRAW <- read_csv("fallecidos.csv")
+DFVacunadosRAW <- read_csv("vacunados.csv")
 ```
 
 
@@ -44,6 +44,7 @@ mes<-str_sub(vector,-4,-3) #mes
 anio<-str_sub(vector, end = 4) #anio
 date = paste(anio,"-",mes,"-",dia, sep = "")
 DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
+DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINADO")
 ```
 
 
@@ -65,8 +66,14 @@ DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
 ## Dataset FALLECIDOS
 
 ### FECHA_FALLECIMIENTO
-```{r}
-
+```{r, echo=FALSE}
+DFFechaFallecidos <- as.data.frame(table(DFFallecidosCLEAN$FECHA_FALLECIMIENTO))
+ggplot(data = DFFallecidosCLEAN, aes(FECHA_FALLECIMIENTO)) + 
+  geom_freqpoly() + 
+  scale_x_date(date_minor_breaks = "1 day", date_labels = "%b %d") +
+  labs(title = "Polígono de dispersión de fallecidos por COVID-19",
+       x = "Fecha",
+       y = "Cantidad de fallecidos")
 ```
 
 ### EDAD
@@ -81,14 +88,14 @@ ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) +
 
 ### SEXO
 ```{r, echo=FALSE}
-# tablaSexoFallecidos <- data.frame(rbind(table(DFFallecidosCLEAN$SEXO)))
+options(scipen=999)
 barplot(table(DFFallecidosCLEAN$SEXO),
         main="Sexo de personas fallecidas por COVID-19",
         col=c("orange", "blue"),
-        legend.text=c("Mujeres","Hombres"),
-        ylim = c(0,70000),
+        legend.text=c("Mujeres", "Hombres"),
+        ylim = c(0,150000),
         ylab = "Frecuencia"
-        )
+)
 ```
 
 ## DEPARTAMENTO
