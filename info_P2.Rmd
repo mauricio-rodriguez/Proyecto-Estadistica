@@ -1,7 +1,7 @@
 ---
 author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salazar, Frings Barrueta" 
 title: "Impacto del proceso de vacunación contra la Covid-19"
-date: "June 9th 2021"
+date: "May 11th 2021"
 output:
   html_notebook:
     toc: yes
@@ -14,6 +14,7 @@ output:
     toc: yes
     df_print: paged
 ---
+
 # Cargar librerias 
 ```{r}
 library(readr)
@@ -28,13 +29,15 @@ library(viridis)
 
 # Asignar DF's con los datos RAW de los archivos
 ```{r}
-DFFallecidosRAW <- read_csv("../fallecidos.csv")
-DFVacunadosRAW <- read_csv("../vacunados.csv")
+DFFallecidosRAW <- read_csv("fallecidos.csv")
+DFVacunadosRAW <- read_csv("vacunados.csv")
 ```
 
-
-```{r echo = FALSE}
-DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,UBIGEO,PROVINCIA,DISTRITO))
+# Limpieza general de DATA FRAMES
+## Data frame fallecidos
+Generamos un nuevo data frame donde "eliminamos" las variables que indicaban UUID,Provincia,distrito y ubicación geográfica. También, renombramos la variable "EDAD_DECLARADA" a "EDAD" para simplificar y cambiamos el formato de la variable FECHA_FALLECIMIENTO a fin de que calze con el estándar de R.
+```{r}
+DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,FECHA_NAC,UBIGEO,PROVINCIA,DISTRITO))
 
 DFFallecidosCLEAN %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidosCLEAN
 
@@ -47,7 +50,10 @@ DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
 ```
 
 
-```{r echo = FALSE}
+## Data frame vacunados
+Generamos un nuevo data frame donde "eliminamos" las variables que indicaban fecha de corte, UUID, diresa, provincia y distrito
+Asimismo, renombramos la variable "GRUPO_Riesgo a "GRUPO" para simplificar. No se eliminaron las observaciones incompletas puesto que se utilizaran para todos los análisis que no requieran el uso de su variable EDAD.
+```{r}
 DFVacunadosCLEAN<-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
 DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
 
@@ -59,6 +65,7 @@ date = paste(anio,"-",mes,"-",dia, sep = "")
 DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
 ```
 
+En ambos data frames las variables fueron descartadas en base a que no eran requeridas para nuestro análisis por no tener información relevante.
 
 # Figuras de Mérito
 
@@ -95,3 +102,6 @@ barplot(table(DFFallecidosCLEAN$SEXO),
 ```{r, echo=FALSE}
 
 ```
+
+
+
