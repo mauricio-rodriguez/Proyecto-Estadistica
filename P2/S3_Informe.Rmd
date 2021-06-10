@@ -66,6 +66,9 @@ DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
 ## Dataset FALLECIDOS
 
 ### FECHA_FALLECIMIENTO
+HIPÓTESIS: ¿Cómo influye la llegada de las vacunas en la cantidad de fallecidos por COVID?
+En lo que va la llegada de las vacunas, el pico más alto de la cantidad de fallecidos fue obtenido durante este periodo.
+
 ```{r, echo=FALSE}
 DFFechaFallecidos <- as.data.frame(table(DFFallecidosCLEAN$FECHA_FALLECIMIENTO))
 ggplot(data = DFFallecidosCLEAN, aes(FECHA_FALLECIMIENTO)) + 
@@ -77,6 +80,9 @@ ggplot(data = DFFallecidosCLEAN, aes(FECHA_FALLECIMIENTO)) +
 ```
 
 ### EDAD
+HIPÓTESIS: ¿Será cierto que los adultos mayores son las personas que mas fallecieron por COVID?
+El rango de edades de la mayor cantidad de personas que fallecieron por COVID está entre 60 y 80 años. 
+
 ```{r, echo=FALSE}
 ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) + 
   geom_histogram(aes(fill=..count..)) + 
@@ -87,6 +93,9 @@ ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) +
 ```
 
 ### SEXO
+HIPÓTESIS: ¿Existe alguna diferencia entre la cantidad de fallecidos y su género?
+En el Perú, la gran mayoría de personas fallecidas por COVID son hombres.
+
 ```{r, echo=FALSE}
 options(scipen=999)
 barplot(table(DFFallecidosCLEAN$SEXO),
@@ -98,7 +107,11 @@ barplot(table(DFFallecidosCLEAN$SEXO),
 )
 ```
 
+
 ### DEPARTAMENTO
+HIPÓTESIS:¿Es cierto que los departamentos del Norte tienen la mayor cantidad de fallecidos por COVID?
+A partir de los gráficos, Lima es la ciudad con mayor cantidad de fallecidos por COVID
+
 ```{r, echo=FALSE}
 ggplot(data = DFFallecidosCLEAN, aes(x=DEPARTAMENTO)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
@@ -111,12 +124,17 @@ ggplot(data = DFFallecidosCLEAN, aes(x=DEPARTAMENTO)) +
 ## Dataset PROCESO DE VACUNACIÓN
 
 ### FECHA_VACUNACION x EDAD
+HIPÓTESIS:¿Es cierto que la género de?
+
 ```{r}
 
 ```
 
 
 ### SEXO
+HIPÓTESIS: ¿Es cierto que el género de la mayor cantidad de personas vacunadas es el mismo que de las personas fallecidas?
+No, observamos que la mayor cantidad de personas vacunadas son mujeres.
+
 ```{r, echo=FALSE}
 options(scipen=999)
 barplot(table(DFVacunadosCLEAN$SEXO),
@@ -129,6 +147,9 @@ barplot(table(DFVacunadosCLEAN$SEXO),
 ```
 
 ### DOSIS
+HIPÓTESIS:¿Existe la misma cantidad de dosis aplicadas en las personas vacunadas del Perú?
+No, la mayor cantidad de dosis aplicadas es la primera.
+
 ```{r, echo=FALSE}
 ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
@@ -139,6 +160,10 @@ ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) +
 ```
 
 ### FABRICANTE
+HIPÓTESIS:
+¿Será el mayor fabricante de vacunas del mundo (AstraZeneca) el que distribuye mayor cantidad de vacunas al Perú?
+El fabricante que más cantidad de vacunas distribuye al Perú es Pfizer.
+
 ```{r, echo=FALSE}
 ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
@@ -149,6 +174,10 @@ ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) +
 ```
 
 ### DEPARTAMENTO
+HIPÓTESIS:
+¿Es cierto que el departamento con la mayor cantidad de personas vacunadas es el mismo que de las personas fallecidas?
+Si, es cierto el departamento con mayor cantidad de personas vacunadas es Lima.
+
 ```{r, echo=FALSE}
 ggplot(data = DFVacunadosCLEAN, aes(x=DEPARTAMENTO)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
