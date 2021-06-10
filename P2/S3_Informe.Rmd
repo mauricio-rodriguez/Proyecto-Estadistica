@@ -3,6 +3,9 @@ author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salaz
 title: "Impacto del proceso de vacunación contra la Covid-19"
 date: "June 9th 2021"
 output:
+  html_document:
+    toc: yes
+    df_print: paged
   html_notebook:
     toc: yes
     toc_float:
@@ -10,9 +13,6 @@ output:
       smooth_scroll: no
     number_sections: yes
     theme: journal
-  html_document:
-    toc: yes
-    df_print: paged
 ---
 # Cargar librerias 
 ```{r}
@@ -32,7 +32,7 @@ DFFallecidosRAW <- read_csv("fallecidos.csv")
 DFVacunadosRAW <- read_csv("vacunados.csv")
 ```
 
-
+# Limpieza tabla DFFallecidos
 ```{r echo = FALSE}
 DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,UBIGEO,PROVINCIA,DISTRITO))
 
@@ -47,7 +47,7 @@ DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
 DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINADO")
 ```
 
-
+# Limpieza tabla DFVacunados
 ```{r echo = FALSE}
 DFVacunadosCLEAN<-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
 DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
@@ -82,7 +82,7 @@ ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) +
   geom_histogram(aes(fill=..count..)) + 
   scale_fill_viridis("Frecuencia", discrete=F) + 
   labs(title="Edades de personas fallecidas por COVID-19",
-       x="Edad(anhos)",
+       x="Edad(años)",
        y="Frecuencia")
 ```
 
@@ -98,7 +98,64 @@ barplot(table(DFFallecidosCLEAN$SEXO),
 )
 ```
 
-## DEPARTAMENTO
+### DEPARTAMENTO
 ```{r, echo=FALSE}
+ggplot(data = DFFallecidosCLEAN, aes(x=DEPARTAMENTO)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Departamentos de fallecidos por COVID-19",
+       x="Departamento",
+       y="Frecuencia")
+```
+
+## Dataset PROCESO DE VACUNACIÓN
+
+### FECHA_VACUNACION x EDAD
+```{r}
 
 ```
+
+
+### SEXO
+```{r, echo=FALSE}
+options(scipen=999)
+barplot(table(DFVacunadosCLEAN$SEXO),
+        main="Sexo de personas vacunadas por COVID-19",
+        col=c("orange", "blue"),
+        legend.text=c("Mujeres", "Hombres"),
+        ylim = c(0,2000000),
+        ylab = "Frecuencia"
+)
+```
+
+### DOSIS
+```{r, echo=FALSE}
+ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Dosis de vacunas por COVID-19",
+       x="Dosis",
+       y="Frecuencia")
+```
+
+### FABRICANTE
+```{r, echo=FALSE}
+ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Fabricantes de vacunas por COVID-19",
+       x="Fabricante",
+       y="Frecuencia")
+```
+
+### DEPARTAMENTO
+```{r, echo=FALSE}
+ggplot(data = DFVacunadosCLEAN, aes(x=DEPARTAMENTO)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Departamentos de vacunados por COVID-19",
+       x="Departamento",
+       y="Frecuencia")
+```
+
+
