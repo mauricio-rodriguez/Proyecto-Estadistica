@@ -32,7 +32,9 @@ Plataforma Nacional de Datos Abiertos
 DataSet: Fallecidos
 ========================================================
 <div align="center">
-<img src="P2-figure/FFallecidos.png" width=700 height=432 style="margin-top:72px; ">
+<p>¿Cómo influye la llegada de las vacunas en la cantidad de fallecidos por COVID?</p>
+<img src="P2-figure/FFallecidos.png" width=700 height=432">
+<figcaption>El pico más alto de la cantidad de fallecidos fue obtenido durante este periodo.</figcaption>
 </div>
 
 DataSet: Fallecidos
@@ -98,35 +100,36 @@ Modelos de Variable Aleatoria
 ========================================================
 <div align="center">
 <p>Que tan probable es que eligiendo una persona al azar de nuestra muestra, esta sea un adulto mayor de Lima y haya sido vacunado con el fabricante Pfizer. (No es equiprobable)</p>
-<p> 0.2734933 </p>
+<p> 0.27 </p>
 </div>
 
 <div align="center">
 <p>Qué tan probable es que en UCAYALI exista un adulto mayor con 2 dosis y de género masculino</p>
-<p> 0.0004066406 </p>
+<p> Menor a 0.01 </p>
 </div>
 
 <div align="center">
 <p>Qué tan probable es que eligiendo una persona al azar esta sea una mujer y tenga 1 dosis</p>
-<p> 0.3559801 </p>
+<p> 0.36 </p>
 </div>
 
 Modelos de Variable Aleatoria
-========================================================
-
-
-Modelos de Variable Aleatoria
-========================================================
-
-
-Modelos de Variable Aleatoria
-========================================================
-
-
 ========================================================
 <div align="center">
-<h2 style="margin:250px 0 20px 0;font-size:400%;">Hipótesis</h2>
+<p>Qué tan probable es que el fabricante de una vacuna aplicada sea Sinopharm</p>
+<p>0.21</p>
 </div>
+
+<div align="center">
+<p>Qué tan probable es que el género de una persona fallecida sea hombre</p>
+<p>0.64</p>
+</div>
+
+<div align="center">
+<p>Qué tan probable es que la etapa de vida de una persona fallecida sea adulto mayor(60 a más)</p>
+<p>0.7</p>
+</div>
+
 
 ========================================================
 <div align="center">
