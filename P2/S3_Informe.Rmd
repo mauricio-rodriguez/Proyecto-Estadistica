@@ -1,11 +1,8 @@
 ---
 author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salazar, Frings Barrueta" 
 title: "Impacto del proceso de vacunación contra la Covid-19"
-date: "June 9th 2021"
+date: "May 22th 2021"
 output:
-  html_document:
-    toc: yes
-    df_print: paged
   html_notebook:
     toc: yes
     toc_float:
@@ -13,6 +10,9 @@ output:
       smooth_scroll: no
     number_sections: yes
     theme: journal
+  html_document:
+    toc: yes
+    df_print: paged
 ---
 #Instalacion de librerias
 ```{r}
@@ -56,6 +56,45 @@ fun_int0 <- function(my_data) {    # Create user-defined function
   }
 }
 ```
+
+```{r}
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
 # Asignar DF's con los datos RAW de los archivos
 ```{r}
 DFFallecidosRAW <- read_csv("fallecidos.csv")
@@ -330,8 +369,19 @@ DFVacEtVida %>% filter(ETAPA == "Adulto Mayor") %>%
 ```
 
 ```{r}
-scatter.smooth(x = DFFallAdulMay2daOla$FECHA_FALLECIMIENTO, y = DFFallAdulMay2daOla$n)
-scatter.smooth(x = DFVacAdulMay2daOla$FECHA_VACUNACION, y = DFVacAdulMay2daOla$n)
+graph_1 <- ggplot(DFFallAdulMay2daOla, aes(x = FECHA_FALLECIMIENTO, y = n)) + 
+  geom_point() + geom_smooth() + 
+  labs(title="Diagrama de dispersión de adultos mayores fallecidos en la 2da Ola",
+       x="Fecha de fallecimiento",
+       y="Cantidad de fallecidos")
+
+graph_2 <- ggplot(DFVacAdulMay2daOla, aes(x = FECHA_VACUNACION, y = n)) + 
+  geom_point() + geom_smooth() + 
+  labs(title="Diagrama de dispersión de adultos mayores vacunados en la 2da Ola",
+       x="Fecha de vacunación",
+       y="Cantidad de vacunados")
+
+multiplot(graph_1, graph_2, cols=1)
 ```
 
 ```{r}
@@ -347,8 +397,19 @@ DFVacEtVida %>% filter(ETAPA == "Adulto") %>%
 ```
 
 ```{r}
-scatter.smooth(x = DFFallAdul2daOla$FECHA_FALLECIMIENTO, y = DFFallAdul2daOla$n)
-scatter.smooth(x = DFVacAdul2daOla$FECHA_VACUNACION, y = DFVacAdul2daOla$n)
+graph_1 <- ggplot(DFFallAdul2daOla, aes(x = FECHA_FALLECIMIENTO, y = n)) + 
+  geom_point() + geom_smooth() + 
+  labs(title="Diagrama de dispersión de adultos fallecidos en la 2da Ola",
+       x="Fecha de fallecimiento",
+       y="Cantidad de fallecidos")
+
+graph_2 <- ggplot(DFVacAdul2daOla, aes(x = FECHA_VACUNACION, y = n)) + 
+  geom_point() + geom_smooth() + 
+  labs(title="Diagrama de dispersión de adultos vacunados en la 2da Ola",
+       x="Fecha de vacunación",
+       y="Cantidad de vacunados")
+
+multiplot(graph_1, graph_2, cols=1)
 ```
 
 ```{r}
@@ -385,8 +446,19 @@ DFVacEtVida %>% filter(ETAPA == "Joven") %>%
 ```
 
 ```{r}
-scatter.smooth(x = DFFallJov2daOla$FECHA_FALLECIMIENTO, y = DFFallJov2daOla$n)
-scatter.smooth(x = DFVacJov2daOla$FECHA_VACUNACION, y = DFVacJov2daOla$n)
+graph_1 <- ggplot(DFFallJov2daOla, aes(x = FECHA_FALLECIMIENTO, y = n)) + 
+  geom_point() + geom_smooth() + 
+  labs(title="Diagrama de dispersión de jóvenes fallecidos en la 2da Ola",
+       x="Fecha de fallecimiento",
+       y="Cantidad de fallecidos")
+
+graph_2 <- ggplot(DFVacJov2daOla, aes(x = FECHA_VACUNACION, y = n)) + 
+  geom_point() + geom_smooth() + 
+  labs(title="Diagrama de dispersión de jóvenes vacunados en la 2da Ola",
+       x="Fecha de vacunación",
+       y="Cantidad de vacunados")
+
+multiplot(graph_1, graph_2, cols=1)
 ```
 
 ```{r}
