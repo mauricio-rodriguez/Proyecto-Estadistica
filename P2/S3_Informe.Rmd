@@ -187,13 +187,43 @@ max(DFVacunadosCLEAN$FECHA_VACUNACION)
 
 
 # Variables aleatorias
+## Qué tan probable es que eligiendo una persona al azar de nuestra muestra, esta sea un adulto mayor de Lima y haya sido vacunado con el fabricante Pfizer. (No es equiprobable)
 ```{r}
-#
-#
-# CODE
-#
-#
+E1<-(DFVacunadosCLEAN$GRUPO=="ADULTO MAYOR")
+E2<-(DFVacunadosCLEAN$DEPARTAMENTO=="LIMA")
+E3<-(DFVacunadosCLEAN$FABRICANTE=="PFIZER")
+
+sum(E1&E2&E3)/nrow(DFVacunadosCLEAN)
 ```
+
+## Qué tan probable es que en UCAYALI exista un adulto mayor con 2 dosis y de género masculino
+```{r}
+E1<-(DFVacunadosCLEAN$DEPARTAMENTO == "UCAYALI")
+E2<-(DFVacunadosCLEAN$GRUPO == "ADULTO MAYOR")
+E3<-(DFVacunadosCLEAN$SEXO == "MASCULINO")
+E4<-(DFVacunadosCLEAN$DOSIS == 2)
+sum(E1&E2&E3&E4)/nrow(DFVacunadosCLEAN)
+```
+
+## Qué tan probable es que en un día vacunen solo a personas de un sexo (hombre/mujer)
+```{r}
+Fechas<-table(DFVacunadosCLEAN$FECHA_VACUNACION)
+promedio_vacunas_por_dia<-mean(Fechas)
+promedio_vacunas_por_dia
+
+prop_hombres<-sum(DFVacunadosCLEAN$SEXO=="MASCULINO")/length(DFVacunadosCLEAN$SEXO)
+prop_hombres
+
+prop_mujeres<-sum(DFVacunadosCLEAN$SEXO=="FEMENINO")/length(DFVacunadosCLEAN$SEXO)
+prop_mujeres
+
+prop_solo_hombres<-promedio_vacunas_por_dia*prop_hombres
+prop_solo_mujeres<-promedio_vacunas_por_dia*prop_mujeres
+
+prop_solo_hombres+prop_solo_mujeres
+```
+
+
 
 # Hipótesis
 
