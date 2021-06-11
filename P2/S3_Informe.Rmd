@@ -201,13 +201,59 @@ ggplot(data = DFVacunadosCLEAN, aes(y=DEPARTAMENTO)) +
 ```
 
 # Patrones y descripcion del conjunto de datos
-```{r}
-#
-#
-# CODE
-#
-#
+## Comparar entre los departamentos que tienen más y menos vacunados para visualizar si es que existe algún patrón.
+```{r echo=FALSE, warning=FALSE}
+DFVacunadosCLEAN %>% select(FECHA_VACUNACION) %>% filter(DFVacunadosCLEAN$DEPARTAMENTO=="LIMA")->DFLima
+DFLimaVacunados <- as.data.frame(table(DFLima$FECHA_VACUNACION))
+ggplot(data = DFLima, aes(FECHA_VACUNACION)) + 
+  geom_freqpoly() + 
+  scale_x_date(date_breaks = "2 week", labels = date_format("%b %Y"), limits = as.Date(c('2021-02-09','2021-06-07'))) +
+  labs(title = "Polígono de dispersión de vacunados en Lima",
+       x = "Fecha",
+       y = "Cantidad de vacunados")
+```
 
+```{r echo=FALSE, warning=FALSE}
+DFVacunadosCLEAN %>% select(FECHA_VACUNACION) %>% filter(DFVacunadosCLEAN$DEPARTAMENTO=="MADRE DE DIOS")->DFMadreDeDiosV
+DFMadreDeDiosVacunados <- as.data.frame(table(DFMadreDeDiosV$FECHA_VACUNACION))
+ggplot(data = DFMadreDeDiosV, aes(FECHA_VACUNACION)) + 
+  geom_freqpoly() + 
+  scale_x_date(date_breaks = "2 week", labels = date_format("%b %Y"), limits = as.Date(c('2021-02-09','2021-06-07'))) +
+  labs(title = "Polígono de dispersión de vacunados en Madre De Dios",
+       x = "Fecha",
+       y = "Cantidad de vacunados")
+```
+
+```{r echo=FALSE, warning=FALSE}
+DFFallecidosCLEAN %>% select(FECHA_FALLECIMIENTO) %>% filter(DFFallecidosCLEAN$DEPARTAMENTO=="CALLAO")->DFCallaoF
+DFFallecidosCallao <- as.data.frame(table(DFCallaoF$FECHA_FALLECIMIENTO))
+ggplot(data = DFCallaoF, aes(FECHA_FALLECIMIENTO)) + 
+  geom_freqpoly() + 
+  scale_x_date(date_breaks = "2 month", labels = date_format("%b %Y"), limits = as.Date(c('2020-03-03','2021-06-07'))) +
+  labs(title = "Polígono de dispersión de fallecidos por COVID-19 en Callao",
+       x = "Fecha",
+       y = "Cantidad de fallecidos en Callao")
+```
+
+```{r echo=FALSE, warning=FALSE}
+DFFallecidosCLEAN %>% select(FECHA_FALLECIMIENTO) %>% filter(DFFallecidosCLEAN$DEPARTAMENTO=="UCAYALI")->DFUcayaliF
+DFFallecidosUcayali <- as.data.frame(table(DFUcayaliF$FECHA_FALLECIMIENTO))
+ggplot(data = DFUcayaliF, aes(FECHA_FALLECIMIENTO)) + 
+  geom_freqpoly() + 
+  scale_x_date(date_breaks = "2 month", labels = date_format("%b %Y"), limits = as.Date(c('2020-03-03','2021-06-07'))) +
+  labs(title = "Polígono de dispersión de fallecidos por COVID-19 en Ucayali",
+       x = "Fecha",
+       y = "Cantidad de fallecidos en Ucayali")
+```
+```{r echo=FALSE, warning=FALSE}
+DFFallecidosCLEAN %>% select(FECHA_FALLECIMIENTO) %>% filter(DFFallecidosCLEAN$DEPARTAMENTO=="MADRE DE DIOS")->DFMadreDeDiosF
+DFFallecidosMadreDeDios <- as.data.frame(table(DFMadreDeDiosF$FECHA_FALLECIMIENTO))
+ggplot(data = DFMadreDeDiosF, aes(FECHA_FALLECIMIENTO)) + 
+  geom_freqpoly() + 
+  scale_x_date(date_breaks = "2 month", labels = date_format("%b %Y"), limits = as.Date(c('2020-03-03','2021-06-07'))) +
+  labs(title = "Polígono de dispersión de fallecidos por COVID-19 en Madre De Dios",
+       x = "Fecha",
+       y = "Cantidad de fallecidos en Madre De Dios")
 ```
 
 
