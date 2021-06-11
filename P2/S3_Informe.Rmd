@@ -24,6 +24,7 @@ library(scales)
 library(lubridate)
 library(modeest)
 library(viridis)
+library(lubridate)
 ``` 
 
 # Asignar DF's con los datos RAW de los archivos
@@ -116,7 +117,7 @@ ggplot(data = DFFallecidosCLEAN, aes(x=DEPARTAMENTO)) +
 
 ### FECHA_VACUNACION x EDAD
 ```{r}
-
+ggplot(DFVacunadosCLEAN, aes(FECHA_VACUNACION, EDAD)) + geom_point()
 ```
 
 
@@ -160,6 +161,7 @@ ggplot(data = DFVacunadosCLEAN, aes(x=DEPARTAMENTO)) +
   labs(title="Departamentos de vacunados por COVID-19",
        x="Departamento",
        y="Frecuencia")
+
 ```
 
 
@@ -225,7 +227,143 @@ Si, es cierto que el departamento con mayor cantidad de personas vacunadas es Li
 # Relaciones entre variables
 
 ## Primera relación
+```{r echo=FALSE}
+getEtapa <- function(edad) 
+{
+  ifelse(edad>60,"Adulto Mayor",ifelse(edad>29,"Adulto",ifelse(edad>17,"Joven","Niño")))
+}
+```
+
+```{r echo=FALSE}
+na.exclude(DFVacunadosCLEAN) %>% mutate(ETAPA = getEtapa(EDAD))%>% group_by(ETAPA,FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n)%>% filter(FECHA_VACUNACION>="2021-01-13")
+
+na.exclude(DFFallecidosCLEAN) %>% mutate(ETAPA= getEtapa(EDAD) ) %>% group_by(ETAPA,FECHA_FALLECIMIENTO) %>% summarize(n = n()) %>%
+  arrange(FECHA_FALLECIMIENTO,n) %>% filter(FECHA_FALLECIMIENTO>="2021-01-13")
+```
 
 ## Segunda relación
+### Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con más vacunados
+
+Calculamos las regiones más vacunados y menos vacunados
+```{r echo=FALSE}
+table(DFVacunadosCLEAN$DEPARTAMENTO)
+which.max(table(DFVacunadosCLEAN$DEPARTAMENTO))
+which.min(table(DFVacunadosCLEAN$DEPARTAMENTO))
+```
+Vemos que Lima es el departamento que tiene más vacunados, y Madre de Dios es que el tiene menos vacunados.
+
+Para Lima
+```{r}
+# Calculamos fallecidos por departamento
+DFFallecidosCLEAN %>% select(DEPARTAMENTO, FECHA_FALLECIMIENTO) %>% 
+  filter(DEPARTAMENTO =="LIMA METROPOLITANA" | DEPARTAMENTO == "LIMA REGION") %>% 
+  filter(FECHA_FALLECIMIENTO >= as.Date("2021-02-09")) -> fall2daOlaLima
+DFfall2daOlaLima <- as.data.frame(table(fall2daOlaLima$FECHA_FALLECIMIENTO), 
+                              col.names = c("FECHAS", "CANT_FALLECIDOS"))
+
+
+# Calculamos vacunados por departamento
+DFVacunadosCLEAN %>% select(DEPARTAMENTO, FECHA_VACUNACION) %>% 
+  filter(DEPARTAMENTO =="LIMA") %>% 
+  filter(FECHA_VACUNACION >= as.Date("2021-02-09") &
+         FECHA_VACUNACION <= as.Date("2021-06-07")) -> vac2daOlaLima
+DFvac2daOlaLima <- as.data.frame(table(vac2daOlaLima$FECHA_VACUNACION), 
+                              col.names = c("FECHAS", "CANT_VACUNADOS"))
+cor(DFvac2daOlaLima$Freq, DFfall2daOlaLima$Freq)
+```
+
+Distribución de los vacunados y fallecidos en Lima en la segunda Ola
+```{r}
+# TODO arreglar grafica para que se vean las dos juntas
+scatter.smooth(DFvac2daOlaLima)
+scatter.smooth(DFfall2daOlaLima)
+```
+
 
 ## Tercera relación
+### Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con menos vacunados
+
+Utilies
+```{r}
+# Verifica si es que la variable es integer(0) o no
+fun_int0 <- function(my_data) {    # Create user-defined function
+ 
+  if(length(my_data) == 0 & is.integer(my_data)) {
+ 
+    return(FALSE)
+# [1] "The data object is integer(0)."
+ 
+  } else {
+ 
+    return(TRUE)
+# [1] "The data object is NOT integer(0)."
+  }
+}
+```
+
+Para Madre de Dios
+```{r}
+# Calculamos fallecidos por departamento
+DFFallecidosCLEAN %>% select(DEPARTAMENTO, FECHA_FALLECIMIENTO) %>% 
+  filter(DEPARTAMENTO =="MADRE DE DIOS") %>% 
+  filter(FECHA_FALLECIMIENTO >= as.Date("2021-02-09") &
+           FECHA_FALLECIMIENTO <= as.Date("2021-06-03") ) -> fall2daOlaMadDios
+DFfall2daOlaMadDios <- as.data.frame(table(fall2daOlaMadDios$FECHA_FALLECIMIENTO), 
+                              col.names = c("FECHAS", "CANT_FALLECIDOS"))
+
+# Limpiamos los datos
+s <- as.Date("2021-02-11")
+e <- as.Date("2021-06-03")
+daysCompleteMadDios <- seq(from=s, to=e, by=1)
+fallCompleteMadDios <- c()
+theDate <- s
+while (theDate <= e){
+  toSearch <- grep(theDate, DFfall2daOlaMadDios$Var1)
+  if(!fun_int0(toSearch)){
+    fallCompleteMadDios <- c(fallCompleteMadDios, 0)
+  } else {
+    fallCompleteMadDios <- c(fallCompleteMadDios, DFfall2daOlaMadDios$Freq[toSearch])
+  }
+  theDate <- theDate + 1 
+}
+# dataset final de vacunados en la segunda ola completo
+DFfall2daOlaMadDiosComplete <- data.frame(FECHAS=daysCompleteMadDios, 
+                                          CANTIDAD=fallCompleteMadDios)
+
+# Calculamos vacunados por departamento
+DFVacunadosCLEAN %>% select(DEPARTAMENTO, FECHA_VACUNACION) %>% 
+  filter(DEPARTAMENTO =="MADRE DE DIOS") %>% 
+  filter(FECHA_VACUNACION >= as.Date("2021-02-09") &
+         FECHA_VACUNACION <= as.Date("2021-06-03")) -> vac2daOlaMadDios
+DFvac2daOlaMadDios <- as.data.frame(table(vac2daOlaMadDios$FECHA_VACUNACION), 
+                              col.names = c("FECHAS", "CANT_VACUNADOS"))
+
+# Limpiamos los datos
+s <- as.Date("2021-02-11")
+e <- as.Date("2021-06-03")
+daysCompleteMadDios <- seq(from=s, to=e, by=1)
+vacCompleteMadDios <- c()
+theDate <- s
+while (theDate <= e){
+  toSearch <- grep(theDate, DFvac2daOlaMadDios$Var1)
+  if(!fun_int0(toSearch)){
+    vacCompleteMadDios <- c(vacCompleteMadDios, 0)
+  } else {
+    print(DFvac2daOlaMadDios$Freq[toSearch])
+    vacCompleteMadDios <- c(vacCompleteMadDios, DFvac2daOlaMadDios$Freq[toSearch])
+  }
+  theDate <- theDate + 1 
+}
+# dataset final de vacunados en la segunda ola completo
+DFvac2daOlaMadDiosComplete <- data.frame(FECHAS=daysCompleteMadDios, 
+                                          CANTIDAD=vacCompleteMadDios)
+
+cor(DFfall2daOlaMadDiosComplete$CANTIDAD, DFvac2daOlaMadDiosComplete$CANTIDAD)
+```
+
+Distribución de los vacunados y fallecidos en Madre de Dios en la segunda Ola
+```{r}
+# TODO arreglar grafica para que se vean las dos juntas
+scatter.smooth(DFfall2daOlaMadDiosComplete)
+scatter.smooth(DFvac2daOlaMadDiosComplete)
+```
