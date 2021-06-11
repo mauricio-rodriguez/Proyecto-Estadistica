@@ -40,49 +40,65 @@ DataSet: Fallecidos
 DataSet: Fallecidos
 ========================================================
 <div align="center">
-<img src="P2-figure/edad_fallecidos.jpg" width=700 height=432 style="margin-top:72px;">
+<p>¿Será cierto que los adultos mayores son las personas que más fallecieron por COVID?</p>
+<img src="P2-figure/edad_fallecidos.jpg" width=700 height=432>
+<figcaption>Sí,es cierto. Las personas que más fallecieron tenían entre 60 y 80 años.</figcaption>
 </div>
 
 DataSet: Fallecidos
 ========================================================
 <div align="center">
-<img src="P2-figure/FSexo.png" width=700 height=432 style="margin-top:72px;">
+<p>¿Existe alguna diferencia entre la cantidad de fallecidos y su género?</p>
+<img src="P2-figure/FSexo.png" width=700 height=432>
+<figcaption>En el Perú, la gran mayoría de personas fallecidas por COVID son hombres.</figcation>
 </div>
 
 DataSet: Fallecidos
 ========================================================
 <div align="center">
-<img src="P2-figure/FDepartamento.png" width=700 height=432 style="margin-top:72px;">
+<p>¿Es cierto que los departamentos del Norte tienen la mayor cantidad de fallecidos por COVID?</p>
+<img src="P2-figure/FDepartamento.png" width=700 height=432>
+<figcaption>Lima es la ciudad con mayor cantidad de fallecidos por COVID</figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
 ========================================================
 <div align="center">
-<img src="P2-figure/FVacunaEdad.png" width=700 height=432 style="margin-top:72px;">
+<p></p>
+<img src="P2-figure/FVacunaEdad.png" width=700 height=432 style="margin-top:100px">
+<figcaption> </figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
 ========================================================
 <div align="center">
-<img src="P2-figure/VSexo.png" width=700 height=432 style="margin-top:72px;">
+<p>¿Es cierto que el género de la mayor cantidad de personas vacunadas es el mismo que de las personas fallecidas?</p>
+<img src="P2-figure/VSexo.png" width=700 height=432>
+<figcaption>No, observamos que la mayor cantidad de personas vacunadas son mujeres.</figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
 ========================================================
 <div align="center">
-<img src="P2-figure/VDosis.png" width=700 height=432 style="margin-top:72px;">
+<p>¿Existe la misma cantidad de dosis aplicadas en las personas vacunadas del Perú?</p>
+<img src="P2-figure/VDosis.png" width=700 height=432>
+<figcaption>No, la mayor cantidad de dosis aplicadas es la primera.</figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
 ========================================================
 <div align="center">
-<img src="P2-figure/VFabricantes.png" width=700 height=432 style="margin-top:72px;">
+<p>¿Será el mayor fabricante de vacunas del mundo (AstraZeneca) el que distribuye mayor cantidad de vacunas al Perú?</p>
+<img src="P2-figure/VFabricantes.png" width=700 height=432>
+<figcaption>El fabricante que más cantidad de vacunas distribuye al Perú es Pfizer.</figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
 ========================================================
 <div align="center">
-<img src="P2-figure/VDepartamentos.png" width=700 height=432 style="margin-top:72px;">
+<p>¿Es cierto que el departamento con la mayor cantidad de personas vacunadas es el mismo que de las personas fallecidas?</p>
+<img src="P2-figure/VDepartamentos.png" width=700 height=432>
+<figcaption>Si, es cierto que el departamento con mayor cantidad de personas vacunadas es Lima.</figcaption>
 </div>
 
 ========================================================
@@ -135,6 +151,7 @@ Modelos de Variable Aleatoria
 <div align="center">
 <h2 style="margin:250px 0 20px 0;font-size:400%;">Relaciones</h2>
 </div>
+
 
 
 
