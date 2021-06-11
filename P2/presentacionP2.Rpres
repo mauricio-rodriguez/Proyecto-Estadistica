@@ -96,9 +96,19 @@ DataSet: Proceso de Vacunacion
 
 Modelos de Variable Aleatoria
 ========================================================
-Que tan probable es que eligiendo una persona al azar de nuestra muestra, esta sea un adulto mayor de Lima y haya sido vacunado con el fabricante Pfizer. (No es equiprobable)
 <div align="center">
+<p>Que tan probable es que eligiendo una persona al azar de nuestra muestra, esta sea un adulto mayor de Lima y haya sido vacunado con el fabricante Pfizer. (No es equiprobable)</p>
 <p> 0.2734933 </p>
+</div>
+
+<div align="center">
+<p>Qué tan probable es que en UCAYALI exista un adulto mayor con 2 dosis y de género masculino</p>
+<p> 0.0004066406 </p>
+</div>
+
+<div align="center">
+<p>Qué tan probable es que eligiendo una persona al azar esta sea una mujer y tenga 1 dosis</p>
+<p> 0.3559801 </p>
 </div>
 
 Modelos de Variable Aleatoria
