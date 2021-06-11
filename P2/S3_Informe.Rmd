@@ -117,7 +117,7 @@ barplot(table(DFFallecidosCLEAN$SEXO),
 
 ```{r, echo=FALSE}
 # Podemos mejorar con una gráfica por cada departamento
-ggplot(data = DFFallecidosCLEAN, aes(x=DEPARTAMENTO)) + 
+ggplot(data = DFFallecidosCLEAN, aes(y=DEPARTAMENTO)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
   scale_fill_viridis("Frecuencia", discrete=F) + 
   labs(title="Departamentos de fallecidos por COVID-19",
