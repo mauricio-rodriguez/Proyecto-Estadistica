@@ -1,7 +1,7 @@
 Impacto del proceso de vacunación contra el Covid-19
 ========================================================
-author: 
-date: 
+author: Grupo 3
+date: 11 de Junio de 2021
 autosize: true
 
 Importancia
@@ -35,14 +35,22 @@ DataSet: Fallecidos
 <p>¿Cómo influye la llegada de las vacunas en la cantidad de fallecidos por COVID?</p>
 <img src="P2-figure/FFallecidos.png" width=700 height=432">
 <figcaption>El pico más alto de la cantidad de fallecidos fue obtenido durante este periodo.</figcaption>
+
+<figcaption>La máxima cantidad de fallecidos en un dia es 845.</figcaption>
+<figcaption>La mínima cantidad de fallecidos en un dia es 1.</figcaption>
+
+
 </div>
 
 DataSet: Fallecidos
 ========================================================
 <div align="center">
 <p>¿Será cierto que los adultos mayores son las personas que más fallecieron por COVID?</p>
-<img src="P2-figure/edad_fallecidos.jpg" width=700 height=432>
-<figcaption>Sí,es cierto. Las personas que más fallecieron tenían entre 60 y 80 años.</figcaption>
+<img src="P2-figure/FEdad.png" width=700 height=432>
+<figcaption>Las personas que más fallecieron tenían entre 60 y 80 años.</figcaption>
+<figcaption>La edad mínima de los fallecidos es 0.</figcaption>
+<figcaption>La edad máxima de los fallecidos es 117.</figcaption>
+
 </div>
 
 DataSet: Fallecidos
@@ -58,7 +66,9 @@ DataSet: Fallecidos
 <div align="center">
 <p>¿Es cierto que los departamentos del Norte tienen la mayor cantidad de fallecidos por COVID?</p>
 <img src="P2-figure/FDepartamento.png" width=700 height=432>
-<figcaption>Lima es la ciudad con mayor cantidad de fallecidos por COVID</figcaption>
+<figcaption>Lima es el departamento con mayor cantidad de fallecidos por COVID</figcaption>
+<figcaption>Amazonas es el departamento con menor cantidad de fallecidos.</figcaption>
+
 </div>
 
 DataSet: Proceso de Vacunacion
@@ -66,7 +76,9 @@ DataSet: Proceso de Vacunacion
 <div align="center">
 <p></p>
 <img src="P2-figure/FVacunaEdad.png" width=700 height=432 style="margin-top:100px">
-<figcaption> </figcaption>
+<figcaption>La mayor cantidad de vacunados en un día es 153066.</figcaption>
+<figcaption>La menor cantidad de vacunados en un día es 86.</figcaption>
+
 </div>
 
 DataSet: Proceso de Vacunacion
@@ -74,7 +86,7 @@ DataSet: Proceso de Vacunacion
 <div align="center">
 <p>¿Es cierto que el género de la mayor cantidad de personas vacunadas es el mismo que de las personas fallecidas?</p>
 <img src="P2-figure/VSexo.png" width=700 height=432>
-<figcaption>No, observamos que la mayor cantidad de personas vacunadas son mujeres.</figcaption>
+<figcaption>La mayor cantidad de personas vacunadas son mujeres.</figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
@@ -82,7 +94,7 @@ DataSet: Proceso de Vacunacion
 <div align="center">
 <p>¿Existe la misma cantidad de dosis aplicadas en las personas vacunadas del Perú?</p>
 <img src="P2-figure/VDosis.png" width=700 height=432>
-<figcaption>No, la mayor cantidad de dosis aplicadas es la primera.</figcaption>
+<figcaption>La mayor cantidad de dosis aplicadas es la primera.</figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
@@ -91,6 +103,7 @@ DataSet: Proceso de Vacunacion
 <p>¿Será el mayor fabricante de vacunas del mundo (AstraZeneca) el que distribuye mayor cantidad de vacunas al Perú?</p>
 <img src="P2-figure/VFabricantes.png" width=700 height=432>
 <figcaption>El fabricante que más cantidad de vacunas distribuye al Perú es Pfizer.</figcaption>
+<figcaption>El fabricante que menos cantidad de vacunas distribuye al Perú es Astrazeneca.</figcaption>
 </div>
 
 DataSet: Proceso de Vacunacion
@@ -98,7 +111,8 @@ DataSet: Proceso de Vacunacion
 <div align="center">
 <p>¿Es cierto que el departamento con la mayor cantidad de personas vacunadas es el mismo que de las personas fallecidas?</p>
 <img src="P2-figure/VDepartamentos.png" width=700 height=432>
-<figcaption>Si, es cierto que el departamento con mayor cantidad de personas vacunadas es Lima.</figcaption>
+<figcaption>El departamento con mayor cantidad de personas vacunadas es Lima.</figcaption>
+<figcaption>El departamento con menor cantidad de personas vacunadas es Amazonas.</figcaption>
 </div>
 
 ========================================================
@@ -106,6 +120,29 @@ DataSet: Proceso de Vacunacion
 <h2 style="margin:250px 0 20px 0;font-size:400%;">Patrones</h2>
 </div>
 
+Patrones
+========================================================
+<div align="center">
+<p></p>
+<img src="P2-figure/pFallecidosCallao.png" width=700 height=432>
+<figcaption></figcation>
+</div>
+
+Patrones
+========================================================
+<div align="center">
+<p></p>
+<img src="P2-figure/pFallecidosUcayal.png" width=700 height=432>
+<figcaption></figcation>
+</div>
+
+Patrones
+========================================================
+<div align="center">
+<p></p>
+<img src="P2-figure/pFallecidosDios.png" width=700 height=432>
+<figcaption></figcation>
+</div>
 
 ========================================================
 <div align="center">
@@ -152,7 +189,68 @@ Modelos de Variable Aleatoria
 <h2 style="margin:250px 0 20px 0;font-size:400%;">Relaciones</h2>
 </div>
 
+Relaciones
+========================================================
+<div align="center">
+<p>Cantidad de fallecidos en la 2da ola por etapa de vida x Cantidad de vacunados en la 2da ola por etapa de vida</p>
+<img src="P2-figure/rMayor.png" width=700 height=432>
+<figcaption>Adultos Mayores - Correlación: -0.5704937</figcation>
+</div>
 
+Relaciones
+========================================================
+<div align="center">
+<p>Cantidad de fallecidos en la 2da ola por etapa de vida x Cantidad de vacunados en la 2da ola por etapa de vida</p>
+<img src="P2-figure/rAdulto.png" width=700 height=432>
+<figcaption>Adultos - Correlación: 0.1306875</figcation>
+</div>
+
+Relaciones
+========================================================
+<div align="center">
+<p>Cantidad de fallecidos en la 2da ola por etapa de vida x Cantidad de vacunados en la 2da ola por etapa de vida</p>
+<img src="P2-figure/rJoven.png" width=700 height=432>
+<figcaption>Jóvenes - Correlación: 0.04970341</figcation>
+</div>
+
+Relaciones
+========================================================
+<div align="center">
+<p>Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con más vacunados</p>
+<img src="P2-figure/cantidadFallecidos2ola.png" width=700 height=432>
+<figcaption>Lima, es la ciudad con más fallecidos - Correlación: -0.4668205</figcation>
+</div>
+
+Relaciones
+========================================================
+<div align="center">
+<p>Cantidad de vacunados por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con más vacunados</p>
+<img src="P2-figure/cantidadVacunados2ola.png" width=700 height=432>
+<figcaption>Lima, es la ciudad con más vacunados - Correlación: -0.4668205<</figcation>
+</div>
+
+Relaciones
+========================================================
+<div align="center">
+<p>Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con menos vacunados</p>
+<img src="P2-figure/cantidadFallecidos2olaDios.png" width=700 height=432>
+<figcaption>Madre de Dios, es la ciudad con menos vacunados - Correlaccón: -0.1124028</figcation>
+</div>
+
+
+Relaciones
+========================================================
+<div align="center">
+<p>Cantidad de vacunados por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con menos vacunados</p>
+<img src="P2-figure/cantidadVacunados2olaDios.png" width=700 height=432>
+<figcaption>Madre de Dios, es la ciudad con menos vacunados - Correlaccón: -0.1124028</figcation>
+</div>
+
+========================================================
+<div align="center">
+<h2 style="margin:250px 0 20px 0;font-size:400%;">Gracias</h2>
+<p>¿Preguntas?</p>
+</div>
 
 
 

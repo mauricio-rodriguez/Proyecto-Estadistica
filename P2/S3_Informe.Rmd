@@ -536,8 +536,8 @@ cor(DFvac2daOlaLima$Freq, DFfall2daOlaLima$Freq)
 Distribución de los vacunados y fallecidos en Lima en la segunda Ola
 ```{r}
 # TODO arreglar grafica para que se vean las dos juntas
-scatter.smooth(DFvac2daOlaLima)
-scatter.smooth(DFfall2daOlaLima)
+scatter.smooth(DFvac2daOlaLima, main="Cantidad de vacunados en Lima en la 2da Ola", xlab="Fecha de vacunación", ylab="Frecuencia")
+scatter.smooth(DFfall2daOlaLima, main="Cantidad de fallecidos en Lima en la 2da Ola", xlab="Fecha de fallecmiento", ylab="Frecuencia")
 ```
 
 
@@ -613,6 +613,6 @@ cor(DFfall2daOlaMadDiosComplete$CANTIDAD, DFvac2daOlaMadDiosComplete$CANTIDAD)
 Distribución de los vacunados y fallecidos en Madre de Dios en la segunda Ola
 ```{r}
 # TODO arreglar grafica para que se vean las dos juntas
-scatter.smooth(DFfall2daOlaMadDiosComplete)
-scatter.smooth(DFvac2daOlaMadDiosComplete)
+scatter.smooth(DFfall2daOlaMadDiosComplete, main="Cantidad de vacunados en Madre de Dios en la 2da Ola", xlab="Fecha de vacunación", ylab="Frecuencia")
+scatter.smooth(DFvac2daOlaMadDiosComplete, main="Cantidad de fallecidos en Madre de Dios en la 2da Ola", xlab="Fecha de fallecidos", ylab="Frecuencia")
 ```
