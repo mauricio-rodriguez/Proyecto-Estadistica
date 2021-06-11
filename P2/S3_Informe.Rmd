@@ -39,6 +39,23 @@ library(viridis)
 library(lubridate)
 ``` 
 
+Utilies
+```{r}
+# Verifica si es que la variable es integer(0) o no
+fun_int0 <- function(my_data) {    # Create user-defined function
+ 
+  if(length(my_data) == 0 & is.integer(my_data)) {
+ 
+    return(FALSE)
+# [1] "The data object is integer(0)."
+ 
+  } else {
+ 
+    return(TRUE)
+# [1] "The data object is NOT integer(0)."
+  }
+}
+```
 # Asignar DF's con los datos RAW de los archivos
 ```{r}
 DFFallecidosRAW <- read_csv("fallecidos.csv")
@@ -129,7 +146,7 @@ ggplot(data = DFFallecidosCLEAN, aes(y=DEPARTAMENTO)) +
 
 ### FECHA_VACUNACION x EDAD
 ```{r}
-ggplot(DFVacunadosCLEAN, aes(FECHA_VACUNACION, EDAD)) + geom_point()
+
 ```
 
 
@@ -279,6 +296,9 @@ Si, es cierto que el departamento con mayor cantidad de personas vacunadas es Li
 # Relaciones entre variables
 
 ## Primera relación
+### Cantidad de fallecidos en la 2da ola por etapa de vida x Cantidad de vacunados en la 2da ola por etapa de vida
+
+Utilities
 ```{r echo=FALSE}
 getEtapa <- function(edad) 
 {
@@ -286,21 +306,100 @@ getEtapa <- function(edad)
 }
 ```
 
+Etapas de vida
+Niños(0-11 años)
+Adolescentes (12 - 17 años)
+Jóvenes(18 - 29 años)
+Adultos (30 -59 años)
+Adulto Mayor(60 a más)
+
+Creamos dataset cantidad de fallecidos agrupados por etapa de vida
 ```{r echo=FALSE}
-na.exclude(DFVacunadosCLEAN) %>% mutate(ETAPA = getEtapa(EDAD))%>% group_by(ETAPA,FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n)%>% filter(FECHA_VACUNACION>="2021-01-13")
+na.exclude(DFVacunadosCLEAN) %>% mutate(ETAPA = getEtapa(EDAD))%>% group_by(ETAPA,FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n)%>% filter(FECHA_VACUNACION>="2021-01-13") -> DFVacEtVida
 
 na.exclude(DFFallecidosCLEAN) %>% mutate(ETAPA= getEtapa(EDAD) ) %>% group_by(ETAPA,FECHA_FALLECIMIENTO) %>% summarize(n = n()) %>%
-  arrange(FECHA_FALLECIMIENTO,n) %>% filter(FECHA_FALLECIMIENTO>="2021-01-13")
+  arrange(FECHA_FALLECIMIENTO,n) %>% filter(FECHA_FALLECIMIENTO>="2021-01-13") -> DFFallEtVida
+```
+
+Para adultos mayores
+```{r echo=FALSE}
+DFFallEtVida %>% filter(ETAPA == "Adulto Mayor") %>% 
+  filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdulMay2daOla
+DFVacEtVida %>% filter(ETAPA == "Adulto Mayor") %>%
+  filter(FECHA_VACUNACION < "2021-06-08")-> DFVacAdulMay2daOla
+```
+
+```{r}
+scatter.smooth(x = DFFallAdulMay2daOla$FECHA_FALLECIMIENTO, y = DFFallAdulMay2daOla$n)
+scatter.smooth(x = DFVacAdulMay2daOla$FECHA_VACUNACION, y = DFVacAdulMay2daOla$n)
+```
+
+```{r}
+cor(DFFallAdulMay2daOla$n, DFVacAdulMay2daOla$n)
+```
+
+Para adultos 
+```{r echo=FALSE}
+DFFallEtVida %>% filter(ETAPA == "Adulto") %>% 
+  filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdul2daOla
+DFVacEtVida %>% filter(ETAPA == "Adulto") %>%
+  filter(FECHA_VACUNACION < "2021-06-08")-> DFVacAdul2daOla
+```
+
+```{r}
+scatter.smooth(x = DFFallAdul2daOla$FECHA_FALLECIMIENTO, y = DFFallAdul2daOla$n)
+scatter.smooth(x = DFVacAdul2daOla$FECHA_VACUNACION, y = DFVacAdul2daOla$n)
+```
+
+```{r}
+cor(DFFallAdul2daOla$n, DFVacAdul2daOla$n)
+```
+
+
+Para jovenes 
+```{r echo=FALSE}
+DFFallEtVida %>% filter(ETAPA == "Joven") %>% 
+  filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallJov2daOla
+
+# Limpiamos los datos
+s <- as.Date("2021-02-09")
+e <- as.Date("2021-06-06")
+daysComplete <- seq(from=s, to=e, by=1)
+fallComplete <- c()
+theDate <- s
+while (theDate <= e){
+  toSearch <- grep(theDate, DFFallJov2daOla$FECHA_FALLECIMIENTO)
+  if(!fun_int0(toSearch)){
+    fallComplete <- c(fallComplete, 0)
+  } else {
+    fallComplete <- c(fallComplete, DFFallJov2daOla$n[toSearch])
+  }
+  theDate <- theDate + 1 
+}
+# dataset final de vacunados en la segunda ola completo
+DFFallJov2daOla <- data.frame(FECHA_FALLECIMIENTO=daysComplete, 
+                              n=fallComplete)
+
+DFVacEtVida %>% filter(ETAPA == "Joven") %>%
+  filter(FECHA_VACUNACION <= "2021-06-06")-> DFVacJov2daOla
+```
+
+```{r}
+scatter.smooth(x = DFFallJov2daOla$FECHA_FALLECIMIENTO, y = DFFallJov2daOla$n)
+scatter.smooth(x = DFVacJov2daOla$FECHA_VACUNACION, y = DFVacJov2daOla$n)
+```
+
+```{r}
+cor(DFFallJov2daOla$n, DFVacJov2daOla$n)
 ```
 
 ## Segunda relación
 ### Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con más vacunados
 
-Calculamos las regiones más vacunados y menos vacunados
+Calculamos las regiones más vacunados
 ```{r echo=FALSE}
 table(DFVacunadosCLEAN$DEPARTAMENTO)
 which.max(table(DFVacunadosCLEAN$DEPARTAMENTO))
-which.min(table(DFVacunadosCLEAN$DEPARTAMENTO))
 ```
 Vemos que Lima es el departamento que tiene más vacunados, y Madre de Dios es que el tiene menos vacunados.
 
@@ -335,23 +434,11 @@ scatter.smooth(DFfall2daOlaLima)
 ## Tercera relación
 ### Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con menos vacunados
 
-Utilies
-```{r}
-# Verifica si es que la variable es integer(0) o no
-fun_int0 <- function(my_data) {    # Create user-defined function
- 
-  if(length(my_data) == 0 & is.integer(my_data)) {
- 
-    return(FALSE)
-# [1] "The data object is integer(0)."
- 
-  } else {
- 
-    return(TRUE)
-# [1] "The data object is NOT integer(0)."
-  }
-}
+```{r echo=FALSE}
+table(DFVacunadosCLEAN$DEPARTAMENTO)
+which.min(table(DFVacunadosCLEAN$DEPARTAMENTO))
 ```
+Vemos que Madre de Dios es el departamento que menos vacunados.
 
 Para Madre de Dios
 ```{r}
