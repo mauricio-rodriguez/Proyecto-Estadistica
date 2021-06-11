@@ -1,7 +1,7 @@
 ---
 author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salazar, Frings Barrueta" 
 title: "Impacto del proceso de vacunación contra la Covid-19"
-date: "May 22th 2021"
+date: "June 11th 2021"
 output:
   html_notebook:
     toc: yes
@@ -15,7 +15,7 @@ output:
     df_print: paged
 ---
 #Instalacion de librerias
-```{r}
+```{r eval=FALSE, include=FALSE}
 install.packages("readr")
 install.packages("dplyr")
 install.packages ("ggplot2")
@@ -27,7 +27,7 @@ install.packages("viridis")
 ```
 
 # Cargar librerias 
-```{r}
+```{r warning=FALSE, include=FALSE}
 library(readr)
 library(dplyr)
 library (ggplot2)
@@ -39,8 +39,8 @@ library(viridis)
 library(lubridate)
 ``` 
 
-Utilies
-```{r}
+Utilities
+```{r warning=FALSE, include=FALSE}
 # Verifica si es que la variable es integer(0) o no
 fun_int0 <- function(my_data) {    # Create user-defined function
  
@@ -56,47 +56,8 @@ fun_int0 <- function(my_data) {    # Create user-defined function
   }
 }
 ```
-
-```{r}
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  library(grid)
-
-  # Make a list from the ... arguments and plotlist
-  plots <- c(list(...), plotlist)
-
-  numPlots = length(plots)
-
-  # If layout is NULL, then use 'cols' to determine layout
-  if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                    ncol = cols, nrow = ceiling(numPlots/cols))
-  }
-
- if (numPlots==1) {
-    print(plots[[1]])
-
-  } else {
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
-}
-```
-
 # Asignar DF's con los datos RAW de los archivos
-```{r}
+```{r echo=TRUE}
 DFFallecidosRAW <- read_csv("fallecidos.csv")
 DFVacunadosRAW <- read_csv("vacunados.csv")
 ```
@@ -135,18 +96,18 @@ DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
 ## Dataset FALLECIDOS
 
 ### FECHA_FALLECIMIENTO
-```{r, echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 DFFechaFallecidos <- as.data.frame(table(DFFallecidosCLEAN$FECHA_FALLECIMIENTO))
 ggplot(data = DFFallecidosCLEAN, aes(FECHA_FALLECIMIENTO)) + 
   geom_freqpoly() + 
-  scale_x_date(date_minor_breaks = "1 day", date_labels = "%b %d") +
+  scale_x_date(date_breaks = "2 month", labels = date_format("%b %Y"), limits = as.Date(c('2020-03-03','2021-06-07'))) +
   labs(title = "Polígono de dispersión de fallecidos por COVID-19",
        x = "Fecha",
        y = "Cantidad de fallecidos")
 ```
 
 ### EDAD
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) + 
   geom_histogram(aes(fill=..count..)) + 
   scale_fill_viridis("Frecuencia", discrete=F) + 
@@ -156,7 +117,7 @@ ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) +
 ```
 
 ### SEXO
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 options(scipen=999)
 barplot(table(DFFallecidosCLEAN$SEXO),
         main="Sexo de personas fallecidas por COVID-19",
@@ -171,7 +132,7 @@ barplot(table(DFFallecidosCLEAN$SEXO),
 ### DEPARTAMENTO
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 # Podemos mejorar con una gráfica por cada departamento
 ggplot(data = DFFallecidosCLEAN, aes(y=DEPARTAMENTO)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
@@ -184,8 +145,16 @@ ggplot(data = DFFallecidosCLEAN, aes(y=DEPARTAMENTO)) +
 ## Dataset PROCESO DE VACUNACIÓN
 
 ### FECHA_VACUNACION x EDAD
-```{r}
-
+```{r echo=FALSE, warning=FALSE}
+DFFechaVacunados <- as.data.frame(table(DFVacunadosCLEAN$FECHA_VACUNACION))
+ggplot(data = DFVacunadosCLEAN, aes(x= FECHA_VACUNACION, y = EDAD)) + 
+  geom_line(color="indianred3", size=1) +
+  geom_smooth()+ 
+  scale_x_date(date_breaks = "1 month", labels = date_format("%b %Y"), limits = as.Date(c('2021-02-09','2021-06-07'))) +
+  labs(title = "Polígono de frecuencia de fecha de vacunacion y edad contra la COVID-19",
+       x = "Fecha de vacunacion",
+       y = "Edad") +
+  ylim(0,120)
 ```
 
 
@@ -238,57 +207,62 @@ ggplot(data = DFVacunadosCLEAN, aes(y=DEPARTAMENTO)) +
 # CODE
 #
 #
-max(DFVacunadosCLEAN$FECHA_VACUNACION)
 
 ```
 
 
 # Variables aleatorias
 ## Qué tan probable es que eligiendo una persona al azar de nuestra muestra, esta sea un adulto mayor de Lima y haya sido vacunado con el fabricante Pfizer. (No es equiprobable)
-```{r}
+```{r echo=FALSE}
 E1<-(DFVacunadosCLEAN$GRUPO=="ADULTO MAYOR")
 E2<-(DFVacunadosCLEAN$DEPARTAMENTO=="LIMA")
 E3<-(DFVacunadosCLEAN$FABRICANTE=="PFIZER")
 
-sum(E1&E2&E3)/nrow(DFVacunadosCLEAN)
+result <-sum(E1&E2&E3)/nrow(DFVacunadosCLEAN)
+result
 ```
 
 ## Qué tan probable es que en UCAYALI exista un adulto mayor con 2 dosis y de género masculino
-```{r}
+```{r echo=FALSE}
 E1<-(DFVacunadosCLEAN$DEPARTAMENTO == "UCAYALI")
 E2<-(DFVacunadosCLEAN$GRUPO == "ADULTO MAYOR")
 E3<-(DFVacunadosCLEAN$SEXO == "MASCULINO")
 E4<-(DFVacunadosCLEAN$DOSIS == 2)
-sum(E1&E2&E3&E4)/nrow(DFVacunadosCLEAN)
+result <-sum(E1&E2&E3&E4)/nrow(DFVacunadosCLEAN)
+result
 ```
 
 ## Qué tan probable es que eligiendo una persona al azar esta sea una mujer y tenga 1 dosis
-```{r}
+```{r echo=FALSE}
 E1<-(DFVacunadosCLEAN$SEXO=="FEMENINO")
 E2<-(DFVacunadosCLEAN$DOSIS==1)
 
-sum(E1&E2)/nrow(DFVacunadosCLEAN)
+result <-sum(E1&E2)/nrow(DFVacunadosCLEAN)
+result
 ```
 
 ## Qué tan probable es que el fabricante de una vacuna aplicada sea sinopharm
-```{r}
+```{r echo=FALSE}
 E1 <- (DFVacunadosCLEAN$FABRICANTE=="SINOPHARM")
 E2 <- nrow(DFVacunadosCLEAN)
-round(sum(E1)/E2, digits=2)
+result <- round(sum(E1)/E2, digits=2)
+result
 ```
 
 
 ## Qué tan probable es que el género de una persona fallecida sea hombre
-```{r}
+```{r echo=FALSE}
 E1 <- (DFFallecidosCLEAN$SEXO=="MASCULINO")
 E2 <- nrow(DFFallecidosCLEAN)
-round(sum(E1)/E2, digits=2)
+result <-round(sum(E1)/E2, digits=2)
+result
 ```
 ## Qué tan probable es que la etapa de vida de una persona fallecida sea adulto mayor(60 a más)
-```{r}
+```{r echo=FALSE}
 E1 <- (DFFallecidosCLEAN$EDAD>=60)
 E2 <- nrow(DFFallecidosCLEAN)
-round(sum(E1,na.rm=TRUE)/E2, digits=2)
+result <-round(sum(E1,na.rm=TRUE)/E2, digits=2)
+result
 ```
 
 

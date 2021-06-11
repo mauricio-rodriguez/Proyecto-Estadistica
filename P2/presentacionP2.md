@@ -8,19 +8,19 @@ Importancia
 =========================================================
 El estudio busca sensibilizar e informar a la población sobre los efectos generados por el proceso de vacunación contra la Covid-19 en las regiones del Perú, por lo que se considera un tema de interés público debido al contexto actual.
 <div align="center">
-<img src="../presentacionP1-figure/imagenVacunas.jpg" width=600 height=400>
+<img src="imgs/imagenVacunas.jpg" width=600 height=400>
 </div>
 
 Obtención de los datos
 ========================================================
 Plataforma Nacional de Datos Abiertos
 - [Datos sobre vacunados](https://www.datosabiertos.gob.pe/dataset/vacunaci%C3%B3n-contra-covid-19-ministerio-de-salud-minsa-0): 
-  - Datos faltantes:  127931
-  - Observaciones completas: 2671786
-  - Porcentaje de observaciones incompletas: 4.57
+  - Datos faltantes:  127931 -> 0
+  - Observaciones completas: 2671786 -> 4571604
+  - Porcentaje de observaciones incompletas: 4.57 -> 0
 - [Datos sobre fallecidos](https://www.datosabiertos.gob.pe/dataset/fallecidos-por-covid-19-ministerio-de-salud-minsa/resource/4b7636f3-5f0c-4404-8526):
-  - Datos faltantes: 0
-  - Observaciones completas: 66770
+  - Datos faltantes: 0 -> 1
+  - Observaciones completas: 66770 -> 187157
   
   
 Clasificación de las variables del estudio
@@ -51,13 +51,57 @@ DEPARTAMENTO | C. Nominal | Departamentos del Perú
 
 Figuras de Mérito
 ========================================================
-Tabla Fallecidos: 
+<div align="center">
+<img src="P2-figure/FFallecidos.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/edad_fallecidos.jpg" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/FSexo.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/FDepartamento.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VSexo.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VDosis.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VFabricantes.png" width=700 height=432>
+</div>
+
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VDepartamentos.png" width=700 height=432>
+</div>
+
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VDepartamentos.png" width=700 height=432>
+</div>
 
 
 
