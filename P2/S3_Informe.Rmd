@@ -14,6 +14,18 @@ output:
     number_sections: yes
     theme: journal
 ---
+#Instalacion de librerias
+```{r}
+install.packages("readr")
+install.packages("dplyr")
+install.packages ("ggplot2")
+install.packages("stringr")
+install.packages("scales")
+install.packages("lubridate")
+install.packages("modeest")
+install.packages("viridis")
+```
+
 # Cargar librerias 
 ```{r}
 library(readr)
@@ -128,7 +140,7 @@ barplot(table(DFVacunadosCLEAN$SEXO),
         main="Sexo de personas vacunadas por COVID-19",
         col=c("orange", "blue"),
         legend.text=c("Mujeres", "Hombres"),
-        ylim = c(0,2000000),
+        ylim = c(0,3000000),
         ylab = "Frecuencia"
 )
 ```
@@ -155,15 +167,13 @@ ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) +
 
 ### DEPARTAMENTO
 ```{r, echo=FALSE}
-ggplot(data = DFVacunadosCLEAN, aes(x=DEPARTAMENTO)) + 
+ggplot(data = DFVacunadosCLEAN, aes(y=DEPARTAMENTO)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
   scale_fill_viridis("Frecuencia", discrete=F) + 
   labs(title="Departamentos de vacunados por COVID-19",
-       x="Departamento",
-       y="Frecuencia")
-
+       x="Frecuencia",
+       y="Departamento")
 ```
-
 
 # Patrones y descripcion del conjunto de datos
 ```{r}
@@ -172,17 +182,59 @@ ggplot(data = DFVacunadosCLEAN, aes(x=DEPARTAMENTO)) +
 # CODE
 #
 #
+max(DFVacunadosCLEAN$FECHA_VACUNACION)
+
 ```
 
 
 # Variables aleatorias
+## Qué tan probable es que eligiendo una persona al azar de nuestra muestra, esta sea un adulto mayor de Lima y haya sido vacunado con el fabricante Pfizer. (No es equiprobable)
 ```{r}
-#
-#
-# CODE
-#
-#
+E1<-(DFVacunadosCLEAN$GRUPO=="ADULTO MAYOR")
+E2<-(DFVacunadosCLEAN$DEPARTAMENTO=="LIMA")
+E3<-(DFVacunadosCLEAN$FABRICANTE=="PFIZER")
+
+sum(E1&E2&E3)/nrow(DFVacunadosCLEAN)
 ```
+
+## Qué tan probable es que en UCAYALI exista un adulto mayor con 2 dosis y de género masculino
+```{r}
+E1<-(DFVacunadosCLEAN$DEPARTAMENTO == "UCAYALI")
+E2<-(DFVacunadosCLEAN$GRUPO == "ADULTO MAYOR")
+E3<-(DFVacunadosCLEAN$SEXO == "MASCULINO")
+E4<-(DFVacunadosCLEAN$DOSIS == 2)
+sum(E1&E2&E3&E4)/nrow(DFVacunadosCLEAN)
+```
+
+## Qué tan probable es que eligiendo una persona al azar esta sea una mujer y tenga 1 dosis
+```{r}
+E1<-(DFVacunadosCLEAN$SEXO=="FEMENINO")
+E2<-(DFVacunadosCLEAN$DOSIS==1)
+
+sum(E1&E2)/nrow(DFVacunadosCLEAN)
+```
+
+## Qué tan probable es que el fabricante de una vacuna aplicada sea sinopharm
+```{r}
+E1 <- (DFVacunadosCLEAN$FABRICANTE=="SINOPHARM")
+E2 <- nrow(DFVacunadosCLEAN)
+round(sum(E1)/E2, digits=2)
+```
+
+
+## Qué tan probable es que el género de una persona fallecida sea hombre
+```{r}
+E1 <- (DFFallecidosCLEAN$SEXO=="MASCULINO")
+E2 <- nrow(DFFallecidosCLEAN)
+round(sum(E1)/E2, digits=2)
+```
+## Qué tan probable es que la etapa de vida de una persona fallecida sea adulto mayor(60 a más)
+```{r}
+E1 <- (DFFallecidosCLEAN$EDAD>=60)
+E2 <- nrow(DFFallecidosCLEAN)
+round(sum(E1,na.rm=TRUE)/E2, digits=2)
+```
+
 
 # Hipótesis
 
