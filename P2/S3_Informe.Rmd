@@ -224,6 +224,8 @@ ggplot(data = DFMadreDeDiosV, aes(FECHA_VACUNACION)) +
        y = "Cantidad de vacunados")
 ```
 
+## Comparar entre los departamentos que tienen más y menos fallecidos para visualizar si es que existe algún patrón.
+Como podemos observar en los siguientes polígonos de dispersión existe un patrón entre la cantidad de fallecidos de cada departamento. El patrón se presenta en forma de 2 puntos máximos los cuales alcanza la frecuencia de vacunados por departamento. Siendo el primer punto máximo entre abril y octubre de 2020, consolidando la idea de primera ola. Además del segundo punto máximo entre febrero y junio de 2021, consolidando la idea de segunda ola.
 ```{r echo=FALSE, warning=FALSE}
 DFFallecidosCLEAN %>% select(FECHA_FALLECIMIENTO) %>% filter(DFFallecidosCLEAN$DEPARTAMENTO=="CALLAO")->DFCallaoF
 DFFallecidosCallao <- as.data.frame(table(DFCallaoF$FECHA_FALLECIMIENTO))
