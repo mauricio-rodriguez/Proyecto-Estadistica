@@ -223,6 +223,26 @@ prop_solo_mujeres<-promedio_vacunas_por_dia*prop_mujeres
 prop_solo_hombres+prop_solo_mujeres
 ```
 
+## Qué tan probable es que el fabricante de una vacuna aplicada sea sinopharm
+```{r}
+E1 <- (DFVacunadosCLEAN$FABRICANTE=="SINOPHARM")
+E2 <- nrow(DFVacunadosCLEAN)
+round(sum(E1)/E2, digits=2)
+```
+
+
+## Qué tan probable es que el género de una persona fallecida sea hombre
+```{r}
+E1 <- (DFFallecidosCLEAN$SEXO=="MASCULINO")
+E2 <- nrow(DFFallecidosCLEAN)
+round(sum(E1)/E2, digits=2)
+```
+## Qué tan probable es que la etapa de vida de una persona fallecida sea adulto mayor(60 a más)
+```{r}
+E1 <- (DFFallecidosCLEAN$EDAD>=60)
+E2 <- nrow(DFFallecidosCLEAN)
+round(sum(E1,na.rm=TRUE)/E2, digits=2)
+```
 
 
 # Hipótesis
