@@ -51,13 +51,57 @@ DEPARTAMENTO | C. Nominal | Departamentos del Perú
 
 Figuras de Mérito
 ========================================================
-Tabla Fallecidos: 
+<div align="center">
+<img src="P2-figure/FFallecidos.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/edad_fallecidos.jpg" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/FSexo.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/FDepartamento.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VSexo.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VDosis.png" width=700 height=432>
+</div>
 
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VFabricantes.png" width=700 height=432>
+</div>
+
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VDepartamentos.png" width=700 height=432>
+</div>
+
+Figuras de Mérito
+========================================================
+<div align="center">
+<img src="P2-figure/VDepartamentos.png" width=700 height=432>
+</div>
 
 
 
