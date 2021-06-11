@@ -46,3 +46,4 @@ vignettes/*.pdf
 S3_Fuente/
 S3_Fuente.zip
 
+*.nb.html
