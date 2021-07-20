@@ -1,0 +1,30 @@
+---
+author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salazar, Frings Barrueta" 
+title: "Impacto del proceso de vacunación contra la Covid-19"
+date: "June 11th 2021"
+output:
+  html_notebook:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: yes
+    theme: journal
+  html_document:
+    toc: yes
+    df_print: paged
+---
+
+
+# Cargamos librerías
+```{r}
+library(readr)
+library(dplyr)
+```
+
+# Asignar df's con los datos raw de los archivos
+```{r echo=true}
+dffallecidosraw <- read_csv("fallecidos_covid.csv")
+dfvacunadosraw <- read_csv("vacunas_covid.csv")
+```
+
