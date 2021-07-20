@@ -20,11 +20,44 @@ output:
 ```{r}
 library(readr)
 library(dplyr)
+library(stringr)
 ```
 
 # Asignar df's con los datos raw de los archivos
 ```{r echo=true}
-dffallecidosraw <- read_csv("fallecidos_covid.csv")
-dfvacunadosraw <- read_csv("vacunas_covid.csv")
+DFFallecidosRAW <- read_csv("fallecidos_covid.csv")
+DFVacunadosRAW <- read_csv("vacunas_covid.csv")
+```
+
+# Limpieza tabla DFVacunados
+```{r echo = FALSE}
+DFVacunadosCLEAN<-subset(DFVacunadosRAW,select = -c(FECHA_CORTE,UUID,DIRESA,PROVINCIA,DISTRITO))
+DFVacunadosCLEAN %>% rename("GRUPO"="GRUPO_RIESGO")-> DFVacunadosCLEAN
+
+vector<-DFVacunadosCLEAN$FECHA_VACUNACION
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFVacunadosCLEAN$FECHA_VACUNACION<- lubridate::ymd(date)
+```
+
+# Limpieza tabla DFFallecidos
+```{r echo = FALSE}
+DFFallecidosCLEAN<-subset(DFFallecidosRAW,select = -c(FECHA_CORTE,UUID,UBIGEO,PROVINCIA,DISTRITO))
+
+DFFallecidosCLEAN %>% rename("EDAD"= "EDAD_DECLARADA")-> DFFallecidosCLEAN
+
+vector<-DFFallecidosCLEAN$FECHA_FALLECIMIENTO
+dia<-str_sub(vector,-2,-1) #dia
+mes<-str_sub(vector,-4,-3) #mes
+anio<-str_sub(vector, end = 4) #anio
+date = paste(anio,"-",mes,"-",dia, sep = "")
+DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
+DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINADO")
+```
+
+```{r}
+which.max(DFVacunadosCLEAN$FECHA_VACUNACION)
 ```
 

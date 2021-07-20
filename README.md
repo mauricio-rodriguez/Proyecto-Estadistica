@@ -5,5 +5,5 @@
 
 ## detalles
 
-1. El archivo de fallecidos debe estar nombrado como fallecidos.csv y el de la data completa de vacunación debe estar nombrado como vacunados.csv
-1. Abrir el archivo de fallecidos en notepad y reemplazar todos los ; por , 
+1. El archivo de fallecidos debe estar nombrado como fallecidos_covid.csv y el de la data completa de vacunación debe estar nombrado como vacunados_covid.csv
+1. Abrir el archivo de fallecidos en notepad y reemplazar todos los ';' por ','. 
