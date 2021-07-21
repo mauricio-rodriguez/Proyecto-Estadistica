@@ -57,7 +57,5 @@ DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
 DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINADO")
 ```
 
-```{r}
-which.max(DFVacunadosCLEAN$FECHA_VACUNACION)
-```
+
 
