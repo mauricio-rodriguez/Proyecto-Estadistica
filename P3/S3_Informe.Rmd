@@ -21,6 +21,13 @@ output:
 library(readr)
 library(dplyr)
 library(stringr)
+library(ggplot2)
+library(stringr)
+library(scales)
+library(lubridate)
+library(modeest)
+library(viridis)
+library(lubridate)
 ```
 
 # Asignar df's con los datos raw de los archivos
@@ -55,7 +62,182 @@ anio<-str_sub(vector, end = 4) #anio
 date = paste(anio,"-",mes,"-",dia, sep = "")
 DFFallecidosCLEAN$FECHA_FALLECIMIENTO<- lubridate::ymd(date)
 DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINADO")
+DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINAD")
 ```
 
 
 
+
+
+#Gráficas
+### FECHA_FALLECIMIENTO
+```{r echo=FALSE, warning=FALSE}
+DFFechaFallecidos <- as.data.frame(table(DFFallecidosCLEAN$FECHA_FALLECIMIENTO))
+ggplot(data = DFFallecidosCLEAN, aes(FECHA_FALLECIMIENTO)) + 
+  geom_freqpoly() + 
+  scale_x_date(date_breaks = "2 month", labels = date_format("%b %Y"), limits = as.Date(c('2020-03-03','2021-07-14'))) +
+  labs(title = "Polígono de dispersión de fallecidos por COVID-19",
+       x = "Fecha",
+       y = "Cantidad de fallecidos")
+```
+
+
+### EDAD
+```{r, echo=FALSE, warning=FALSE}
+ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) + 
+  geom_histogram(aes(fill=..count..)) + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Edades de personas fallecidas por COVID-19",
+       x="Edad(años)",
+       y="Frecuencia")
+```
+
+
+### FECHA_VACUNACION x EDAD
+```{r echo=FALSE, warning=FALSE}
+DFFechaVacunados <- as.data.frame(table(DFVacunadosCLEAN$FECHA_VACUNACION))
+ggplot(data = DFVacunadosCLEAN, aes(x= FECHA_VACUNACION, y = EDAD)) + 
+  geom_line(color="indianred3", size=1) +
+  geom_smooth()+ 
+  scale_x_date(date_breaks = "1 month", labels = date_format("%b %Y"), limits = as.Date(c('2021-02-09','2021-07-14'))) +
+  labs(title = "Polígono de frecuencia de fecha de vacunacion y edad contra la COVID-19",
+       x = "Fecha de vacunacion",
+       y = "Edad") +
+  ylim(0,120)
+```
+
+
+### SEXO
+```{r, echo=FALSE, warning=FALSE}
+options(scipen=999)
+barplot(table(DFFallecidosCLEAN$SEXO),
+        main="Sexo de personas fallecidas por COVID-19",
+        col=c("orange", "blue"),
+        legend.text=c("Mujeres", "Hombres"),
+        ylim = c(0,150000),
+        ylab = "Frecuencia"
+)
+```
+
+
+
+
+### DEPARTAMENTO
+```{r, echo=FALSE, warning=FALSE}
+# Podemos mejorar con una gráfica por cada departamento
+ggplot(data = DFFallecidosCLEAN, aes(y=DEPARTAMENTO)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Departamentos de fallecidos por COVID-19",
+       x="Departamento",
+       y="Frecuencia")
+```
+
+
+
+
+### SEXO
+```{r, echo=FALSE}
+options(scipen=999)
+barplot(table(DFVacunadosCLEAN$SEXO),
+        main="Sexo de personas vacunadas por COVID-19",
+        col=c("orange", "blue"),
+        legend.text=c("Mujeres", "Hombres"),
+        ylim = c(0,6000000),
+        ylab = "Frecuencia"
+)
+```
+
+
+### DOSIS
+```{r, echo=FALSE}
+ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Dosis de vacunas por COVID-19",
+       x="Dosis",
+       y="Frecuencia")
+```
+
+
+### FABRICANTE
+```{r, echo=FALSE}
+ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Fabricantes de vacunas por COVID-19",
+       x="Fabricante",
+       y="Frecuencia")
+```
+
+
+### DEPARTAMENTO
+```{r, echo=FALSE}
+ggplot(data = DFVacunadosCLEAN, aes(y=DEPARTAMENTO)) + 
+  geom_histogram(aes(fill=..count..), stat = "count") + 
+  scale_fill_viridis("Frecuencia", discrete=F) + 
+  labs(title="Departamentos de vacunados por COVID-19",
+       x="Frecuencia",
+       y="Departamento")
+```
+
+
+
+
+#Numéricas 
+
+### Edad promedio de fallecidos por Covid-19
+```{r, echo=FALSE}
+round(mean(DFFallecidosCLEAN$EDAD), digits = 0)
+```
+
+### Rango de edad de personas fallecidas contra el Covid-19
+```{r, echo=FALSE}
+sprintf("Edad máxima: %s", max(DFFallecidosCLEAN$EDAD))
+sprintf("Edad mínima: %s", min(DFFallecidosCLEAN$EDAD))
+sprintf("Rango: %s", max(DFFallecidosCLEAN$EDAD) - min(DFFallecidosCLEAN$EDAD))
+```
+### Edad promedio de vacunados contra el Covid-19
+```{r, echo=FALSE}
+round(mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE), digits = 0)
+```
+
+### Rango de edad de personas vacunadas contra el Covid-19
+```{r, echo=FALSE}
+sprintf("Edad máxima: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+sprintf("Edad mínima: %s", min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+sprintf("Rango: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE) - min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
+```
+
+
+
+#### Maxima cantidad de fallecidos
+```{r}
+max(DFFechaFallecidos$Freq)
+```
+
+### Minima cantidad de fallecidos
+```{r}
+min(DFFechaFallecidos$Freq)
+```
+
+
+### Edad minima de los fallecidos
+```{r}
+max(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
+```
+
+### Edad máxima de los fallecidos
+```{r}
+min(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
+```
+
+
+### mayor cantidad de vacunados en un día
+```{r}
+max(DFFechaVacunados$Freq)
+```
+### menor cantidad de vacunados en un día
+```{r}
+min(DFFechaVacunados$Freq)
+```
