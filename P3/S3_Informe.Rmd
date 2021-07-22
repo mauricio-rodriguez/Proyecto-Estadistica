@@ -70,7 +70,7 @@ DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINAD")
 
 
 #Gráficas
-### FECHA_FALLECIMIENTO
+## FECHA_FALLECIMIENTO
 ```{r echo=FALSE, warning=FALSE}
 DFFechaFallecidos <- as.data.frame(table(DFFallecidosCLEAN$FECHA_FALLECIMIENTO))
 ggplot(data = DFFallecidosCLEAN, aes(FECHA_FALLECIMIENTO)) + 
@@ -82,7 +82,7 @@ ggplot(data = DFFallecidosCLEAN, aes(FECHA_FALLECIMIENTO)) +
 ```
 
 
-### EDAD
+## EDAD
 ```{r, echo=FALSE, warning=FALSE}
 ggplot(data = DFFallecidosCLEAN, aes(x=EDAD)) + 
   geom_histogram(aes(fill=..count..)) + 
@@ -162,6 +162,7 @@ ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) +
 
 ### FABRICANTE
 ```{r, echo=FALSE}
+DFVacunadosCLEAN<-filter(DFVacunadosCLEAN,FABRICANTE != "NA")
 ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
   scale_fill_viridis("Frecuencia", discrete=F) + 
@@ -191,18 +192,18 @@ ggplot(data = DFVacunadosCLEAN, aes(y=DEPARTAMENTO)) +
 round(mean(DFFallecidosCLEAN$EDAD), digits = 0)
 ```
 
-### Rango de edad de personas fallecidas contra el Covid-19
+### Rango de edad de personas fallecidas a causa de Covid-19
 ```{r, echo=FALSE}
 sprintf("Edad máxima: %s", max(DFFallecidosCLEAN$EDAD))
 sprintf("Edad mínima: %s", min(DFFallecidosCLEAN$EDAD))
 sprintf("Rango: %s", max(DFFallecidosCLEAN$EDAD) - min(DFFallecidosCLEAN$EDAD))
 ```
-### Edad promedio de vacunados contra el Covid-19
+### Edad promedio de vacunados contra Covid-19
 ```{r, echo=FALSE}
 round(mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE), digits = 0)
 ```
 
-### Rango de edad de personas vacunadas contra el Covid-19
+### Rango de edad de personas vacunadas contra Covid-19
 ```{r, echo=FALSE}
 sprintf("Edad máxima: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
 sprintf("Edad mínima: %s", min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
@@ -222,12 +223,12 @@ min(DFFechaFallecidos$Freq)
 ```
 
 
-### Edad minima de los fallecidos
+### Edad máxima de los fallecidos
 ```{r}
 max(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
 ```
 
-### Edad máxima de los fallecidos
+### Edad mínima de los fallecidos
 ```{r}
 min(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
 ```
