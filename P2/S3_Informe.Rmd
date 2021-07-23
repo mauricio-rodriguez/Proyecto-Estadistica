@@ -456,8 +456,10 @@ Para adultos mayores
 DFFallEtVida %>% filter(ETAPA == "Adulto Mayor") %>% 
   filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdulMay2daOla
 DFVacEtVida %>% filter(ETAPA == "Adulto Mayor") %>%
-  filter(FECHA_VACUNACION < "2021-06-08")-> DFVacAdulMay2daOla
+  filter(FECHA_VACUNACION < "2021-07-15")-> DFVacAdulMay2daOla
 ```
+
+
 
 ```{r}
 graph_1 <- ggplot(DFFallAdulMay2daOla, aes(x = FECHA_FALLECIMIENTO, y = n)) + 
@@ -475,16 +477,26 @@ graph_2 <- ggplot(DFVacAdulMay2daOla, aes(x = FECHA_VACUNACION, y = n)) +
 multiplot(graph_1, graph_2, cols=1)
 ```
 
+
+###Gráfica de regresión lineal Adultos Mayores
 ```{r}
-cor(DFFallAdulMay2daOla$n, DFVacAdulMay2daOla$n)
+plot(DFVacAdulMay2daOla$n, DFFallAdulMay2daOla$n, pch=20, col=rgb(0,0,0,0.2))
+lm1<- lm(DFFallAdulMay2daOla$n ~ DFVacAdulMay2daOla$n)
+abline(lm1, col = "red")
 ```
+```{r}
+summary(lm1)
+```
+
+
+
 
 Para adultos 
 ```{r echo=FALSE}
 DFFallEtVida %>% filter(ETAPA == "Adulto") %>% 
   filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdul2daOla
 DFVacEtVida %>% filter(ETAPA == "Adulto") %>%
-  filter(FECHA_VACUNACION < "2021-06-08")-> DFVacAdul2daOla
+  filter(FECHA_VACUNACION < "2021-07-14")-> DFVacAdul2daOla
 ```
 
 ```{r}
@@ -503,9 +515,21 @@ graph_2 <- ggplot(DFVacAdul2daOla, aes(x = FECHA_VACUNACION, y = n)) +
 multiplot(graph_1, graph_2, cols=1)
 ```
 
+
+###Gráfica de regresión lineal Adultos
 ```{r}
-cor(DFFallAdul2daOla$n, DFVacAdul2daOla$n)
+plot(DFVacAdul2daOla$n, DFFallAdul2daOla$n, pch=20, col=rgb(0,0,0,0.2))
+lm2<- lm(DFFallAdul2daOla$n ~ DFVacAdul2daOla$n)
+abline(lm2, col = "red")
 ```
+
+```{r}
+summary(lm2)
+```
+
+
+
+
 
 
 Para jovenes 
@@ -515,7 +539,7 @@ DFFallEtVida %>% filter(ETAPA == "Joven") %>%
 
 # Limpiamos los datos
 s <- as.Date("2021-02-09")
-e <- as.Date("2021-06-06")
+e <- as.Date("2021-07-14")
 daysComplete <- seq(from=s, to=e, by=1)
 fallComplete <- c()
 theDate <- s
@@ -533,7 +557,7 @@ DFFallJov2daOla <- data.frame(FECHA_FALLECIMIENTO=daysComplete,
                               n=fallComplete)
 
 DFVacEtVida %>% filter(ETAPA == "Joven") %>%
-  filter(FECHA_VACUNACION <= "2021-06-06")-> DFVacJov2daOla
+  filter(FECHA_VACUNACION <= "2021-07-14")-> DFVacJov2daOla
 ```
 
 ```{r}
@@ -552,9 +576,20 @@ graph_2 <- ggplot(DFVacJov2daOla, aes(x = FECHA_VACUNACION, y = n)) +
 multiplot(graph_1, graph_2, cols=1)
 ```
 
+
+###Gráfica de regresión lineal Jovenes
 ```{r}
-cor(DFFallJov2daOla$n, DFVacJov2daOla$n)
+plot(DFVacJov2daOla$n, DFFallJov2daOla$n, pch=20, col=rgb(0,0,0,0.2))
+lm3<- lm(DFFallJov2daOla$n ~ DFVacJov2daOla$n)
+abline(lm3, col = "red")
 ```
+
+```{r}
+summary(lm3)
+```
+
+
+
 
 ## Segunda relación
 ### Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con más vacunados
@@ -583,7 +618,7 @@ DFVacunadosCLEAN %>% select(DEPARTAMENTO, FECHA_VACUNACION) %>%
          FECHA_VACUNACION <= as.Date("2021-06-07")) -> vac2daOlaLima
 DFvac2daOlaLima <- as.data.frame(table(vac2daOlaLima$FECHA_VACUNACION), 
                               col.names = c("FECHAS", "CANT_VACUNADOS"))
-cor(DFvac2daOlaLima$Freq, DFfall2daOlaLima$Freq)
+
 ```
 
 Distribución de los vacunados y fallecidos en Lima en la segunda Ola
@@ -660,7 +695,6 @@ while (theDate <= e){
 DFvac2daOlaMadDiosComplete <- data.frame(FECHAS=daysCompleteMadDios, 
                                           CANTIDAD=vacCompleteMadDios)
 
-cor(DFfall2daOlaMadDiosComplete$CANTIDAD, DFvac2daOlaMadDiosComplete$CANTIDAD)
 ```
 
 Distribución de los vacunados y fallecidos en Madre de Dios en la segunda Ola
