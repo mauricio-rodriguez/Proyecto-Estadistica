@@ -90,8 +90,11 @@ DFFallecidosCLEAN<-filter(DFFallecidosCLEAN,SEXO != "INDETERMINAD")
 
 
 #Análisis descriptivo
+
 ##Descriptores Gráficos
+
 ### Cantidad de fallecidos por día
+
 Podemos observar claramente cómo han habido dos olas en las que hubo una gran cantidad de fallecidos por día. El gráfico aparenta que el decremento de fallecidos en la segunda ola ha sido más rápido y el número de fallecidos por día ha llegado a niveles inferiores a los de la primera ola. Este descriptor es importante ya que el decremento de fallecimientos de la segunda ola coincide con la llegada de las vacunas al Perú, lo que nos permite estudiar la influencia del proceso de vacunación en el número de fallecimientos.
 ```{r echo=FALSE, warning=FALSE}
 DFFechaFallecidos <- as.data.frame(table(DFFallecidosCLEAN$FECHA_FALLECIMIENTO))
@@ -161,6 +164,7 @@ ggplot(data = DFFallecidosCLEAN, aes(y=DEPARTAMENTO)) +
 
 
 ### Cantidad de personas vacunadas por sexo
+En este gráfico se observa que la cantidad de personas vacunadas del sexo femenino es superior a la del sexo masculino, siendo que las personas de sexo femenino han recibido alrededor de 6,000,000 de dosis y las de sexo masculino un número inferior pero entre las 5,500,000 y las 6,000,000 por lo que podríamos decir que la diferencia no es considerable Este gráfico es importante ya que nos indica que el proceso de vacunación se está llevando a cabo de manera prácticamente uniforme en términos de sexo, al menos desde un punto de vista general y no regional.
 ```{r, echo=FALSE}
 options(scipen=999)
 barplot(table(DFVacunadosCLEAN$SEXO),
@@ -174,6 +178,7 @@ barplot(table(DFVacunadosCLEAN$SEXO),
 
 
 ### Cantidad de personas con 1 o 2 dosis
+En el gráfico se observa que la cantidad de personas que han recibido una dosis supera a la que han recibido 2, lo que es totalmente normal considerando que existe una diferencia de días que se deben dar para poder aplicarse la segunda dosis. En específico, la cantidad de personas que han recibido una dosis son alrededor de 7 millones mientras que alrededor de 4 millones han recibido ambas dosis, es decir, que el aproximadamente el 36% de la población vacunada cuenta con ambas dosis. Estos datos son útiles para analizar correctamente el impacto de la vacunación según el número de dosis aplicadas.
 ```{r, echo=FALSE}
 ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
@@ -185,6 +190,7 @@ ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) +
 
 
 ### Cantidad de vacunas inoculadas por fabricante
+El siguiente gráfico de frecuencias muestra la cantidad de dosis que se han aplicado según el respectivo fabricante de vacunas. Se observa que el fabricante Pfizer, ha sido el principal proveedor de dosis, siendo que en el proceso se han utilizado alrededor de 8 millones de dosis es esta compañía. Muy por debajo, se encuentran los fabricantes Astrazeneca y Sinopharm, cuyas dosis han sido partícipes de alrededor de 2 millones y medio millón  de aplicaciones respectivamente. Esta información es importante ya que nos permite saber cuál ha sido la vacuna más aplicada y su proporción respecto al porcentaje de aplicaciones totales.
 ```{r, echo=FALSE}
 DFVacunadosCLEAN<-filter(DFVacunadosCLEAN,FABRICANTE != "NA")
 ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) + 
@@ -213,22 +219,26 @@ ggplot(data = DFVacunadosCLEAN, aes(y=DEPARTAMENTO)) +
 #Numéricas 
 
 ### Edad promedio de fallecidos por Covid-19
+Conocer la edad promedio de los fallecidos por Covid-19 nos ayuda a determinar el grupo de edad el cual concentra una mayor cantidad de personas con consecuencias letales durante la pandemia. En nuestro caso obtuvimos que la edad promedio es 66 años, lo que indica que el sector más afectado por la pandemia son los adultos mayores o de tercera edad. Esta información es útil para nuestro estudio ya que podemos saber cuál fue el sector en el que se debió enfocar la atención y recursos médicos durante la emergencia.
 ```{r, echo=FALSE}
 round(mean(DFFallecidosCLEAN$EDAD), digits = 0)
 ```
 
 ### Rango de edad de personas fallecidas a causa de Covid-19
+El rango de edad de personas fallecidas a causa de Covid-19 nos indica todas las edades las cuales abarca nuestra muestra. Determinado por el máximo y mínimo de edad, un rango de 117 años. Este dato nos sirve para confirmar que estamos tomando en cuenta todos los datos de fallecidos para cada una de nuestras gráficas en las que utilizamos este dato.
 ```{r, echo=FALSE}
 sprintf("Edad máxima: %s", max(DFFallecidosCLEAN$EDAD))
 sprintf("Edad mínima: %s", min(DFFallecidosCLEAN$EDAD))
 sprintf("Rango: %s", max(DFFallecidosCLEAN$EDAD) - min(DFFallecidosCLEAN$EDAD))
 ```
 ### Edad promedio de vacunados contra Covid-19
+La edad promedio de vacunados contra Covid-19 nos indica en qué sector de la población se han realizado la mayor cantidad de vacunas, por ende a cual sector se le ha dado prioridad en esta pandemia. En nuestra muestra la edad promedio de vacunados resultó 60 años, lo que indica que fueron priorizados los adultos mayores en el proceso de vacunación.
 ```{r, echo=FALSE}
 round(mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE), digits = 0)
 ```
 
 ### Rango de edad de personas vacunadas contra Covid-19
+El rango de edad de personas vacunadas contra Covid-19 nos indica qué tanto abarca la edad de vacunados en nuestra muestra, con esta información podemos saber cuales son las edades mínima y máxima que fueron vacunadas, y gracias a la información de nuestro dataframe, también podemos saber el motivo de la vacunación de alguna persona menor a la edad de vacunación programada a día de hoy por el MINSA. En nuestra muestra obtuvimos una edad mínima de 17 años, una edad máxima de 134 años y respectivamente un rango de edad de vacunados de 117 años.
 ```{r, echo=FALSE}
 sprintf("Edad máxima: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
 sprintf("Edad mínima: %s", min(DFVacunadosCLEAN$EDAD, na.rm = TRUE))
@@ -237,37 +247,29 @@ sprintf("Rango: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE) - min(DFVacunadosC
 
 
 
-#### Maxima cantidad de fallecidos
+#### Maxima y mínima cantidad de fallecidos
+La edad máxima y mínima de fallecidos es útil para nuestro estudio ya que determina el rango máximo y mínimo de edad de nuestra muestra. En nuestra muestra obtuvimos como edad máxima 117 años; como edad mínima 0 años, lo cual indica que hubo menores de edad fallecidos con menos de 1 año de edad. Podemos utilizar estos datos con la edad promedio de fallecidos por covid para determinar cuantos y cuales rangos de edad se han visto seriamente afectados por la Covid-19.
 ```{r}
 max(DFFechaFallecidos$Freq)
-```
-
-### Minima cantidad de fallecidos
-```{r}
 min(DFFechaFallecidos$Freq)
 ```
 
 
-### Edad máxima de los fallecidos
+
+### Edad máxima y mínima de los fallecidos
+La edad máxima y mínima de fallecidos es útil para nuestro estudio ya que determina el rango máximo y mínimo de edad de nuestra muestra. En nuestra muestra obtuvimos como edad máxima 117 años; como edad mínima 0 años, lo cual indica que hubo menores de edad fallecidos con menos de 1 año de edad. Podemos utilizar estos datos con la edad promedio de fallecidos por covid para determinar cuantos y cuales rangos de edad se han visto seriamente afectados por la Covid-19.
 ```{r}
 max(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
-```
-
-### Edad mínima de los fallecidos
-```{r}
 min(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
 ```
 
 
-### mayor cantidad de vacunados en un día
+### Mayor y menor cantidad de vacunados en un día
+Esta información es útil para nuestro estudio porque obteniendo estos límites, podemos calcular cuál ha sido el pico mayor de vacunados en un solo día y comparar dicho extremo con la cantidad mínima de vacunados por día. En nuestra muestra la mayor cantidad de vacunados en un día fue 279826 vacunados, esto recientemente gracias al Vacunaton realizado por MINSA y una cantidad mínima de 90 vacunados, en el día de las elecciones presidenciales. Obteniendo la cantidad promedio de vacunados por día de un determinado periodo podemos hallar la eficacia del estado para suministrar las vacunas a la población. Debido a que la cantidad de vacunados por día es un indicador directo de la eficiencia del estado para enfrentar la pandemia.
 ```{r}
 max(DFFechaVacunados$Freq)
-```
-### menor cantidad de vacunados en un día
-```{r}
 min(DFFechaVacunados$Freq)
 ```
-
 
 
 
@@ -305,29 +307,15 @@ DFFallEtVida %>% filter(ETAPA == "Adulto Mayor") %>%
   filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdulMay2daOla
 DFVacEtVida %>% filter(ETAPA == "Adulto Mayor") %>%
   filter(FECHA_VACUNACION < "2021-07-15")-> DFVacAdulMay2daOla
-```
 
-
-
-```{r}
-graph_1 <- ggplot(DFFallAdulMay2daOla, aes(x = FECHA_FALLECIMIENTO, y = n)) + 
-  geom_point() + geom_smooth() + 
-  labs(title="Diagrama de dispersión de adultos mayores fallecidos en la 2da Ola",
-       x="Fecha de fallecimiento",
-       y="Cantidad de fallecidos")
-graph_2 <- ggplot(DFVacAdulMay2daOla, aes(x = FECHA_VACUNACION, y = n)) + 
-  geom_point() + geom_smooth() + 
-  labs(title="Diagrama de dispersión de adultos mayores vacunados en la 2da Ola",
-       x="Fecha de vacunación",
-       y="Cantidad de vacunados")
-multiplot(graph_1, graph_2, cols=1)
+DFVacAdulMay2daOla <- mutate(DFVacAdulMay2daOla, frecAcumulativa = cumsum(n))
 ```
 
 
 ###Gráfica de regresión lineal Adultos Mayores
 ```{r}
-plot(DFVacAdulMay2daOla$n, DFFallAdulMay2daOla$n, pch=20, col=rgb(0,0,0,0.2))
-lm1<- lm(DFFallAdulMay2daOla$n ~ DFVacAdulMay2daOla$n)
+plot(DFVacAdulMay2daOla$frecAcumulativa, DFFallAdulMay2daOla$n, pch=20, col=rgb(0,0,0,0.2))
+lm1<- lm(DFFallAdulMay2daOla$n ~ DFVacAdulMay2daOla$frecAcumulativa)
 abline(lm1, col = "red")
 ```
 ```{r}
@@ -343,36 +331,21 @@ DFFallEtVida %>% filter(ETAPA == "Adulto") %>%
   filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdul2daOla
 DFVacEtVida %>% filter(ETAPA == "Adulto") %>%
   filter(FECHA_VACUNACION < "2021-07-14")-> DFVacAdul2daOla
-```
 
-```{r}
-graph_1 <- ggplot(DFFallAdul2daOla, aes(x = FECHA_FALLECIMIENTO, y = n)) + 
-  geom_point() + geom_smooth() + 
-  labs(title="Diagrama de dispersión de adultos fallecidos en la 2da Ola",
-       x="Fecha de fallecimiento",
-       y="Cantidad de fallecidos")
-graph_2 <- ggplot(DFVacAdul2daOla, aes(x = FECHA_VACUNACION, y = n)) + 
-  geom_point() + geom_smooth() + 
-  labs(title="Diagrama de dispersión de adultos vacunados en la 2da Ola",
-       x="Fecha de vacunación",
-       y="Cantidad de vacunados")
-multiplot(graph_1, graph_2, cols=1)
+DFVacAdul2daOla <- mutate(DFVacAdul2daOla, frecAcumulativa = cumsum(n))
 ```
 
 
 ###Gráfica de regresión lineal Adultos
 ```{r}
-plot(DFVacAdul2daOla$n, DFFallAdul2daOla$n, pch=20, col=rgb(0,0,0,0.2))
-lm2<- lm(DFFallAdul2daOla$n ~ DFVacAdul2daOla$n)
+plot(DFVacAdul2daOla$frecAcumulativa, DFFallAdul2daOla$n, pch=20, col=rgb(0,0,0,0.2))
+lm2<- lm(DFFallAdul2daOla$n ~ DFVacAdul2daOla$frecAcumulativa)
 abline(lm2, col = "red")
 ```
 
 ```{r}
 summary(lm2)
 ```
-
-
-
 
 
 
@@ -400,27 +373,15 @@ DFFallJov2daOla <- data.frame(FECHA_FALLECIMIENTO=daysComplete,
                               n=fallComplete)
 DFVacEtVida %>% filter(ETAPA == "Joven") %>%
   filter(FECHA_VACUNACION <= "2021-07-14")-> DFVacJov2daOla
-```
 
-```{r}
-graph_1 <- ggplot(DFFallJov2daOla, aes(x = FECHA_FALLECIMIENTO, y = n)) + 
-  geom_point() + geom_smooth() + 
-  labs(title="Diagrama de dispersión de jóvenes fallecidos en la 2da Ola",
-       x="Fecha de fallecimiento",
-       y="Cantidad de fallecidos")
-graph_2 <- ggplot(DFVacJov2daOla, aes(x = FECHA_VACUNACION, y = n)) + 
-  geom_point() + geom_smooth() + 
-  labs(title="Diagrama de dispersión de jóvenes vacunados en la 2da Ola",
-       x="Fecha de vacunación",
-       y="Cantidad de vacunados")
-multiplot(graph_1, graph_2, cols=1)
+DFVacJov2daOla <- mutate(DFVacJov2daOla, frecAcumulativa = cumsum(n))
 ```
 
 
 ###Gráfica de regresión lineal Jovenes
 ```{r}
-plot(DFVacJov2daOla$n, DFFallJov2daOla$n, pch=20, col=rgb(0,0,0,0.2))
-lm3<- lm(DFFallJov2daOla$n ~ DFVacJov2daOla$n)
+plot(DFVacJov2daOla$frecAcumulativa, DFFallJov2daOla$n, pch=20, col=rgb(0,0,0,0.2))
+lm3<- lm(DFFallJov2daOla$n ~ DFVacJov2daOla$frecAcumulativa)
 abline(lm3, col = "red")
 ```
 
@@ -456,13 +417,15 @@ DFVacunadosCLEAN %>% select(DEPARTAMENTO, FECHA_VACUNACION) %>%
          FECHA_VACUNACION <= as.Date("2021-07-14")) -> vac2daOlaLima
 DFvac2daOlaLima <- as.data.frame(table(vac2daOlaLima$FECHA_VACUNACION), 
                               col.names = c("FECHAS", "CANT_VACUNADOS"))
+
+DFvac2daOlaLima <- mutate(DFvac2daOlaLima, frecAcumulativa = cumsum(Freq))
 ```
 
 
 ###Gráfica de regresión Vacunados y Fallecidos en Lima
 ```{r}
-plot(DFvac2daOlaLima$Freq, DFfall2daOlaLima$Freq, pch=20, col=rgb(0,0,0,0.2))
-lm4<- lm(DFfall2daOlaLima$Freq ~ DFvac2daOlaLima$Freq)
+plot(DFvac2daOlaLima$frecAcumulativa, DFfall2daOlaLima$Freq, pch=20, col=rgb(0,0,0,0.2))
+lm4<- lm(DFfall2daOlaLima$Freq ~ DFvac2daOlaLima$frecAcumulativa)
 abline(lm4, col = "red")
 ```
 
@@ -487,12 +450,12 @@ Para Madre de Dios
 DFFallecidosCLEAN %>% select(DEPARTAMENTO, FECHA_FALLECIMIENTO) %>% 
   filter(DEPARTAMENTO =="MADRE DE DIOS") %>% 
   filter(FECHA_FALLECIMIENTO >= as.Date("2021-02-09") &
-           FECHA_FALLECIMIENTO <= as.Date("2021-06-03") ) -> fall2daOlaMadDios
+           FECHA_FALLECIMIENTO <= as.Date("2021-07-14") ) -> fall2daOlaMadDios
 DFfall2daOlaMadDios <- as.data.frame(table(fall2daOlaMadDios$FECHA_FALLECIMIENTO), 
                               col.names = c("FECHAS", "CANT_FALLECIDOS"))
 # Limpiamos los datos
 s <- as.Date("2021-02-11")
-e <- as.Date("2021-06-03")
+e <- as.Date("2021-07-14")
 daysCompleteMadDios <- seq(from=s, to=e, by=1)
 fallCompleteMadDios <- c()
 theDate <- s
@@ -512,12 +475,12 @@ DFfall2daOlaMadDiosComplete <- data.frame(FECHAS=daysCompleteMadDios,
 DFVacunadosCLEAN %>% select(DEPARTAMENTO, FECHA_VACUNACION) %>% 
   filter(DEPARTAMENTO =="MADRE DE DIOS") %>% 
   filter(FECHA_VACUNACION >= as.Date("2021-02-09") &
-         FECHA_VACUNACION <= as.Date("2021-06-03")) -> vac2daOlaMadDios
+         FECHA_VACUNACION <= as.Date("2021-07-14")) -> vac2daOlaMadDios
 DFvac2daOlaMadDios <- as.data.frame(table(vac2daOlaMadDios$FECHA_VACUNACION), 
                               col.names = c("FECHAS", "CANT_VACUNADOS"))
 # Limpiamos los datos
 s <- as.Date("2021-02-11")
-e <- as.Date("2021-06-03")
+e <- as.Date("2021-07-14")
 daysCompleteMadDios <- seq(from=s, to=e, by=1)
 vacCompleteMadDios <- c()
 theDate <- s
@@ -534,4 +497,19 @@ while (theDate <= e){
 # dataset final de vacunados en la segunda ola completo
 DFvac2daOlaMadDiosComplete <- data.frame(FECHAS=daysCompleteMadDios, 
                                           CANTIDAD=vacCompleteMadDios)
+
+DFvac2daOlaMadDiosComplete <- mutate(DFvac2daOlaMadDiosComplete, frecAcumulativa = cumsum(CANTIDAD))
+```
+
+
+
+###Gráfica de regresión Vacunados y Fallecidos en Madre De Dios
+```{r}
+plot(DFvac2daOlaMadDiosComplete$frecAcumulativa, DFfall2daOlaMadDiosComplete$CANTIDAD, pch=20, col=rgb(0,0,0,0.2))
+lm5<- lm(DFfall2daOlaMadDiosComplete$CANTIDAD ~ DFvac2daOlaMadDiosComplete$frecAcumulativa)
+abline(lm5, col = "red")
+```
+
+```{r}
+summary(lm5)
 ```
