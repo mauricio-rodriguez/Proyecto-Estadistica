@@ -605,7 +605,7 @@ Para Lima
 ```{r}
 # Calculamos fallecidos por departamento
 DFFallecidosCLEAN %>% select(DEPARTAMENTO, FECHA_FALLECIMIENTO) %>% 
-  filter(DEPARTAMENTO =="LIMA METROPOLITANA" | DEPARTAMENTO == "LIMA REGION") %>% 
+  filter(DEPARTAMENTO =="LIMA") %>% 
   filter(FECHA_FALLECIMIENTO >= as.Date("2021-02-09")) -> fall2daOlaLima
 DFfall2daOlaLima <- as.data.frame(table(fall2daOlaLima$FECHA_FALLECIMIENTO), 
                               col.names = c("FECHAS", "CANT_FALLECIDOS"))
@@ -615,18 +615,24 @@ DFfall2daOlaLima <- as.data.frame(table(fall2daOlaLima$FECHA_FALLECIMIENTO),
 DFVacunadosCLEAN %>% select(DEPARTAMENTO, FECHA_VACUNACION) %>% 
   filter(DEPARTAMENTO =="LIMA") %>% 
   filter(FECHA_VACUNACION >= as.Date("2021-02-09") &
-         FECHA_VACUNACION <= as.Date("2021-06-07")) -> vac2daOlaLima
+         FECHA_VACUNACION <= as.Date("2021-07-14")) -> vac2daOlaLima
 DFvac2daOlaLima <- as.data.frame(table(vac2daOlaLima$FECHA_VACUNACION), 
                               col.names = c("FECHAS", "CANT_VACUNADOS"))
 
 ```
 
-Distribución de los vacunados y fallecidos en Lima en la segunda Ola
+
+###Gráfica de regresión Vacunados y Fallecidos en Lima
 ```{r}
-# TODO arreglar grafica para que se vean las dos juntas
-scatter.smooth(DFvac2daOlaLima, main="Cantidad de vacunados en Lima en la 2da Ola", xlab="Fecha de vacunación", ylab="Frecuencia")
-scatter.smooth(DFfall2daOlaLima, main="Cantidad de fallecidos en Lima en la 2da Ola", xlab="Fecha de fallecmiento", ylab="Frecuencia")
+plot(DFvac2daOlaLima$Freq, DFfall2daOlaLima$Freq, pch=20, col=rgb(0,0,0,0.2))
+lm4<- lm(DFfall2daOlaLima$Freq ~ DFvac2daOlaLima$Freq)
+abline(lm4, col = "red")
 ```
+
+```{r}
+summary(lm4)
+```
+
 
 
 ## Tercera relación
