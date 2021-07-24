@@ -3,6 +3,9 @@ author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salaz
 title: "Impacto del proceso de vacunación contra la Covid-19"
 date: "June 11th 2021"
 output:
+  html_document:
+    toc: yes
+    df_print: paged
   html_notebook:
     toc: yes
     toc_float:
@@ -10,9 +13,6 @@ output:
       smooth_scroll: no
     number_sections: yes
     theme: journal
-  html_document:
-    toc: yes
-    df_print: paged
 ---
 
 
@@ -341,11 +341,11 @@ min(DFFechaVacunados$Freq)
 
 # Análisis inferencial
 
-## ¿Es verdad que la media de edad de fallecidos es igual a la de vacunados?
+## Es verdad que la media de edad de fallecidos es igual a la de vacunados
 
 * Nivel de confianza: 98%.
 * Significancia($\alpha$): 0.02
-H0: La media verdadera de la edad de fallecidos es igual a la de vacunados?
+H0: La media verdadera de la edad de fallecidos es igual a la de vacunados
 
 ```{r, echo=T}
 FC <- DFFallecidosCLEAN$EDAD
@@ -357,7 +357,7 @@ En este caso el es menor $p$-value al nivel de significacia $\alpha = 0.02$. Por
 Con un 98% de confianza, podemos decir que la media de edad de fallecidos no es igual a la de vacunados.
 
 
-## ¿Es verdad que al día el por lo menos 45% de vacunados son adultos mayores?, al 95%
+## Es verdad que al día el por lo menos 45% de vacunados son adultos mayores, al 95%.
 
 * Nivel de confianza: 95%.
 * Significancia($\alpha$): 0.05
@@ -379,7 +379,7 @@ En este caso el no es menor $p$-value al nivel de significacia $\alpha = 0.05$. 
 Con un 95% de confia4za, podemos decir que la media del porcentaje de vacunados al día de adultos mayores es mayor al 45%. 
 
 
-## Es cierto que al día Lima tiene por lo menos 50% de los vacunados?
+## Es cierto que al día Lima tiene por lo menos 50% de los vacunados
 
 * Nivel de confianza: 95%.
 * Significancia($\alpha$): 0.05
@@ -432,6 +432,9 @@ DFVacAdulMay2daOla <- mutate(DFVacAdulMay2daOla, frecAcumulativa = cumsum(n))
 
 
 #### Gráfica de regresión lineal Adultos Mayores
+
+La siguiente gráfica nos muestra la regresión lineal para el caso de los adultos mayores durante la segunda ola de la pandemia. En el eje X se encuentra la frecuencia acumulada de adultos mayores vacunados y en el eje Y la cantidad de adultos mayores fallecidos por día. Con esta gráfica observamos que la pendiente de la línea es significativa, lo que indica que existe una relación entre la cantidad de adultos mayores vacunados en total y la cantidad de adultos mayores fallecidos diariamente. Esta relación nos indica que a mayor cantidad de adultos mayores vacunados en total, la cantidad de adultos mayores que fallecen diariamente por Covid-19 disminuye. Cada uno de los puntos de la gráfica de dispersión nos indica un día en el cual son comparados ambos parámetros, estos días avanzan cronológicamente de izquierda a derecha. Esto se puede observar en la gráfica debido a que al inicio de la pandemia la cantidad de adultos mayores vacunados era muy pequeña. Por ello, podemos encontrar una acumulación de puntos en el lado izquierdo de la gráfica por el pequeño aumento de vacunados diarios al inicio de la segunda ola. Por otro lado, en los puntos del extremo derecho de la gráfica observamos que los puntos se encuentran más separados en el eje X. Esta información se traduce como una mayor cantidad de adultos mayores vacunados diariamente.  
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 plot(DFVacAdulMay2daOla$frecAcumulativa, DFFallAdulMay2daOla$n, pch=20, col=rgb(0,0,0,0.2))
 lm1<- lm(DFFallAdulMay2daOla$n ~ DFVacAdulMay2daOla$frecAcumulativa)
@@ -457,6 +460,9 @@ DFVacAdul2daOla <- mutate(DFVacAdul2daOla, frecAcumulativa = cumsum(n))
 
 
 #### Gráfica de regresión lineal Adultos
+
+En la siguiente gráfica se observa el resultado de aplicar el método de regresión lineal, donde los valores del eje Y son la cantidad de adultos fallecidos en la segunda ola, mientras que los valores del eje X son la frecuencia acumulada de personas vacunadas pertenecientes al mismo rango de edad durante la segunda ola. La impresión que nos da la gráfica es que si bien al inicio hubo un periodo en el que la cantidad de adultos que fallecían aumentó considerablemente, luego de ello la tendencia que se marca es que la cantidad de fallecidos, a medida que hay un mayor número de personas vacunadas, disminuya.
+
 ```{r echo=FALSE, warning=FALSE}
 plot(DFVacAdul2daOla$frecAcumulativa, DFFallAdul2daOla$n, pch=20, col=rgb(0,0,0,0.2))
 lm2<- lm(DFFallAdul2daOla$n ~ DFVacAdul2daOla$frecAcumulativa)
@@ -497,6 +503,9 @@ DFVacJov2daOla <- mutate(DFVacJov2daOla, frecAcumulativa = cumsum(n))
 
 
 #### Gráfica de regresión lineal Jovenes
+
+En la gráfica mostrada se observa el resultado al aplicar el método de regresión lineal, donde los ejes X e Y representa la frecuencia acumulada de la población joven vacunada durante la segunda ola y la cantidad de personas fallecidas pertenecientes a ese rango, respectivamente. Al visualizar los puntos en la gráfica, que representan los días de la segunda ola, podemos atestiguar la estrategia de vacunación utilizada por el Estado donde la población de primera línea era prioridad y mayoritariamente este rango poblacional no pertenece a la misma, por lo que los puntos se encuentran dispersos y da la impresión que existe un relación baja entre ambos ejes evaluados, esto se da debido a que la región poblacional analizada no ha sido prioridad en el proceso de vacunación en el caso de no poseer ninguna comorbilidad o ser parte de un grupo de riesgo.
+
 ```{r echo=FALSE, warning=FALSE}
 plot(DFVacJov2daOla$frecAcumulativa, DFFallJov2daOla$n, pch=20, col=rgb(0,0,0,0.2))
 lm3<- lm(DFFallJov2daOla$n ~ DFVacJov2daOla$frecAcumulativa)
@@ -541,6 +550,9 @@ DFvac2daOlaLima <- mutate(DFvac2daOlaLima, frecAcumulativa = cumsum(Freq))
 
 
 #### Gráfica de regresión Vacunados y Fallecidos en Lima
+
+En la siguiente gráfica tenemos la comparación entre la cantidad total de personas vacunadas en Lima y la cantidad de personas fallecidas por día en Lima durante la segunda ola de la pandemia. Como podemos observar existe una relación ya que la pendiente de la línea de mínimos cuadrados es importante. Esto significa que a mayor cantidad de vacunados totales en Lima, el número de personas fallecidas diariamente se redujo.
+
 ```{r echo=FALSE, warning=FALSE}
 plot(DFvac2daOlaLima$frecAcumulativa, DFfall2daOlaLima$Freq, pch=20, col=rgb(0,0,0,0.2))
 lm4<- lm(DFfall2daOlaLima$Freq ~ DFvac2daOlaLima$frecAcumulativa)
@@ -623,6 +635,9 @@ DFvac2daOlaMadDiosComplete <- mutate(DFvac2daOlaMadDiosComplete, frecAcumulativa
 
 
 #### Gráfica de regresión Vacunados y Fallecidos en Madre De Dios
+
+En esta gráfica de regresión lineal observamos la comparación entre la cantidad total de personas vacunadas en Madre De Dios y la cantidad de personas fallecidas en Madre De Dios por día. La gráfica nos muestra una gran cantidad de puntos dispersos, principalmente al inicio del proceso de vacunación, lo cual dificulta encontrar una gráfica ideal de mínimos cuadrados. A pesar de ello obtenemos en el modelo lineal una pendiente negativa, lo que indica que a mayor número de personas vacunadas en Madre De Dios, disminuye la cantidad de personas fallecidas por día en este departamento.
+
 ```{r echo=FALSE, warning=FALSE}
 plot(DFvac2daOlaMadDiosComplete$frecAcumulativa, DFfall2daOlaMadDiosComplete$CANTIDAD, pch=20, col=rgb(0,0,0,0.2))
 lm5<- lm(DFfall2daOlaMadDiosComplete$CANTIDAD ~ DFvac2daOlaMadDiosComplete$frecAcumulativa)
