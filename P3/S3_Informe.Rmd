@@ -30,13 +30,77 @@ library(viridis)
 library(lubridate)
 ```
 
-# Asignar df's con los datos raw de los archivos
-```{r echo=true}
+# Utilities 
+```{r echo=FALSE}
+getEtapa <- function(edad) 
+{
+  ifelse(edad>60,"Adulto Mayor",ifelse(edad>29,"Adulto",ifelse(edad>17,"Joven","Niño")))
+}
+```
+
+```{r warning=FALSE, include=FALSE}
+# Verifica si es que la variable es integer(0) o no
+fun_int0 <- function(my_data) {    # Create user-defined function
+ 
+  if(length(my_data) == 0 & is.integer(my_data)) {
+ 
+    return(FALSE)
+# [1] "The data object is integer(0)."
+ 
+  } else {
+ 
+    return(TRUE)
+# [1] "The data object is NOT integer(0)."
+  }
+}
+```
+
+```{r warning=FALSE, include=FALSE}
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
+
+# Asignar DF's con los datos raw de los archivos
+```{r}
 DFFallecidosRAW <- read_csv("fallecidos_covid.csv")
 DFVacunadosRAW <- read_csv("vacunas_covid.csv")
 ```
 
-#Asignar df con las proporciones por departamento
+# Asignar DF con las proporciones por departamento
 ```{r}
 DFProporciones <- read_csv("PoblacionTotal.csv")
 ```
@@ -85,9 +149,9 @@ DFProporciones <-mutate(DFProporciones, porcentajeFallecidos = as.double((tablaF
 ```
 
 
-#Análisis descriptivo
+# Análisis descriptivo
 
-##Descriptores Gráficos
+## Descriptores Gráficos
 
 ### Cantidad de fallecidos por día
 
@@ -182,7 +246,7 @@ barplot(table(DFVacunadosCLEAN$SEXO),
 
 ### Cantidad de personas con 1 o 2 dosis
 En el gráfico se observa que la cantidad de personas que han recibido una dosis supera a la que han recibido 2, lo que es totalmente normal considerando que existe una diferencia de días que se deben dar para poder aplicarse la segunda dosis. En específico, la cantidad de personas que han recibido una dosis son alrededor de 7 millones mientras que alrededor de 4 millones han recibido ambas dosis, es decir, que el aproximadamente el 36% de la población vacunada cuenta con ambas dosis. Estos datos son útiles para analizar correctamente el impacto de la vacunación según el número de dosis aplicadas.
-```{r, echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
   scale_fill_viridis("Frecuencia", discrete=F) + 
@@ -194,7 +258,7 @@ ggplot(data = DFVacunadosCLEAN, aes(x=DOSIS)) +
 
 ### Cantidad de vacunas inoculadas por fabricante
 El siguiente gráfico de frecuencias muestra la cantidad de dosis que se han aplicado según el respectivo fabricante de vacunas. Se observa que el fabricante Pfizer, ha sido el principal proveedor de dosis, siendo que en el proceso se han utilizado alrededor de 8 millones de dosis es esta compañía. Muy por debajo, se encuentran los fabricantes Astrazeneca y Sinopharm, cuyas dosis han sido partícipes de alrededor de 2 millones y medio millón  de aplicaciones respectivamente. Esta información es importante ya que nos permite saber cuál ha sido la vacuna más aplicada y su proporción respecto al porcentaje de aplicaciones totales.
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 DFVacunadosCLEAN<-filter(DFVacunadosCLEAN,FABRICANTE != "NA")
 ggplot(data = DFVacunadosCLEAN, aes(x=FABRICANTE)) + 
   geom_histogram(aes(fill=..count..), stat = "count") + 
@@ -220,24 +284,24 @@ ggplot( data = DF_PROP_FILTER_VAC, aes(y=porcentajeVacunados, x=DEPARTAMENTO)) +
 
 
 
-#Numéricas 
+# Numéricas 
 
 ### Edad promedio de fallecidos por Covid-19
 Conocer la edad promedio de los fallecidos por Covid-19 nos ayuda a determinar el grupo de edad el cual concentra una mayor cantidad de personas con consecuencias letales durante la pandemia. En nuestro caso obtuvimos que la edad promedio es 66 años, lo que indica que el sector más afectado por la pandemia son los adultos mayores o de tercera edad. Esta información es útil para nuestro estudio ya que podemos saber cuál fue el sector en el que se debió enfocar la atención y recursos médicos durante la emergencia.
-```{r, echo=FALSE}
+```{r echo=FALSE}
 round(mean(DFFallecidosCLEAN$EDAD), digits = 0)
 ```
 
 ### Rango de edad de personas fallecidas a causa de Covid-19
 El rango de edad de personas fallecidas a causa de Covid-19 nos indica todas las edades las cuales abarca nuestra muestra. Determinado por el máximo y mínimo de edad, un rango de 117 años. Este dato nos sirve para confirmar que estamos tomando en cuenta todos los datos de fallecidos para cada una de nuestras gráficas en las que utilizamos este dato.
-```{r, echo=FALSE}
+```{r, echo=F}
 sprintf("Edad máxima: %s", max(DFFallecidosCLEAN$EDAD))
 sprintf("Edad mínima: %s", min(DFFallecidosCLEAN$EDAD))
 sprintf("Rango: %s", max(DFFallecidosCLEAN$EDAD) - min(DFFallecidosCLEAN$EDAD))
 ```
 ### Edad promedio de vacunados contra Covid-19
 La edad promedio de vacunados contra Covid-19 nos indica en qué sector de la población se han realizado la mayor cantidad de vacunas, por ende a cual sector se le ha dado prioridad en esta pandemia. En nuestra muestra la edad promedio de vacunados resultó 60 años, lo que indica que fueron priorizados los adultos mayores en el proceso de vacunación.
-```{r, echo=FALSE}
+```{r, echo=F}
 round(mean(DFVacunadosCLEAN$EDAD, na.rm = TRUE), digits = 0)
 ```
 
@@ -253,7 +317,7 @@ sprintf("Rango: %s", max(DFVacunadosCLEAN$EDAD, na.rm = TRUE) - min(DFVacunadosC
 
 #### Maxima y mínima cantidad de fallecidos
 La edad máxima y mínima de fallecidos es útil para nuestro estudio ya que determina el rango máximo y mínimo de edad de nuestra muestra. En nuestra muestra obtuvimos como edad máxima 117 años; como edad mínima 0 años, lo cual indica que hubo menores de edad fallecidos con menos de 1 año de edad. Podemos utilizar estos datos con la edad promedio de fallecidos por covid para determinar cuantos y cuales rangos de edad se han visto seriamente afectados por la Covid-19.
-```{r}
+```{r, echo=F}
 max(DFFechaFallecidos$Freq)
 min(DFFechaFallecidos$Freq)
 ```
@@ -262,7 +326,7 @@ min(DFFechaFallecidos$Freq)
 
 ### Edad máxima y mínima de los fallecidos
 La edad máxima y mínima de fallecidos es útil para nuestro estudio ya que determina el rango máximo y mínimo de edad de nuestra muestra. En nuestra muestra obtuvimos como edad máxima 117 años; como edad mínima 0 años, lo cual indica que hubo menores de edad fallecidos con menos de 1 año de edad. Podemos utilizar estos datos con la edad promedio de fallecidos por covid para determinar cuantos y cuales rangos de edad se han visto seriamente afectados por la Covid-19.
-```{r}
+```{r, echo=F}
 max(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
 min(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
 ```
@@ -270,7 +334,7 @@ min(DFFallecidosCLEAN$EDAD,na.rm = TRUE)
 
 ### Mayor y menor cantidad de vacunados en un día
 Esta información es útil para nuestro estudio porque obteniendo estos límites, podemos calcular cuál ha sido el pico mayor de vacunados en un solo día y comparar dicho extremo con la cantidad mínima de vacunados por día. En nuestra muestra la mayor cantidad de vacunados en un día fue 279826 vacunados, esto recientemente gracias al Vacunaton realizado por MINSA y una cantidad mínima de 90 vacunados, en el día de las elecciones presidenciales. Obteniendo la cantidad promedio de vacunados por día de un determinado periodo podemos hallar la eficacia del estado para suministrar las vacunas a la población. Debido a que la cantidad de vacunados por día es un indicador directo de la eficiencia del estado para enfrentar la pandemia.
-```{r}
+```{r, echo=F}
 max(DFFechaVacunados$Freq)
 min(DFFechaVacunados$Freq)
 ```
@@ -283,7 +347,7 @@ min(DFFechaVacunados$Freq)
 * Significancia($\alpha$): 0.02
 H0: La media verdadera de la edad de fallecidos es igual a la de vacunados?
 
-```{r}
+```{r, echo=T}
 FC <- DFFallecidosCLEAN$EDAD
 V <- DFVacunadosCLEAN$EDAD
 
@@ -301,12 +365,14 @@ Con un 98% de confianza, podemos decir que la media de edad de fallecidos no es 
 * Ha: La media verdadera de la cantidad de vacunados adultos mayores es menor al 45% de los vacunados. ($45 > \mu$)
 * H0: La media verdadera de la cantidad de vacunados adultos mayores es mayor o igual al 45% de los vacunados. ($45 <= \mu$)
 
-```{r}
+```{r warning=FALSE, include=FALSE}
 
 DFVacunadosCLEAN %>% mutate(ETAPA = getEtapa(EDAD))%>% group_by(FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n) %>% filter(FECHA_VACUNACION > "2021-02-08")-> DF_DIA_ETVIDA_DIA
 DFVacunadosCLEAN %>% mutate(ETAPA = getEtapa(EDAD))%>% filter(ETAPA == "Adulto Mayor") %>% group_by(FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n) -> DF_VAC_DIA_ADULMAY
 DF_VAC_DIA_ADULMAY <- cbind(DF_VAC_DIA_ADULMAY, PROPORCION=(round(DF_VAC_DIA_ADULMAY$n / DF_DIA_ETVIDA_DIA$n, 2)))
+```
 
+```{r, echo=T}
 t.test(x = DF_VAC_DIA_ADULMAY$PROPORCION, mu=0.45, alternative = "greater", conf.level = 0.95)
 ```
 En este caso el no es menor $p$-value al nivel de significacia $\alpha = 0.05$. Por lo tanto, la hipótesis nula no se rechaza. 
@@ -320,106 +386,42 @@ Con un 95% de confia4za, podemos decir que la media del porcentaje de vacunados 
 
 * Ha: La media verdadera de la cantidad de vacunados en Lima es menor al 50% de los vacunados. (50 > u)
 * H0:  La media verdadera de la cantidad de vacunados en Lima es igual (mayor) al 50% de los vacunados. (50 <= u)
-```{r}
+```{r warning=FALSE, include=FALSE}
 
 DFVacunadosCLEAN %>% group_by(FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n) -> DF_FECH_VAC
 DFVacunadosCLEAN %>% filter(DEPARTAMENTO == "LIMA") %>% group_by(FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n) -> DF_VAC_LIMA
 DF_VAC_LIMA <- cbind(DF_VAC_LIMA, PROPORCION=(round(DF_VAC_LIMA$n / DF_FECH_VAC$n, 2)))
+```
 
+```{r,echo=T}
 t.test(x = DF_VAC_LIMA$PROPORCION, mu=0.50, alternative = "greater", conf.level = 0.95)
 ```
 
 En este caso el no es menor $p$-value al nivel de significacia $\alpha = 0.05$. Por lo tanto, la hipótesis nula no se rechaza. 
 Con un 95% de confianza, podemos decir que Lima tiene por lo menos 50% de los vacunados.
 
-
-
-
 # Relaciones entre variables
 
 ## Primera relación
 ### Cantidad de fallecidos en la 2da ola por etap  de vida x Cantidad de vacunados en la 2da ola por etapa de vida
 
-Utilities
-```{r echo=FALSE}
-getEtapa <- function(edad) 
-{
-  ifelse(edad>60,"Adulto Mayor",ifelse(edad>29,"Adulto",ifelse(edad>17,"Joven","Niño")))
-}
-```
+Etapas de vida:
 
-```{r warning=FALSE, include=FALSE}
-# Verifica si es que la variable es integer(0) o no
-fun_int0 <- function(my_data) {    # Create user-defined function
- 
-  if(length(my_data) == 0 & is.integer(my_data)) {
- 
-    return(FALSE)
-# [1] "The data object is integer(0)."
- 
-  } else {
- 
-    return(TRUE)
-# [1] "The data object is NOT integer(0)."
-  }
-}
-```
+- Niños(0-11 años)
+- Adolescentes (12 - 17 años)
+- Jóvenes(18 - 29 años)
+- Adultos (30 -59 años)
+- Adulto Mayor(60 a más)
 
-```{r warning=FALSE, include=FALSE}
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  library(grid)
-
-  # Make a list from the ... arguments and plotlist
-  plots <- c(list(...), plotlist)
-
-  numPlots = length(plots)
-
-  # If layout is NULL, then use 'cols' to determine layout
-  if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                    ncol = cols, nrow = ceiling(numPlots/cols))
-  }
-
- if (numPlots==1) {
-    print(plots[[1]])
-
-  } else {
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
-}
-```
-
-
-Etapas de vida
-Niños(0-11 años)
-Adolescentes (12 - 17 años)
-Jóvenes(18 - 29 años)
-Adultos (30 -59 años)
-Adulto Mayor(60 a más)
-
-Creamos dataset cantidad de fallecidos agrupados por etapa de vida
-```{r echo=FALSE}
+### Creamos dataset cantidad de fallecidos agrupados por etapa de vida
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 na.exclude(DFVacunadosCLEAN) %>% mutate(ETAPA = getEtapa(EDAD))%>% group_by(ETAPA,FECHA_VACUNACION) %>% summarize(n = n()) %>% arrange(FECHA_VACUNACION,n)%>% filter(FECHA_VACUNACION>="2021-01-13") -> DFVacEtVida
 na.exclude(DFFallecidosCLEAN) %>% mutate(ETAPA= getEtapa(EDAD) ) %>% group_by(ETAPA,FECHA_FALLECIMIENTO) %>% summarize(n = n()) %>%
   arrange(FECHA_FALLECIMIENTO,n) %>% filter(FECHA_FALLECIMIENTO>="2021-01-13") -> DFFallEtVida
 ```
 
-Para adultos mayores
-```{r echo=FALSE}
+#### Para adultos mayores
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 DFFallEtVida %>% filter(ETAPA == "Adulto Mayor") %>% 
   filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdulMay2daOla
 DFVacEtVida %>% filter(ETAPA == "Adulto Mayor") %>%
@@ -429,21 +431,22 @@ DFVacAdulMay2daOla <- mutate(DFVacAdulMay2daOla, frecAcumulativa = cumsum(n))
 ```
 
 
-###Gráfica de regresión lineal Adultos Mayores
-```{r}
+#### Gráfica de regresión lineal Adultos Mayores
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 plot(DFVacAdulMay2daOla$frecAcumulativa, DFFallAdulMay2daOla$n, pch=20, col=rgb(0,0,0,0.2))
 lm1<- lm(DFFallAdulMay2daOla$n ~ DFVacAdulMay2daOla$frecAcumulativa)
 abline(lm1, col = "red")
 ```
-```{r}
+
+```{r echo=FALSE, warning=FALSE}
 summary(lm1)
 ```
 
 
 
 
-Para adultos 
-```{r echo=FALSE}
+#### Para adultos 
+```{r echo=T}
 DFFallEtVida %>% filter(ETAPA == "Adulto") %>% 
   filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallAdul2daOla
 DFVacEtVida %>% filter(ETAPA == "Adulto") %>%
@@ -453,19 +456,19 @@ DFVacAdul2daOla <- mutate(DFVacAdul2daOla, frecAcumulativa = cumsum(n))
 ```
 
 
-###Gráfica de regresión lineal Adultos
-```{r}
+#### Gráfica de regresión lineal Adultos
+```{r echo=FALSE, warning=FALSE}
 plot(DFVacAdul2daOla$frecAcumulativa, DFFallAdul2daOla$n, pch=20, col=rgb(0,0,0,0.2))
 lm2<- lm(DFFallAdul2daOla$n ~ DFVacAdul2daOla$frecAcumulativa)
 abline(lm2, col = "red")
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
 summary(lm2)
 ```
 
-Para jovenes 
-```{r echo=FALSE}
+#### Para jovenes 
+```{r echo=TRUE, warning=FALSE}
 DFFallEtVida %>% filter(ETAPA == "Joven") %>% 
   filter(FECHA_FALLECIMIENTO >= "2021-02-09" ) -> DFFallJov2daOla
 # Limpiamos los datos
@@ -493,14 +496,14 @@ DFVacJov2daOla <- mutate(DFVacJov2daOla, frecAcumulativa = cumsum(n))
 ```
 
 
-###Gráfica de regresión lineal Jovenes
-```{r}
+#### Gráfica de regresión lineal Jovenes
+```{r echo=FALSE, warning=FALSE}
 plot(DFVacJov2daOla$frecAcumulativa, DFFallJov2daOla$n, pch=20, col=rgb(0,0,0,0.2))
 lm3<- lm(DFFallJov2daOla$n ~ DFVacJov2daOla$frecAcumulativa)
 abline(lm3, col = "red")
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
 summary(lm3)
 ```
 
@@ -517,8 +520,8 @@ which.max(table(DFVacunadosCLEAN$DEPARTAMENTO))
 ```
 Vemos que Lima es el departamento que tiene más vacunados, y Madre de Dios es que el tiene menos vacunados.
 
-Para Lima
-```{r}
+#### Para Lima
+```{r warning=FALSE}
 # Calculamos fallecidos por departamento
 DFFallecidosCLEAN %>% select(DEPARTAMENTO, FECHA_FALLECIMIENTO) %>% 
   filter(DEPARTAMENTO =="LIMA") %>% 
@@ -537,14 +540,14 @@ DFvac2daOlaLima <- mutate(DFvac2daOlaLima, frecAcumulativa = cumsum(Freq))
 ```
 
 
-###Gráfica de regresión Vacunados y Fallecidos en Lima
-```{r}
+#### Gráfica de regresión Vacunados y Fallecidos en Lima
+```{r echo=FALSE, warning=FALSE}
 plot(DFvac2daOlaLima$frecAcumulativa, DFfall2daOlaLima$Freq, pch=20, col=rgb(0,0,0,0.2))
 lm4<- lm(DFfall2daOlaLima$Freq ~ DFvac2daOlaLima$frecAcumulativa)
 abline(lm4, col = "red")
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
 summary(lm4)
 ```
 
@@ -553,14 +556,14 @@ summary(lm4)
 ## Tercera relación
 ### Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con menos vacunados
 
-```{r echo=FALSE}
+```{r echo=T}
 table(DFVacunadosCLEAN$DEPARTAMENTO)
 which.min(table(DFVacunadosCLEAN$DEPARTAMENTO))
 ```
 Vemos que Madre de Dios es el departamento que menos vacunados.
 
-Para Madre de Dios
-```{r}
+#### Para Madre de Dios
+```{r message=FALSE, warning=FALSE, include=FALSE}
 # Calculamos fallecidos por departamento
 DFFallecidosCLEAN %>% select(DEPARTAMENTO, FECHA_FALLECIMIENTO) %>% 
   filter(DEPARTAMENTO =="MADRE DE DIOS") %>% 
@@ -568,6 +571,7 @@ DFFallecidosCLEAN %>% select(DEPARTAMENTO, FECHA_FALLECIMIENTO) %>%
            FECHA_FALLECIMIENTO <= as.Date("2021-07-14") ) -> fall2daOlaMadDios
 DFfall2daOlaMadDios <- as.data.frame(table(fall2daOlaMadDios$FECHA_FALLECIMIENTO), 
                               col.names = c("FECHAS", "CANT_FALLECIDOS"))
+
 # Limpiamos los datos
 s <- as.Date("2021-02-11")
 e <- as.Date("2021-07-14")
@@ -618,14 +622,14 @@ DFvac2daOlaMadDiosComplete <- mutate(DFvac2daOlaMadDiosComplete, frecAcumulativa
 
 
 
-###Gráfica de regresión Vacunados y Fallecidos en Madre De Dios
-```{r}
+#### Gráfica de regresión Vacunados y Fallecidos en Madre De Dios
+```{r echo=FALSE, warning=FALSE}
 plot(DFvac2daOlaMadDiosComplete$frecAcumulativa, DFfall2daOlaMadDiosComplete$CANTIDAD, pch=20, col=rgb(0,0,0,0.2))
 lm5<- lm(DFfall2daOlaMadDiosComplete$CANTIDAD ~ DFvac2daOlaMadDiosComplete$frecAcumulativa)
 abline(lm5, col = "red")
 ```
 
-```{r}
+```{r echo=FALSE}
 summary(lm5)
 ```
 
