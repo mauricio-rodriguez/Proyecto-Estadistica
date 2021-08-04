@@ -133,7 +133,7 @@ DataSet: Proceso de Vacunacion
 
 ========================================================
 <div align="center">
-<h2 style="margin:250px 0 20px 0;font-size:400%;">Análisis inferencial y descriptivo</h2>
+<h3 style="margin:250px 0 20px 0;font-size:400%;">Análisis inferencial y descriptivo</h3>
 </div>
 
 Pruebas de hipótesis
@@ -141,7 +141,7 @@ Pruebas de hipótesis
 <div align="center">
 <h2>Primera hipótesis</h2>
 <div>
-<img src="S3_presentacion-figure/h0.png">
+<img src="S3_presentacion-figure/h0.jpg">
 </div>
 <div>
 <img src="S3_presentacion-figure/h0_1.png">
@@ -153,7 +153,7 @@ Pruebas de hipótesis
 <div align="center">
 <h2>Segunda hipótesis</h2>
 <div>
-<img src="S3_presentacion-figure/h1.png">
+<img src="S3_presentacion-figure/h1.jpg">
 </div>
 <div>
 <img src="S3_presentacion-figure/h1_1.png">
@@ -168,7 +168,7 @@ Pruebas de hipótesis
 <div align="center">
 <h2>Tercera hipótesis</h2>
 <div>
-<img src="S3_presentacion-figure/h2.png">
+<img src="S3_presentacion-figure/h2.jpg">
 </div>
 <div>
 <img src="S3_presentacion-figure/h2_1.png">
@@ -219,7 +219,7 @@ Regresión - Segunda relación
 <figcaption></figcation>
 </div>
 
-Regresión - Segunda relacion
+Regresión - Tercera relacion
 ========================================================
 <h2>Cantidad de fallecidos por departamento en la 2da ola x Cantidad de vacunados por departamento en la 2da ola en el departamento con menos vacunados</h2>
 <div align="center">
@@ -235,12 +235,14 @@ Regresión - Segunda relacion
 
 Reflexiones
 ========================================================
- - Con la data abierta proporcionada por el Estado con respecto al proceso de vacunación y los fallecidos se logro realizar procesos de analisis con respecto a nuestros objetivos propuestos.
+- Con la data abierta proporcionada por el Estado con respecto al proceso de vacunación y los fallecidos se logro realizar procesos de análisis con respecto a nuestros objetivos propuestos.
+- Gracias al análisis realizado se ha podido evaluar y observar la situación del covid-19 en el territorio peruano.
+
 
 Conclusiones
 ========================================================
-- En primer lugar, se pudo analizar la cantidad de fallecidos en el periodo de la segunda ola y a su vez obtener un grafico para la visualización de la misma por región y edad.
-- Por otra parte, a través de la relacion entre el numero de fallecidos y vacunados, se pudo realizar un analisis de regresión lineal logrando visualizar el impacto en cada proceso por región.
+- En primer lugar, se pudo analizar la cantidad de fallecidos en el periodo de la segunda ola y a su vez obtener un gráfico para la visualización de la misma por región y edad.
+- Por otra parte, a través de la relación entre el numero de fallecidos y vacunados, se pudo realizar un análisis de regresión lineal logrando visualizar el impacto en cada proceso por región.
 - A su vez, se logró visualizar la cantidad de fallecidos según las olas de contagio por covid-19.
 - Finalmente, no se pudo determinar la relación entre distintos fabricantes de vacunas, sin embargo se logró visualizar el proceso de vacunación en proporción a su población con la finalidad de observar el avance en todo el país.
 
