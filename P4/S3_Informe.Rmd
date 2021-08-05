@@ -3,9 +3,6 @@ author: "Mauricio Rodriguez, Renato Rodriguez, Sebastian Quispe, Christian Salaz
 title: "Impacto del proceso de vacunación contra la Covid-19"
 date: "August 7th 2021"
 output:
-  html_document:
-    toc: yes
-    df_print: paged
   html_notebook:
     toc: yes
     toc_float:
@@ -13,6 +10,9 @@ output:
       smooth_scroll: no
     number_sections: yes
     theme: journal
+  html_document:
+    toc: yes
+    df_print: paged
 ---
 
 # Importancia de la investigación
@@ -374,6 +374,9 @@ Con un 95% de confia4za, podemos decir que la media del porcentaje de vacunados 
 
 
 ## Es cierto que al día Lima tiene por lo menos 50% de los vacunados
+Al ser Lima uno de los principales focos de contagio del Covid-19(según la gráfica de "Porcentaje de vacunados por departamento en proporción a su cantidad de habitantes"). 
+Es importante analizar la cantidad de vacunados que se realizan diariamente en Lima. Por esta razón, planteamos que 
+Lima por lo menos debería de las regiones que más vacunados tiene diariamente. 
 
 * Nivel de confianza: 95%.
 * Significancia($\alpha$): 0.05
